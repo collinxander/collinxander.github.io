@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Images - Collin Xander</title>
+        <link rel="icon" href="House.JPG" type="video/x-icon">
+        <link rel="stylesheet" type="text/css" href="lightbox.min.css">
+        <script type="text/javascript" src="lightbox-plus-jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/71405c46cc.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body{
+                margin: 0;
+            }
+            .section{
+                position:relative;
+                width: 100%;
+                height: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+            .section h1{
+                text-align: center;
+                font-size: 3rem;
+                font-style: italic;
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                text-shadow: 2px 2px 5px red;
+                padding: 20px;
+                margin: 15px;
+                opacity: 0.8;
+                z-index: 1;
+            }
+            .video-container{
+               position: absolute; 
+               top: 0;
+               left: 0;
+               width: 320%;
+               height: 10%;
+            }
+           
+            .navbar{
+                width: 100%;
+               background-color: black;
+                overflow: hidden;
+            }
+            .navbar a:hover{
+                color: lime;
+            }
+            .navbar a{
+                transition: color 0.2s;
+                float: left;
+                display: block;
+                text-shadow: 2px 2px 5px red;
+                color: white;
+                font-style: italic;
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 28px;
+            }
+            .about{
+                text-decoration: none;
+            }
+            
+            body{
+                background: rgba(39, 37, 37, 0.87);
+                background-image: linear-gradient(to right,black,rgb(61, 61, 61))
+            }
+            video{
+                display: block;
+                width: 32%;
+                height: 1000%;
+                object-fit: cover;
+            }
+            .gallery{   margin: 20pt;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                grid-template-rows: auto;
+                grid-gap: 1.5rem;
+                grid-template-areas: 'marioimg-1 mariograssimg-2'; 
+            }
+ 
+            .gallery img{
+                padding: 10px;
+                object-fit: cover;
+                transition: 2s;
+                width: 100%;
+            }
+            @media screen and (max-width: 800px){
+                .gallery img{
+                    width: 110%;
+                    height: 95%;
+                }
+                
+            }
+            @media screen and (max-width: 350px){
+              .gallery img{
+                width: 120%;
+                height: 95%;
+              }                
+            }
+
+
+            .gallery img:hover{
+                transform: scale(1.1);
+                filter:grayscale(100%)
+            }
+            .house img{
+                height: 95%;
+            }
+            .house4 img{
+                height: 95%;
+            }
+            .house2 img{
+                height: 95%
+            }
+            .golf3 img{
+                height: 95%;
+            }
+            .gallery video{
+                transition: 2s;
+                padding: 15px;
+                width: 110%;
+                height: 100%;
+            }
+            .gallery video:hover{
+                transform: scale(1.1);
+                filter: grayscale(100%)
+            }
+          footer{
+            color: white;
+            font-size: 40px;
+            text-decoration: none;
+            background: #111;
+            height: 100px;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+          }
+          .fa-brands{
+            color: white;
+            text-decoration: none;
+          }
+          .fa-brands:hover{
+            animation: pulse 1s infinite;
+            transition: 0.6s;
+              color: pink;
+              text-decoration: none;
+          }
+          @keyframes pulse{
+         0%{
+            scale: 1;
+         }
+         65%{
+            scale: 0.9;
+         }
+         100%{
+            scale: 1;
+         }
+      }
+      
+      
+        </style>
+        
+    </head>
+    <body>
+        </div>
+       </a>
+        <div class="section">
+            <h1>IMAGES</h1>
+    
+            <div class="video-container">
+            <video autoplay loop muted>
+                <source src="snippet.mp4" type="video/mp4">
+            </video>
+            </div>
+
+        </div>
+       
+        <div class="navbar">
+            <a href="index.html">Home</a>
+            <li style="float:right"><a class="about" href="About.html">About</a>
+            </div>
+            
+
+        <div class="gallery">
+            <a class="house" href="house.jpg" data-lightbox="gallery"><img src="house.jpg"></a>
+            <a class="house2" href="House2.JPG" data-lightbox="gallery"><img src="house2.jpg"></a>
+            <a class="house3" href="house3.jpg" data-lightbox="gallery"><img src="house3.jpg"></a>
+            <a class="house4" href="house4.jpg" data-lightbox="gallery"><img src="house4.jpg"></a>
+            <a class="outhouse1" href="outhouse1.JPG" data-lightbox="gallery"><img src="outhouse1.JPG"></a>
+            <a class="outhouse2" href="outhouse2.JPG" data-lightbox="gallery"><img src="outhouse2.JPG"></a>
+            <a class="outhouse3" href="outhouse3.JPG" data-lightbox="gallery"><img src="outhouse3.JPG"></a>
+            <a class="outhouse4" href="outhouse4.JPG" data-lightbox="gallery"><img src="outhouse4.JPG"></a>
+            <a class="inhouse1" href="inhouse1.JPG" data-lightbox="gallery"><img src="inhouse1.jpg"></a>
+            <a class="garage1" href="garage1.JPG" data-lightbox="gallery"><img src="garage1.jpg"></a>
+            <a class="garage2" href="garage2.JPG" data-lightbox="gallery"><img src="garage2.jpg"></a>
+            <a class="garage3" href="garage3.jpg" data-lightbox="gallery"><img src="garage3.jpg"></a>
+            <a class="mario" href="Mario.jpg" data-lightbox="gallery"><img src="mario.jpg"></a>
+            <a class="mariograss" href="mariograss.jpg" data-lightbox="gallery"><img src="mariograss.jpg"></a>
+            <a class="mariograss2" href="mariograss2.jpg" data-lightbox="gallery"><img src="mariograss2.jpg"></a>
+            <a class="mariogarage" href="mariogarage.jpg" data-lightbox="gallery"><img src="mariogarage.jpg"></a>
+            <a class="golf1" href="golf1.jpg" data-lightbox="gallery"><img src="golf1.jpg"></a>
+            <a class="golf2" href="golf2.jpg" data-lightbox="gallery"><img src="golf2.jpg"></a>
+            <a class="golf3" href="golf3.jpg" data-lightbox="gallery"><img src="golf3.jpg"></a>
+            <a class="golf4" href="golf4.jpg" data-lightbox="gallery"><img src="golf4.jpg"></a>
+            <a class="patekswag" href="ツ.mp4"><video autoplay loop muted><source src="ツ.mp4" type="video/mp4"></video></a>
+            <a class="patekswag2" href="ツ2.mp4"><video autoplay loop muted><source src=" ツ2.mp4" type="video/mp4"></video></a>
+            <a class="patekswag3" href="ツ3.mp4"><video autoplay loop muted><source src="ツ3.mp4" type="video/mp4"></video></a>
+            <a class="patekswag4" href="ツ4.mp4"><video autoplay loop muted><source src="ツ4.mp4" type="video/mp4"></video></a>
+        </div>
+        <footer>        
+            <a href="https://www.instagram.com/collin.xander/?hl=en" target="_blank" i class="fa-brands fa-instagram"></i></a>
+          </footer>
+        </div>
+    </body>
+</html>
