@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PHOTOS - COLLIN XANDER</title>
+    <link rel="icon" href="picture1.JPG" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="lightbox.min.css">
+    <script type="text/javascript" src="lightbox-plus-jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/71405c46cc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            background: rgba(39, 37, 37, 0.87);
+            background-image: linear-gradient(to right, black, rgb(61, 61, 61));
+        }
+
+        .section {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .section h1 {
+            text-align: center;
+            font-size: 3rem;
+            font-style: italic;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-shadow: 2px 2px 5px red;
+            padding: 20px;
+            margin: 15px;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: black;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar a:hover {
+            color: black;
+            background-color: rgb(255, 255, 255);
+            transform: scale(1.1);
+        }
+
+        .navbar a {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .navbar a i {
+            margin-right: 5px; /* Add some space between the icon and text */
+        }
+
+        .gallery {
+            margin: 20pt;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 1.5rem;
+        }
+
+        .gallery img {
+            padding: 10px;
+            object-fit: cover;
+            transition: 0.3s;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+            filter: grayscale(100%);
+        }
+
+        @keyframes pulse {
+            0% {
+                scale: 1;
+            }
+
+            65% {
+                scale: 0.9;
+            }
+
+            100% {
+                scale: 1;
+            }
+        }
+
+        /* Media Queries for responsiveness */
+        @media only screen and (max-width: 768px) {
+            .section h1 {
+                font-size: 2rem;
+            }
+            
+            .navbar a {
+                font-size: 18px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .section h1 {
+                font-size: 1.5rem;
+            }
+            
+            .navbar a {
+                font-size: 16px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1>PHOTOS</h1>
+        <div class="video-container">
+            <video autoplay muted loop playsinline preload="none" id="video-container">
+                <source src="goodvideo.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    
+    <div class="navbar">
+        <a href="./">Home</a>
+        <a href="./videos.html"><i class="fa fa-video-camera" aria-hidden="true"></i> Videos</a>
+        <a href="./About.html"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a>
+    </div>
+    
+    <div class="gallery">
+        <a class="RUNCLUB1" href="RUNCLUB1.jpg" data-lightbox="gallery"><img src="RUNCLUB1.jpg"></a>
+        <a class="RUNCLUB2" href="RUNCLUB2.jpg" data-lightbox="gallery"><img src="RUNCLUB2.jpg"></a>
+        <a class="RUNCLUB3" href="RUNCLUB3.jpg" data-lightbox="gallery"><img src="RUNCLUB3.jpg"></a>
+        <a class="RUNCLUB4" href="RUNCLUB4.jpg" data-lightbox="gallery"><img src="RUNCLUB4.jpg"></a>
+        <a class="lj" href="Lj.jpg" data-lightbox="gallery"><img src="Lj.jpg"></a>
+        <a class="funso" href="funso.jpg" data-lightbox="gallery"><img src="funso.jpg"></a>
+        <a class="mise" href="mise.jpg" data-lightbox="gallery"><img src="mise.jpg"></a>
+        <a class="elijha" href="elijha.jpg" data-lightbox="gallery"><img src="elijha.jpg"></a>
+        <a class="collectives" href="Collectives.jpg" data-lightbox="gallery"><img src="Collectives.jpg"></a>
+        <a class="collectives2" href="Collectives2.jpg" data-lightbox="gallery"><img src="Collectives2.jpg"></a>
+        <a class="collectives3" href="Collectives3.jpg" data-lightbox="gallery"><img src="Collectives3.jpg"></a>
+        <a class="collectives4" href="Collectives4.jpg" data-lightbox="gallery"><img src="Collectives4.jpg"></a>
+        <a class="joanna1" href="joanna1.jpg" data-lightbox="gallery"><img src="joanna1.jpg"></a>
+        <a class="Joanna2" href="joanna2.jpg" data-lightbox="gallery"><img src="joanna2.jpg"></a>
+        <a class="Joanna3" href="joanna3.jpg" data-lightbox="gallery"><img src="joanna3.jpg"></a>
+        <a class="Joanna4" href="joanna4.jpg" data-lightbox="gallery"><img src="joanna4.jpg"></a>
+        <a class="Party1" href="Party1.jpg" data-lightbox="gallery"><img src="Party1.jpg"></a>
+        <a class="Party4" href="Party2.jpg" data-lightbox="gallery"><img src="Party2.jpg"></a>
+        <a class="Party4" href="Party3.jpg" data-lightbox="gallery"><img src="Party3.jpg"></a>
+        <a class="Party4" href="Party4.jpg" data-lightbox="gallery"><img src="Party4.jpg"></a>
+        <a class="tony1" href="Tony1.JPG" data-lightbox="gallery"><img src="Tony1.JPG"></a>
+        <a class="tony2" href="Tony2.JPG" data-lightbox="gallery"><img src="Tony2.JPG"></a>
+        <a class="tony3" href="Tony3.JPG" data-lightbox="gallery"><img src="Tony3.JPG"></a>
+        <a class="tony4" href="Tony4.JPG" data-lightbox="gallery"><img src="Tony4.JPG"></a>
+        <a class="josh1" href="josh1.JPG" data-lightbox="gallery"><img src="josh1.JPG"></a>
+        <a class="josh2" href="josh2.JPG" data-lightbox="gallery"><img src="josh2.JPG"></a>
+        <a class="josh3" href="josh3.JPG" data-lightbox="gallery"><img src="josh3.JPG"></a>
+        <a class="josh4" href="josh4.JPG" data-lightbox="gallery"><img src="josh4.JPG"></a>
+        <a class="jpaautogif" href="jpaauto.gif" data-lightbox="gallery"><img src="jpaauto.gif"></a>
+        <a class="jpaauto" href="jpaauto.jpg" data-lightbox="gallery"><img src="jpaauto.jpg"></a>
+        <a class="jpaauto2" href="jpaauto2.jpg" data-lightbox="gallery"><img src="jpaauto2.jpg"></a>
+        <a class="jpaauto3" href="jpaauto3.jpg" data-lightbox="gallery"><img src="jpaauto3.jpg"></a>
+        <a class="kerry1" href="kerry1.JPG" data-lightbox="gallery"><img src="kerry1.JPG"></a>
+        <a class="kerry2" href="kerry2.JPG" data-lightbox="gallery"><img src="kerry2.JPG"></a>
+        <a class="kerry3" href="kerry3.JPG" data-lightbox="gallery"><img src="kerry3.JPG"></a>
+        <a class="kerry4" href="kerry4.JPG" data-lightbox="gallery"><img src="kerry4.JPG"></a>
+        <a class="gang1" href="gang1.JPG" data-lightbox="gallery"><img src="gang1.JPG"></a>
+        <a class="gang2" href="gang2.JPG" data-lightbox="gallery"><img src="gang2.JPG"></a>
+        <a class="gang3" href="gang3.JPG" data-lightbox="gallery"><img src="gang3.JPG"></a>
+        <a class="gang4" href="gang4.JPG" data-lightbox="gallery"><img src="gang4.JPG"></a>
+        <a class="preston1" href="preston1.JPG" data-lightbox="gallery"><img src="preston1.JPG"></a>
+        <a class="pres2" href="pres2.JPG" data-lightbox="gallery"><img src="pres2.JPG"></a>
+        <a class="preston3" href="preston3.JPG" data-lightbox="gallery"><img src="preston3.JPG"></a>
+        <a class="preston4" href="preston4.JPG" data-lightbox="gallery"><img src="preston4.JPG"></a>
+        <a class="jaq&dre1" href="JAQ&DRE1.JPG" data-lightbox="gallery"><img src="JAQ&DRE1.JPG"></a>
+        <a class="jaq&dre2" href="JAQ&DRE2.JPG" data-lightbox="gallery"><img src="JAQ&DRE2.JPG"></a>
+        <a class="jaq&dre3" href="JAQ&DRE3.JPG" data-lightbox="gallery"><img src="JAQ&DRE3.JPG"></a>
+        <a class="jaq&dre4" href="JAQ&DRE4.JPG" data-lightbox="gallery"><img src="JAQ&DRE4.JPG"></a>
+        <a class="keith1" href="keith1.JPG" data-lightbox="gallery"><img src="keith1.JPG"></a>
+        <a class="keith2" href="keith2.JPG" data-lightbox="gallery"><img src="keith2.JPG"></a>
+        <a class="keith3" href="keith3.JPG" data-lightbox="gallery"><img src="keith3.JPG"></a>
+        <a class="keith4" href="keith4.JPG" data-lightbox="gallery"><img src="keith4.JPG"></a>
+        <a class="diego1" href="Diego1.JPG" data-lightbox="gallery"><img src="Diego1.JPG"></a>
+        <a class="diego2" href="Diego2.JPG" data-lightbox="gallery"><img src="Diego2.JPG"></a>
+        <a class="diego3" href="Diego3.JPG" data-lightbox="gallery"><img src="Diego3.JPG"></a>
+        <a class="diego4" href="Diego4.JPG" data-lightbox="gallery"><img src="Diego4.JPG"></a>
+        <a class="marioworkout1" href="marioworkout1.jpg" data-lightbox="gallery"><img src="marioworkout1.jpg"></a>
+        <a class="marioworkout2" href="marioworkout2.jpg" data-lightbox="gallery"><img src="marioworkout2.jpg"></a>
+        <a class="marioworkout3" href="marioworkout3.jpg" data-lightbox="gallery"><img src="marioworkout3.jpg"></a>
+        <a class="marioworkout4" href="marioworkout4.jpg" data-lightbox="gallery"><img src="marioworkout4.jpg"></a>
+        <a class="jay1" href="jay1.JPG" data-lightbox="gallery"><img src="jay1.JPG"></a>
+        <a class="jay2" href="jay2.JPG" data-lightbox="gallery"><img src="jay2.JPG"></a>
+        <a class="jay3" href="jay3.JPG" data-lightbox="gallery"><img src="jay3.JPG"></a>
+        <a class="jay4" href="jay4.JPG" data-lightbox="gallery"><img src="jay4.JPG"></a>
+        <a class="dante1" href="Dante1.JPG" data-lightbox="gallery"><img src="Dante1.JPG"></a>
+        <a class="dante2" href="Dante2.JPG" data-lightbox="gallery"><img src="Dante2.JPG"></a>
+        <a class="dante3" href="Dante3.JPG" data-lightbox="gallery"><img src="Dante3.JPG"></a>
+        <a class="dante4" href="Dante4.JPG" data-lightbox="gallery"><img src="Dante4.JPG"></a>
+        <a class="tre1" href="tre1.JPG" data-lightbox="gallery"><img src="tre1.JPG"></a>
+        <a class="tre2" href="tre2.JPG" data-lightbox="gallery"><img src="tre2.JPG"></a>
+        <a class="tre3" href="tre3.JPG" data-lightbox="gallery"><img src="tre3.JPG"></a>
+        <a class="tre4" href="tre4.JPG" data-lightbox="gallery"><img src="tre4.JPG"></a>
+    </div>
+
+</body>
+</html>
+
