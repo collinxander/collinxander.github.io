@@ -54,17 +54,16 @@
         }
 
         .navbar {
-            width: 100%;
-            background-color: black;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
+            background-color: #000000;
+            text-align: center;
+            padding: 10px 0;
         }
 
         .navbar a:hover {
-            color: black;
-            background-color: rgb(255, 255, 255);
             transform: scale(1.1);
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            animation: pulse 0.5s infinite alternate;
         }
 
         .navbar a {
@@ -76,9 +75,29 @@
             border-radius: 5px;
             transition: background-color 0.3s, transform 0.3s;
         }
-
+        
         .navbar a i {
             margin-right: 5px; /* Add some space between the icon and text */
+        }
+
+        .book-now {
+            background-color: #ff0000; /* Red background */
+            color: white; /* White text */
+            padding: 10px 20px; /* Some padding */
+            text-align: center; /* Centered text */
+            text-decoration: none; /* No underline */
+            display: inline-block; /* Make the link a block element */
+            font-size: 16px; /* Increase font size */
+            margin: 4px 2px; /* Some margin */
+            cursor: pointer; /* Pointer/hand icon on hover */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+        }
+
+        .book-now:hover {
+            background-color: white; /* White background on hover */
+            color: black; /* Black text on hover */
+            transform: scale(1.1); /* Slightly larger on hover */
         }
 
         .gallery {
@@ -157,8 +176,9 @@
     
     <div class="navbar">
         <a href="./">Home</a>
-        <a href="./videos.html"></i> Videos</a>
-        <a href="./About.html"></i> About</a>
+        <a href="./videos.html">Videos</a>
+        <a href="./about.html">About</a>
+        <a href="mailto:collinxander1@gmail.com?subject=Booking%20Request&body=Hi%20Collin,%0D%0A%0D%0AI%20would%20like%20to%20book%20a%20photo%20shoot%20from%20you.%0A%0D%0AThank%20you!%0D%0A" class="book-now">Book Now</a>
     </div>
     
     <div class="gallery">
@@ -196,6 +216,3 @@
     </div>
 </body>
 </html>
-
-
-
