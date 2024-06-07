@@ -1,1 +1,1 @@
-# collinxander.github.io
+# collinxander.com
