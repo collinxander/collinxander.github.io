@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="icon" href="profpic.JPG" type="image/x-icon">
+    <link rel="icon" href="picture1.JPG" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COLLIN XANDER</title>
@@ -59,6 +59,11 @@
             justify-content: center;
             gap: 20px;
             margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .button-container.prices {
+            margin-top: 40px;
         }
 
         button {
@@ -79,7 +84,20 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
-        
+
+        .prices button {
+            color: red;
+            border: 2px solid white; /* Adjusted border color */
+        }
+
+        .prices button:hover {
+            color: lime;
+            background: black;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: lime; /* Change border color on hover */
+        }
+
         .luckas {
             position: absolute;
             top: 15px;
@@ -87,11 +105,11 @@
             font-size: 27px;
             text-decoration: none;
             transition: 0.2s ease;
-            color:rgb(116, 116, 255);
+            color: rgb(116, 116, 255);
         }
 
         .luckas:hover {
-            color:  red;
+            color: red;
             transition: 0.6s;
         }
 
@@ -157,6 +175,10 @@
             .button-container {
                 gap: 10px;
             }
+
+            .button-container.prices {
+                margin-top: 30px;
+            }
         }
 
         @media screen and (max-width: 480px) {
@@ -187,6 +209,10 @@
                 align-items: center;
                 gap: 10px;
             }
+
+            .button-container.prices {
+                margin-top: 20px;
+            }
         }
 
         @keyframes glow {
@@ -214,6 +240,11 @@
             </form>
             <form action="./About">
                 <button id="buttonAbout">ABOUT</button>
+            </form>
+        </div>
+        <div class="button-container prices">
+            <form action="./Prices">
+                <button id="buttonPrices">PRICES</button>
             </form>
         </div>
     </div>
