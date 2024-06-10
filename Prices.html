@@ -79,6 +79,25 @@
             margin-top: 20px;
         }
 
+        .book-now {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #000000;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-now:hover {
+            background-color: rgb(46, 120, 0);
+            transform: translateY(-3px);
+        }
+
         @media (max-width: 768px) {
             .price-list h1 {
                 font-size: 20px;
@@ -94,6 +113,11 @@
 
             .deposit-note {
                 font-size: 14px;
+            }
+
+            .book-now {
+                font-size: 16px;
+                padding: 10px 20px;
             }
         }
 
@@ -120,6 +144,11 @@
 
             .deposit-note {
                 font-size: 12px;
+            }
+
+            .book-now {
+                font-size: 14px;
+                padding: 8px 16px;
             }
         }
     </style>
@@ -155,6 +184,8 @@
         <div class="deposit-note">
             All packages require a 50% deposit of the total to confirm your appointment.
         </div>
+        
+        <a href="mailto:collinxander1@gmail.com" class="book-now">Book Now</a>
     </div>
 </body>
 </html>
