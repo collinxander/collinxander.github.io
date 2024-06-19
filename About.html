@@ -269,7 +269,7 @@
     </video>
 
     <div class="audio-controls">
-        <button id="play-pause">Pause</button>
+        <button id="play-pause">Pause Audio</button>
         <input type="range" id="volume-control" min="0" max="1" step="0.01" value="1">
     </div>
 
@@ -287,44 +287,31 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const audio = document.getElementById('background-audio');
-            const video = document.getElementById('background-video');
             const playPauseButton = document.getElementById('play-pause');
             const volumeControl = document.getElementById('volume-control');
 
-            // Restore audio and video states on load
+            // Restore audio state on load
             const savedAudioTime = localStorage.getItem('audioTime');
-            const savedVideoTime = localStorage.getItem('videoTime');
             const audioPaused = localStorage.getItem('audioPaused') === 'true';
-            const videoPaused = localStorage.getItem('videoPaused') === 'true';
 
             if (savedAudioTime !== null) {
                 audio.currentTime = parseFloat(savedAudioTime);
             }
-            if (savedVideoTime !== null) {
-                video.currentTime = parseFloat(savedVideoTime);
-            }
             if (audioPaused) {
                 audio.pause();
-                playPauseButton.textContent = 'Play';
+                playPauseButton.textContent = 'Play Audio';
             } else {
                 audio.play();
-                playPauseButton.textContent = 'Pause';
-            }
-            if (videoPaused) {
-                video.pause();
-            } else {
-                video.play();
+                playPauseButton.textContent = 'Pause Audio';
             }
 
             playPauseButton.addEventListener('click', () => {
                 if (audio.paused) {
                     audio.play();
-                    video.play();
-                    playPauseButton.textContent = 'Pause';
+                    playPauseButton.textContent = 'Pause Audio';
                 } else {
                     audio.pause();
-                    video.pause();
-                    playPauseButton.textContent = 'Play';
+                    playPauseButton.textContent = 'Play Audio';
                 }
             });
 
@@ -332,16 +319,12 @@
                 audio.volume = e.target.value;
             });
 
-            // Save audio and video states before leaving the page
+            // Save audio state before leaving the page
             window.addEventListener('beforeunload', () => {
                 localStorage.setItem('audioTime', audio.currentTime);
-                localStorage.setItem('videoTime', video.currentTime);
                 localStorage.setItem('audioPaused', audio.paused);
-                localStorage.setItem('videoPaused', video.paused);
             });
         });
     </script>
 </body>
 </html>
-
-
