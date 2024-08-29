@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <link rel="icon" href="profpic.JPG" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COLLIN XANDER</title>
     <style>
+        @font-face {
+            font-family: myFont;
+            src: url(video.ttf);
+        }
         * {
             box-sizing: border-box;
             padding: 0;
@@ -17,24 +21,34 @@
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
 
-        .icon {
-            overflow: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 12px;
-            text-decoration: none;
-            font-style: italic;
-            transition: 0.2s ease;
-            color: red;
-            font-size: 27px;
-            animation: glow 1s ease-in-out infinite alternate;
-        }
+/* Add this CSS to your existing styles */
 
-        .icon:hover {
-            color: lime;
-            transition: 0.6s;
-        }
+@keyframes rotate {
+    0% { transform: perspective(500px) rotateY(0deg); }
+    100% { transform: perspective(500px) rotateY(360deg); }
+}
+
+.icon {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 12px;
+    text-decoration: none;
+    font-style: italic;
+    color: red;
+    font-size: 27px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.2);
+    transform: perspective(500px) rotateX(15deg);
+    animation: glow 1s ease-in-out infinite alternate, rotate 10s linear infinite;
+}
+
+.icon:hover {
+    color: lime;
+    transform: perspective(500px) rotateX(15deg) rotateY(10deg);
+    transition: 0.6s;
+}
+
 
         .container {
             height: 100vh;
@@ -67,6 +81,7 @@
         }
 
         button {
+            font-family: myFont;
             color: white;
             border-radius: 50px;
             background: none;
@@ -75,41 +90,42 @@
             font-weight: bold;
             border: 2px solid white;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
         }
 
         button:hover {
             color: lime;
             background: black;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 -10px 20px rgba(255, 255, 255, 0.3);
         }
 
         .prices button {
             color: red;
-            border: 2px solid white; /* Adjusted border color */
+            border: 2px solid white;
         }
 
         .prices button:hover {
             color: lime;
-            background: black;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-            border-color: lime; /* Change border color on hover */
+            border-color: lime;
         }
 
         .luckas {
             position: absolute;
             top: 15px;
-            right: 20px; 
+            right: 20px;
             font-size: 27px;
             text-decoration: none;
             transition: 0.2s ease;
             color: rgb(116, 116, 255);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.2);
+            transform: perspective(500px) rotateX(15deg);
         }
 
         .luckas:hover {
             color: red;
+            transform: perspective(500px) rotateX(15deg) rotateY(10deg);
             transition: 0.6s;
         }
 
@@ -141,13 +157,14 @@
             border-radius: 10px;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
         }
 
         .audio-controls button:hover, .audio-controls input:hover {
             color: lime;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 -10px 20px rgba(255, 255, 255, 0.3);
         }
 
         @media screen and (max-width: 820px) {
@@ -310,3 +327,4 @@
     </script>
 </body>
 </html>
+
