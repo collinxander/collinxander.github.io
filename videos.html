@@ -6,6 +6,10 @@
     <link rel="icon" href="profpic.JPG" type="image/x-icon">
     <title>VIDEOS - COLLIN XANDER</title>
     <style>
+        @font-face {
+            font-family: myFont;
+            src: url(video.ttf);
+        }
         /* Resetting default margin and padding */
         * {
             margin: 0;
@@ -20,6 +24,7 @@
             color: #fff;
             background-image: linear-gradient(to right, #000, #333);
             line-height: 1.6;
+            overflow: hidden;
         }
         
         /* Styling the header */
@@ -111,6 +116,7 @@
         
         /* Styling the individual video items */
         .video {
+            perspective: 1000px;
             width: calc(25% - 20px);
             margin: 10px;
             border-radius: 10px;
@@ -126,6 +132,29 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
         }
         
+        .video-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .video:hover .video-inner {
+            transform: rotateY(180deg);
+        }
+
+        .video-front, .video-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .video-back {
+            transform: rotateY(180deg);
+        }
+
         .video img {
             width: 100%;
             height: 100%;
@@ -183,6 +212,15 @@
             left: 0;
             width: 100%;
             height: 100%;
+        }
+
+        #3d-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
 
         video {
@@ -297,7 +335,8 @@
        
         @keyframes fadeIn {
             from { opacity: 0; }
-            to { opacity: 1; }
+            to { opacity: 
+                to { opacity: 1; }
         }
 
         @keyframes zoomIn {
@@ -322,57 +361,113 @@
             <li><a href="./Photos">Photos</a></li>
             <li><a href="./About">About</a></li>
             <li><a href="mailto:collinxander1@gmail.com?subject=Booking%20Request&body=Hi%20Collin,%0D%0A%0D%0AI%20would%20like%20to%20book%20a%20video%20shoot%20from%20you.%0D%0A%0D%0AThank%20you!%0D%0A" class="book-now">Book Now</a></li>
-
         </ul>
     </nav>
+    
+    <!-- 3D Canvas -->
+    <canvas id="3d-canvas"></canvas>
+    
     <div class="container">
-        <div class ="video" data-video="mark.MP4">
-            <img src="markpic.jpg" alt="MARK'S VIDEO">
-                <div class="overlay">
-            <h3>MARK'S VIDEO</h3>
+        <div class="video" data-video="mark.MP4">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="markpic.jpg" alt="MARK'S VIDEO">
+                </div>
+                <div class="video-back">
+                    <img src="markpic.jpg" alt="MARK'S VIDEO">
+                </div>
+            </div>
+            <div class="overlay">
+                <h3>MARK'S VIDEO</h3>
+            </div>
         </div>
-    </div>
-    <div class="container">
         <div class="video" data-video="820.MP4">
-            <img src="signals.jpg" alt="SIGNALS">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="signals.jpg" alt="SIGNALS">
+                </div>
+                <div class="video-back">
+                    <img src="signals.jpg" alt="SIGNALS">
+                </div>
+            </div>
             <div class="overlay">
                 <h3>SIGNALS</h3>
             </div>
         </div>
-      <div class="container">
         <div class="video" data-video="LAMBO3.MP4">
-            <img src="lambo.jpg" alt="TAYLOR'S LAMBORGHINI">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="lambo.jpg" alt="TAYLOR'S LAMBORGHINI">
+                </div>
+                <div class="video-back">
+                    <img src="lambo.jpg" alt="TAYLOR'S LAMBORGHINI">
+                </div>
+            </div>
             <div class="overlay">
                 <h3>TAYLOR'S LAMBORGHINI</h3>
             </div>
         </div>
-    <div class="container">
         <div class="video" data-video="chasegraduation.MP4">
-            <img src="chasegraduation.jpg" alt="CHASE'S GRADUATION VIDEO">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="chasegraduation.jpg" alt="CHASE'S GRADUATION VIDEO">
+                </div>
+                <div class="video-back">
+                    <img src="chasegraduation.jpg" alt="CHASE'S GRADUATION VIDEO">
+                </div>
+            </div>
             <div class="overlay">
                 <h3>CHASE'S GRADUATION VIDEO</h3>
             </div>
         </div>
         <div class="video" data-video="atlanta.MP4">
-            <img src="atlanta.jpg" alt="MIDTOWN ATLANTA">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="atlanta.jpg" alt="MIDTOWN ATLANTA">
+                </div>
+                <div class="video-back">
+                    <img src="atlanta.jpg" alt="MIDTOWN ATLANTA">
+                </div>
+            </div>
             <div class="overlay">
                 <h3>MIDTOWN ATLANTA</h3>
             </div>
         </div>
         <div class="video" data-video="runclub.MP4">
-            <img src="runclub.jpg" alt="ROSADO STUDIOS RUN CLUB">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="runclub.jpg" alt="ROSADO STUDIOS RUN CLUB">
+                </div>
+                <div class="video-back">
+                    <img src="runclub.jpg" alt="ROSADO STUDIOS RUN CLUB">
+                </div>
+            </div>
             <div class="overlay">
                 <h3>ROSADO STUDIOS RUN CLUB</h3>
             </div>
         </div>
         <div class="video" data-video="cameron.MP4">
-            <img src="cameron.jpg" alt="CAMERON'S BIRTHDAY VIDEO">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="cameron.jpg" alt="CAMERON'S BIRTHDAY VIDEO">
+                </div>
+                <div class="video-back">
+                    <img src="cameron.jpg" alt="CAMERON'S BIRTHDAY VIDEO">
+                </div>
+            </div>
             <div class="overlay">
                 <h3>CAMERON'S BIRTHDAY VIDEO</h3>
             </div>
         </div>
         <div class="video" data-video="Yeah.MP4">
-            <img src="yeah.JPG" alt="ADVENTURE">
+            <div class="video-inner">
+                <div class="video-front">
+                    <img src="yeah.JPG" alt="ADVENTURE">
+                </div>
+                <div class="video-back">
+                    <img src="yeah.JPG" alt="ADVENTURE">
+                </div>
+            </div>
             <div class="overlay">
                 <h3>ADVENTURE</h3>
             </div>
@@ -389,6 +484,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById("myModal");
@@ -443,7 +539,38 @@
                     closeModal();
                 }
             };
+
+            // 3D Canvas Animation
+            const canvas = document.getElementById('3d-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
         });
     </script>
 </body>
 </html>
+
