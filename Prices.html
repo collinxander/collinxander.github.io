@@ -85,17 +85,23 @@
             margin-top: 20px;
             font-size: 18px;
             color: white;
-            background-color: #000000;
+            background-color: #ff1e1e;
             border: none;
-            border-radius: 50px;
+            border-radius: 12px;
             text-decoration: none;
-            transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 5px 0px #b30000, 0px 8px 15px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         .book-now:hover {
-            background-color: rgb(46, 120, 0);
+            background-color: #ff4747;
             transform: translateY(-3px);
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .book-now:active {
+            transform: translateY(2px);
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.4);
         }
 
         .fallback-note {
@@ -190,11 +196,8 @@
             All packages require a 10% non-refundable deposit of the total to confirm your appointment.
         </div>
         
-        <a href="mailto:collinxander1@gmail.com" class="book-now">Book Now</a>
+        <a href="./Booking" class="book-now">BOOK</a>
         
-        <div class="fallback-note">
-            If the button does not work, please email us directly at collinxander1@gmail.com
-        </div>
     </div>
 </body>
 </html>
