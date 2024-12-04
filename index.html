@@ -10,6 +10,7 @@
             font-family: myFont;
             src: url(video.ttf);
         }
+
         * {
             box-sizing: border-box;
             padding: 0;
@@ -21,34 +22,31 @@
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
 
-/* Add this CSS to your existing styles */
+        @keyframes rotate {
+            0% { transform: perspective(500px) rotateY(0deg); }
+            100% { transform: perspective(500px) rotateY(360deg); }
+        }
 
-@keyframes rotate {
-    0% { transform: perspective(500px) rotateY(0deg); }
-    100% { transform: perspective(500px) rotateY(360deg); }
-}
+        .icon {
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 12px;
+            text-decoration: none;
+            font-style: italic;
+            color: red;
+            font-size: 27px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.2);
+            transform: perspective(500px) rotateX(15deg);
+            animation: glow 1s ease-in-out infinite alternate, rotate 10s linear infinite;
+        }
 
-.icon {
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 12px;
-    text-decoration: none;
-    font-style: italic;
-    color: red;
-    font-size: 27px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.2);
-    transform: perspective(500px) rotateX(15deg);
-    animation: glow 1s ease-in-out infinite alternate, rotate 10s linear infinite;
-}
-
-.icon:hover {
-    color: lime;
-    transform: perspective(500px) rotateX(15deg) rotateY(10deg);
-    transition: 0.6s;
-}
-
+        .icon:hover {
+            color: lime;
+            transform: perspective(500px) rotateX(15deg) rotateY(10deg);
+            transition: 0.6s;
+        }
 
         .container {
             height: 100vh;
@@ -137,36 +135,6 @@
             right: 182px;
         }
 
-        .audio-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-        }
-
-        .audio-controls button, .audio-controls input {
-            background: none;
-            border: 2px solid white;
-            color: white;
-            font-size: 18px;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .audio-controls button:hover, .audio-controls input:hover {
-            color: lime;
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 -10px 20px rgba(255, 255, 255, 0.3);
-        }
-
         @media screen and (max-width: 820px) {
             .icon {
                 font-size: 20px;
@@ -237,10 +205,29 @@
             100% { text-shadow: 0 0 20px red; }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .image-button {
+            display: inline-block;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+        .snake-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%; /* Centers horizontally */
+    transform: translateX(-50%); /* Adjusts the center */
+    width: 100px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.snake-button:hover {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 10px 25px rgba(0, 255, 0, 0.5);
+}
+
+
     </style>
 </head>
 <body>
@@ -258,6 +245,9 @@
             <form action="./About">
                 <button id="buttonAbout">ABOUT</button>
             </form>
+            <a href="./snakegame" class="image-button">
+                <img src="snake.webp" alt="Snake Game" class="snake-button">
+            </a>
         </div>
         <div class="button-container prices">
             <form action="./Prices">
@@ -268,55 +258,6 @@
     <video autoplay muted loop playsinline preload="none">
         <source src="copy.MP4" type="video/mp4">
     </video>
-
-    <script>
-        // Get audio element and play/pause button
-        const audio = document.getElementById('background-audio');
-        const playPauseButton = document.getElementById('play-pause-audio');
-        const volumeControl = document.getElementById('volume-control');
-
-        // Function to play or pause audio
-        const toggleAudio = () => {
-            if (audio.paused) {
-                audio.play();
-                playPauseButton.textContent = 'Pause';
-            } else {
-                audio.pause();
-                playPauseButton.textContent = 'Play';
-            }
-        };
-
-        // Event listener for play/pause button
-        playPauseButton.addEventListener('click', toggleAudio);
-
-        // Event listener for volume control
-        volumeControl.addEventListener('input', (e) => {
-            audio.volume = e.target.value;
-        });
-
-        // Save audio state before leaving the page
-        window.addEventListener('beforeunload', () => {
-            localStorage.setItem('audioTime', audio.currentTime);
-            localStorage.setItem('audioPaused', audio.paused);
-        });
-
-        // Retrieve and set audio state on page load
-        window.addEventListener('load', () => {
-            const savedTime = localStorage.getItem('audioTime');
-            const isPaused = localStorage.getItem('audioPaused') === 'true';
-
-            if (savedTime && !isNaN(savedTime)) {
-                audio.currentTime = parseFloat(savedTime);
-            }
-
-            if (!isPaused) {
-                audio.play();
-                playPauseButton.textContent = 'Pause';
-            } else {
-                playPauseButton.textContent = 'Play';
-            }
-        });
-    </script>
 </body>
 </html>
 
