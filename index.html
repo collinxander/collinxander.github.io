@@ -209,32 +209,32 @@
             display: inline-block;
             text-decoration: none;
             transition: transform 0.3s, box-shadow 0.3s;
-        }
-    .snake-button {
+   .snake-button {
     position: absolute;
     bottom: 20px;
     left: 50%; /* Centers horizontally */
     transform: translateX(-50%) translateZ(0);
-    width: 120px; /* Slightly larger for emphasis */
+    width: 100px; /* Smaller width */
     height: auto;
-    border-radius: 15px;
-    background: linear-gradient(145deg, #1e1e1e, #2e2e2e); /* Adds a gradient for 3D depth */
+    border-radius: 12px;
+    background: linear-gradient(145deg, #222222, #3a3a3a); /* Softer gradient for clarity */
     box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.5), /* Outer shadow */
-        inset 0 -3px 6px rgba(0, 0, 0, 0.6), /* Inner shadow for depth */
-        inset 0 3px 6px rgba(255, 255, 255, 0.1); /* Highlight effect */
+        0 4px 10px rgba(0, 0, 0, 0.4), /* Outer shadow */
+        inset 0 -2px 5px rgba(0, 0, 0, 0.5), /* Subtle inner shadow */
+        inset 0 2px 5px rgba(255, 255, 255, 0.1); /* Highlight effect */
     transition: transform 0.3s, box-shadow 0.3s;
-    border: 2px solid #2e2e2e; /* Adds a border for separation */
+    border: 1px solid #3a3a3a; /* Thinner border for clarity */
 }
 
 .snake-button:hover {
-    transform: translateX(-50%) translateZ(10px) scale(1.1); /* Enhances 3D pop-out effect */
+    transform: translateX(-50%) translateZ(5px) scale(1.05); /* Slight pop-out effect */
     box-shadow: 
-        0 10px 25px rgba(0, 255, 0, 0.5), 
-        inset 0 -5px 10px rgba(0, 0, 0, 0.8), 
-        inset 0 5px 10px rgba(255, 255, 255, 0.2); /* Intensifies shadows */
-    background: linear-gradient(145deg, #2e2e2e, #3e3e3e); /* Adjust gradient on hover */
+        0 6px 15px rgba(0, 255, 0, 0.4), 
+        inset 0 -4px 8px rgba(0, 0, 0, 0.6), 
+        inset 0 3px 6px rgba(255, 255, 255, 0.2); /* Subtle intensification on hover */
+    background: linear-gradient(145deg, #3a3a3a, #4a4a4a); /* Slightly brighter gradient */
 }
+
 
 
     </style>
