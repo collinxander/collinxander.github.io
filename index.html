@@ -210,21 +210,30 @@
             text-decoration: none;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .snake-button {
+    .snake-button {
     position: absolute;
     bottom: 20px;
     left: 50%; /* Centers horizontally */
-    transform: translateX(-50%); /* Adjusts the center */
-    width: 100px;
+    transform: translateX(-50%) translateZ(0);
+    width: 120px; /* Slightly larger for emphasis */
     height: auto;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(145deg, #1e1e1e, #2e2e2e); /* Adds a gradient for 3D depth */
+    box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.5), /* Outer shadow */
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6), /* Inner shadow for depth */
+        inset 0 3px 6px rgba(255, 255, 255, 0.1); /* Highlight effect */
     transition: transform 0.3s, box-shadow 0.3s;
+    border: 2px solid #2e2e2e; /* Adds a border for separation */
 }
 
 .snake-button:hover {
-    transform: translateX(-50%) scale(1.1);
-    box-shadow: 0 10px 25px rgba(0, 255, 0, 0.5);
+    transform: translateX(-50%) translateZ(10px) scale(1.1); /* Enhances 3D pop-out effect */
+    box-shadow: 
+        0 10px 25px rgba(0, 255, 0, 0.5), 
+        inset 0 -5px 10px rgba(0, 0, 0, 0.8), 
+        inset 0 5px 10px rgba(255, 255, 255, 0.2); /* Intensifies shadows */
+    background: linear-gradient(145deg, #2e2e2e, #3e3e3e); /* Adjust gradient on hover */
 }
 
 
