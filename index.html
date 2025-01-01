@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
+    <link rel="icon" href="profpic.JPG" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COLLIN XANDER</title>
@@ -20,6 +20,12 @@
         body {
             background-color: black;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         @keyframes rotate {
@@ -135,6 +141,15 @@
             right: 182px;
         }
 
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+        }
+
         @media screen and (max-width: 820px) {
             .icon {
                 font-size: 20px;
@@ -209,33 +224,33 @@
             display: inline-block;
             text-decoration: none;
             transition: transform 0.3s, box-shadow 0.3s;
-   .snake-button {
-    position: absolute;
-    bottom: 20px;
-    left: 50%; /* Centers horizontally */
-    transform: translateX(-50%) translateZ(0);
-    width: 100px; /* Smaller width */
-    height: auto;
-    border-radius: 12px;
-    background: linear-gradient(145deg, #222222, #3a3a3a); /* Softer gradient for clarity */
-    box-shadow: 
-        0 4px 10px rgba(0, 0, 0, 0.4), /* Outer shadow */
-        inset 0 -2px 5px rgba(0, 0, 0, 0.5), /* Subtle inner shadow */
-        inset 0 2px 5px rgba(255, 255, 255, 0.1); /* Highlight effect */
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid #3a3a3a; /* Thinner border for clarity */
-}
+        }
 
-.snake-button:hover {
-    transform: translateX(-50%) translateZ(5px) scale(1.05); /* Slight pop-out effect */
-    box-shadow: 
-        0 6px 15px rgba(0, 255, 0, 0.4), 
-        inset 0 -4px 8px rgba(0, 0, 0, 0.6), 
-        inset 0 3px 6px rgba(255, 255, 255, 0.2); /* Subtle intensification on hover */
-    background: linear-gradient(145deg, #3a3a3a, #4a4a4a); /* Slightly brighter gradient */
-}
+        .snake-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(0);
+            width: 100px;
+            height: auto;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #222222, #3a3a3a);
+            box-shadow: 
+                0 4px 10px rgba(0, 0, 0, 0.4), 
+                inset 0 -2px 5px rgba(0, 0, 0, 0.5), 
+                inset 0 2px 5px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #3a3a3a;
+        }
 
-
+        .snake-button:hover {
+            transform: translateX(-50%) translateZ(5px) scale(1.05);
+            box-shadow: 
+                0 6px 15px rgba(0, 255, 0, 0.4), 
+                inset 0 -4px 8px rgba(0, 0, 0, 0.6), 
+                inset 0 3px 6px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(145deg, #3a3a3a, #4a4a4a);
+        }
 
     </style>
 </head>
@@ -262,6 +277,8 @@
     <video autoplay muted loop playsinline preload="none">
         <source src="copy.MP4" type="video/mp4">
     </video>
+    <footer>
+        &copy; 2025 Collin Xander
+    </footer>
 </body>
 </html>
-
