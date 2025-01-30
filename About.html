@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT - COLLIN XANDER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+         @font-face {
+            font-family: myFont;
+            src: url(video.ttf);
+        }
+        @font-face {
+            font-family: signatureFont;
+            src: url(signature.ttf);
+        }
+        
+        body { 
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .icon {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px;
+            text-decoration: none;
+            font-style: italic;
+            color: red;
+            font-size: 27px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            animation: glow 1s ease-in-out infinite alternate;
+            z-index: 10;
+            transition: color 0.6s;
+        }
+
+        .icon:hover {
+            color: lime;
+        }
+
+        .content {
+            position: relative;
+            padding: 100px 20px 20px;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        p {
+            font-weight: bolder;
+            font-size: 24px;
+            color: white;
+            font-family: monospace;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .signature {
+            font-family: signatureFont;
+            font-size: 36px;
+            margin-top: 20px;
+            color: #f4e04d;
+            animation: signature-fade-in 3s ease-in-out;
+        }
+
+        .mix-by-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .mix-by {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 18px;
+            color: #ffffff;
+            animation: signature-fade-in 3s ease-in-out;
+        }
+
+        .luckas {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 18px;
+            color: rgb(116, 116, 255);
+            margin-left: 5px;
+            animation: signature-fade-in 3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .luckas:hover {
+            color: rgb(255, 114, 114);
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        @media screen and (max-width: 900px) {
+            video {
+                height: 100%;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            p {
+                font-size: 18px;
+            }
+
+            .icon {
+                font-size: 22px;
+            }
+        }
+
+        @media screen and (max-width: 375px) {
+            p {
+                font-size: 16px;
+            }
+
+            .icon {
+                font-size: 20px;
+            }
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: pink;
+            animation: pulse 1s infinite;
+        }
+
+        .instagram-icon {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png') no-repeat center center / cover;
+            border-radius: 50%;
+            animation: bounce 2s infinite;
+        }
+
+        .audio-controls {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            z-index: 10;
+        }
+
+        .audio-controls button, .audio-controls input {
+            font-family: myFont;
+            background: none;
+            border: 2px solid white;
+            color: white;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .audio-controls button:hover, .audio-controls input:hover {
+            color: lime;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px red; }
+            100% { text-shadow: 0 0 20px red; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes bounce {
+            0%, 100%, 20%, 50%, 80% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 100%, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes signature-fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <a href="./" class="icon">COLLIN XANDER</a>
+
+    <div class="overlay"></div>
+
+    <div class="content">
+        <p>Meet Collin Xander, a 20-year-old from Houston, Texas, studying computer science. Passionate about creativity and visuals, Collin built his personal photography website from scratch. He aims to showcase a stunning portfolio of photos and videos, constantly pushing creative boundaries. "I designed this to visually display my work. Be creative & always elevate!"</p>
+        <div class="signature">- Collin Xander</div>
+    </div>
+
+    <video autoplay muted loop playsinline preload="none" id="background-video">
+        <source src="HILL1.MP4" type="video/mp4">
+    </video>
+
+    <footer>
+        <div class="social-icons">
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('background-audio');
+            const video = document.getElementById('background-video');
+            const playPauseButton = document.getElementById('play-pause');
+            const volumeControl = document.getElementById('volume-control');
+
+            // Restore audio and video states on load
+            const savedAudioTime = localStorage.getItem('audioTime');
+            const savedVideoTime = localStorage.getItem('videoTime');
+            const audioPaused = localStorage.getItem('audioPaused') === 'true';
+            const videoPaused = localStorage.getItem('videoPaused') === 'true';
+
+            if (savedAudioTime !== null) {
+                audio.currentTime = parseFloat(savedAudioTime);
+            }
+            if (savedVideoTime !== null) {
+                video.currentTime = parseFloat(savedVideoTime);
+            }
+            if (audioPaused) {
+                audio.pause();
+                playPauseButton.textContent = 'Play';
+            } else {
+                audio.play();
+                playPauseButton.textContent = 'Pause';
+            }
+            if (videoPaused) {
+                video.pause();
+            } else {
+                video.play();
+            }
+
+            playPauseButton.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    video.play();
+                    playPauseButton.textContent = 'Pause';
+                } else {
+                    audio.pause();
+                    video.pause();
+                    playPauseButton.textContent = 'Play';
+                }
+            });
+
+            volumeControl.addEventListener('input', (e) => {
+                audio.volume = e.target.value;
+            });
+
+            // Save audio and video states before leaving the page
+            window.addEventListener('beforeunload', () => {
+                localStorage.setItem('audioTime', audio.currentTime);
+                localStorage.setItem('videoTime', video.currentTime);
+                localStorage.setItem('audioPaused', audio.paused);
+                localStorage.setItem('videoPaused', video.paused);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
