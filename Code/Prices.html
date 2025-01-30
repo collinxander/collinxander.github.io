@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
+    <title>PRICES - COLLIN XANDER</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .icon {
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            font-style: italic;
+            color: red;
+            font-size: 27px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            animation: glow 1s ease-in-out infinite alternate;
+            z-index: 10;
+            transition: color 0.6s;
+            margin-bottom: 20px;
+        }
+
+        .icon:hover {
+            color: lime;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px red; }
+            100% { text-shadow: 0 0 20px red; }
+        }
+
+        .price-list {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .price-list h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #000000;
+        }
+
+        .package {
+            margin-bottom: 20px;
+        }
+
+        .package h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .package p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .deposit-note {
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .book-now {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #ff1e1e;
+            border: none;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0px 5px 0px #b30000, 0px 8px 15px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .book-now:hover {
+            background-color: #ff4747;
+            transform: translateY(-3px);
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .book-now:active {
+            transform: translateY(2px);
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .fallback-note {
+            font-size: 14px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .price-list h1 {
+                font-size: 20px;
+            }
+
+            .package h2 {
+                font-size: 18px;
+            }
+
+            .package p {
+                font-size: 14px;
+            }
+
+            .deposit-note {
+                font-size: 14px;
+            }
+
+            .book-now {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .icon {
+                font-size: 24px;
+            }
+
+            .price-list {
+                padding: 15px;
+            }
+
+            .price-list h1 {
+                font-size: 18px;
+            }
+
+            .package h2 {
+                font-size: 16px;
+            }
+
+            .package p {
+                font-size: 12px;
+            }
+
+            .deposit-note {
+                font-size: 12px;
+            }
+
+            .book-now {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="./" class="icon">COLLIN XANDER</a>
+    <div class="price-list">
+        <h1>Packages</h1>
+        
+        <div class="package">
+            <h2>Standard Package</h2>
+            <p>15 edited photos</p>
+            <p>Access to all RAW photos</p>
+            <p><strong>$150</strong></p>
+        </div>
+        
+        <div class="package">
+            <h2>Premium Package</h2>
+            <p>30 edited photos</p>
+            <p>Access to all RAW photos</p>
+            <p><strong>$200</strong></p>
+        </div>
+        
+        <div class="package">
+            <h2>Deluxe Package</h2>
+            <p>1 video</p>
+            <p>50 edited photos</p>
+            <p>Access to all RAW photos</p>
+            <p><strong>$250</strong></p>
+        </div>
+        
+        <div class="deposit-note">
+            All packages require a 10% non-refundable deposit of the total to confirm your appointment.
+        </div>
+        
+        <a href="./Booking" class="book-now">BOOK</a>
+        
+    </div>
+</body>
+</html>
