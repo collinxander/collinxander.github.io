@@ -105,10 +105,6 @@
             box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.4);
         }
 
-        .calendar {
-            margin-bottom: 15px;
-        }
-
         .confirmation-message {
             text-align: center;
             margin-top: 20px;
@@ -121,17 +117,16 @@
     <div class="booking-container">
         <h1>Book Your Session</h1>
         
-        <form class="booking-form" action="send_booking_email.php" method="POST">
+        <form class="booking-form" action="booking.php" method="POST">
             <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            <input type="text" id="name" name="name" required>
             
             <label for="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            <input type="tel" id="phone" name="phone" required>
 
             <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <input type="email" id="email" name="email" required>
 
-            
             <label for="package">Select Package:</label>
             <select id="package" name="package" required>
                 <option value="standard">Standard Package - $150</option>
@@ -139,19 +134,17 @@
                 <option value="deluxe">Deluxe Package - $250</option>
             </select>
 
-            <!-- Date Selection -->
             <label for="date">Preferred Session Date:</label>
-            <input type="date" id="date" name="date" class="calendar" required>
+            <input type="date" id="date" name="date" required>
 
             <label for="message">Additional Instructions:</label>
-            <textarea id="message" name="message" rows="4" placeholder="Any specific details or questions?" required></textarea>
+            <textarea id="message" name="message" rows="4"></textarea>
 
-            <!-- Submit Button -->
             <button type="submit">Confirm Booking</button>
         </form>
 
         <div class="confirmation-message">
-            <p>We will contact you via email to confirm your booking and further details.</p>
+            <p>We will contact you via email to confirm your booking.</p>
         </div>
     </div>
 </body>
