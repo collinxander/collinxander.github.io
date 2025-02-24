@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-// Load PHPMailer (Use vendor/autoload.php if installed via Composer)
+// Load PHPMailer
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'PHPMailer/src/Exception.php';
@@ -28,16 +28,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // SMTP Configuration
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com'; // Change if using a different SMTP service
+        $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'your-email@gmail.com'; // Your email address
-        $mail->Password   = 'your-app-password';   // Your App Password (NOT your email password)
+        $mail->Username   = 'your-email@gmail.com';
+        $mail->Password   = 'your-app-password';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587; // Use 465 if using SSL
+        $mail->Port       = 587;
 
         // Email headers
         $mail->setFrom('your-email@gmail.com', 'Collin Xander');
-        $mail->addAddress('collinxander1@gmail.com'); // Replace with your actual email
+        $mail->addAddress('collinxander1@gmail.com');
 
         // Email content
         $mail->isHTML(false);
@@ -59,5 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } catch (Exception $e) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     }
+} else {
+    http_response_code(405); // Method Not Allowed
+    echo "Error 405: Method Not Allowed.";
 }
 ?>
+
