@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
+    <title>CONTACT - COLLIN XANDER</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .icon {
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            font-style: italic;
+            color: red;
+            font-size: 27px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            animation: glow 1s ease-in-out infinite alternate;
+            z-index: 10;
+            transition: color 0.6s;
+            margin-bottom: 20px;
+        }
+
+        .icon:hover {
+            color: lime;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px red; }
+            100% { text-shadow: 0 0 20px red; }
+        }
+
+        .contact-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 30, 30, 0.5);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .contact-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 30, 30, 0.8);
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 20px rgba(255, 30, 30, 0.8);
+            transition: transform 0.3s, box-shadow 0.3s;
+            object-fit: cover; /* Ensures the image maintains its aspect ratio */
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 30, 30, 1);
+        }
+
+        .contact-info {
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin: 15px 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-info a {
+            color: #ff1e1e;
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+            margin-left: 10px;
+        }
+
+        .contact-info a:hover {
+            color: #ff4747;
+            text-shadow: 0 0 10px rgba(255, 71, 71, 0.8);
+        }
+
+        .contact-info i {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #ff1e1e;
+        }
+
+        .fallback-note {
+            font-size: 14px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container h1 {
+                font-size: 20px;
+            }
+
+            .contact-info p {
+                font-size: 16px;
+            }
+
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .icon {
+                font-size: 24px;
+            }
+
+            .contact-container {
+                padding: 20px;
+            }
+
+            .contact-container h1 {
+                font-size: 18px;
+            }
+
+            .contact-info p {
+                font-size: 14px;
+            }
+
+            .profile-photo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+
+    <script>
+        import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
+// Scene Setup
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(
+    75, window.innerWidth / window.innerHeight, 0.1, 1000
+);
+const renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Particle System
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 500;
+const positions = new Float32Array(particlesCount * 3);
+for (let i = 0; i < particlesCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 10;
+}
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+const particlesMaterial = new THREE.PointsMaterial({
+    color: 0xff1e1e,
+    size: 0.05,
+    transparent: true,
+    opacity: 0.8
+});
+const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particleMesh);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xff1e1e, 1, 50);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
+
+// Camera Positioning
+camera.position.z = 5;
+
+// Controls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+// Animation Loop
+function animate() {
+    requestAnimationFrame(animate);
+    particleMesh.rotation.y += 0.001;
+    controls.update();
+    renderer.render(scene, camera);
+}
+animate();
+
+// Resize Handler
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+    </script>
+</head>
+<body>
+    <a href="./" class="icon">COLLIN XANDER</a>
+    <div class="contact-container">
+        <h1>Contact Me</h1>
+        <img src="contact.JPG" alt="Collin Xander" class="profile-photo">
+        <div class="contact-info">
+            <p>
+                <i class="fab fa-instagram"></i>
+                Instagram: <a href="https://www.instagram.com/collinxander.jpeg" target="_blank">@collinxander.jpeg</a>
+            </p>
+            <p>
+                <i class="fas fa-envelope"></i>
+                Email: <a href="mailto:collinxander1@gmail.com">collinxander1@gmail.com</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
