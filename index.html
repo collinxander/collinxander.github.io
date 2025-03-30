@@ -115,6 +115,16 @@
             border-color: lime;
         }
 
+        /* XANDER MIX button styling */
+        #buttonXanderMix {
+            color: #87CEEB; /* Light blue */
+        }
+
+        #buttonXanderMix:hover {
+            color: lime;
+            border-color: lime;
+        }
+
         .luckas {
             position: absolute;
             top: 15px;
@@ -235,9 +245,9 @@
             height: auto;
             border-radius: 12px;
             background: linear-gradient(145deg, #222222, #3a3a3a);
-            box-shadow: 
-                0 4px 10px rgba(0, 0, 0, 0.4), 
-                inset 0 -2px 5px rgba(0, 0, 0, 0.5), 
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, 0.4),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.5),
                 inset 0 2px 5px rgba(255, 255, 255, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #3a3a3a;
@@ -245,19 +255,22 @@
 
         .snake-button:hover {
             transform: translateX(-50%) translateZ(5px) scale(1.05);
-            box-shadow: 
-                0 6px 15px rgba(0, 255, 0, 0.4), 
-                inset 0 -4px 8px rgba(0, 0, 0, 0.6), 
+            box-shadow:
+                0 6px 15px rgba(0, 255, 0, 0.4),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.6),
                 inset 0 3px 6px rgba(255, 255, 255, 0.2);
             background: linear-gradient(145deg, #3a3a3a, #4a4a4a);
         }
-
     </style>
 </head>
 <body>
     <a href="./" class="icon">COLLIN XANDER</a>
     <div class="container">
         <div class="button-container">
+            <!-- Desktop: XANDER MIX above VIDEOS; Mobile: XANDER MIX above PHOTOS -->
+            <form action="https://collinxander.com/Sound-Visualizer/">
+                <button id="buttonXanderMix">XANDER MIX</button>
+            </form>
             <form action="./Photos">
                 <button id="btnOne">PHOTOS</button>
             </form>
@@ -278,7 +291,7 @@
         <source src="homevideo.MP4" type="video/mp4">
     </video>
     <footer>
-        &copy; 2025 Collin Xander
+        © 2025 Collin Xander
     </footer>
 </body>
 </html>
