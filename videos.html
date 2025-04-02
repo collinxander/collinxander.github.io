@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,49 +6,78 @@
     <link rel="icon" href="profilepic.jpg" type="image/x-icon">
     <title>VIDEOS - COLLIN XANDER</title>
     <style>
-        /* Resetting default margin and padding */
+        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        /* Styling the body */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #000;
+            background: linear-gradient(to right, #000, #333);
             color: #fff;
-            background-image: linear-gradient(to right, #000, #333);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
-        /* Styling the header */
-        header {
+        /* Typography */
+        .font-impact {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .text-shadow-red {
+            text-shadow: 2px 2px 5px #ff0000;
+        }
+        
+        /* Hero section */
+        .hero-section {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
             font-style: italic;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             text-align: center;
-            background-color: #444;
-            color: #fff;
-            padding: 20px;
-            font-size: 2.5rem;
-            font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            z-index: 10;
             text-shadow: 2px 2px 5px red;
         }
         
-        /* Styling the navigation */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Navigation */
         nav {
             background-color: #1b1b1b;
-            text-align: center;
-            padding: 10px 0;
+            padding: 1rem 0;
         }
         
         nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
             list-style: none;
-            padding: 0;
-        }
-        
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
+            padding: 0 1rem;
         }
         
         nav ul li a {
@@ -56,387 +85,440 @@
             font-size: 1.2rem;
             color: white;
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
-
+        
         nav ul li a:hover {
             transform: scale(1.1);
-            background-color: #000;
             animation: pulse 0.5s infinite alternate;
         }
-
+        
+        .book-now {
+            background-color: #ff0000;
+        }
+        
+        .book-now:hover {
+            background-color: #cc0000;
+        }
+        
+        /* Video gallery */
+        .container {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1rem;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .video-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .video-item {
+            position: relative;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            cursor: pointer;
+            border: 2px solid #444;
+            transition: all 0.3s ease;
+        }
+        
+        .video-item:hover {
+            transform: scale(1.05);
+            border-color: #ff0000;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(255, 0, 0, 0.2);
+        }
+        
+        .video-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .video-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-item:hover .video-overlay {
+            opacity: 1;
+        }
+        
+        .video-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        
+        .play-button {
+            position: absolute;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 50;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 1024px;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background-color: #222;
+            border: 1px solid #444;
+            animation: zoomIn 0.3s ease-in-out;
+        }
+        
+        .modal-video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background-color: #ff0000;
+        }
+        
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 1rem;
+        }
+        
+        .prev-button {
+            left: 0;
+        }
+        
+        .next-button {
+            right: 0;
+        }
+        
+        .nav-button:hover {
+            background-color: #ff0000;
+        }
+        
+        .modal-info {
+            padding: 1rem;
+            background-color: #222;
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        
+        /* Animations */
         @keyframes pulse {
-            from {
+            0% {
                 transform: scale(1);
                 color: white;
                 text-shadow: 0 0 10px white;
             }
-            to {
+            100% {
                 transform: scale(1.1);
-                color: lime;
-                text-shadow: 0 0 20px lime;
-            }
-        }
-
-        /* Styling the book now button */
-        .book-now {
-            display: inline-block;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 1.2rem;
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            background-color: red;
-            transition: background-color 0.3s, transform 0.3s;
-            margin-left: 20px;
-        }
-
-        .book-now:hover {
-            background-color: darkred;
-            transform: scale(1.1);
-        }
-        
-        /* Styling the container for videos */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        /* Styling the individual video items */
-        .video {
-            width: calc(25% - 20px);
-            margin: 10px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 2px solid #444;
-        }
-        
-        .video:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .video img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .video:hover img {
-            transform: scale(1.05);
-        }
-        
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .video:hover .overlay {
-            opacity: 1;
-        }
-
-        .section {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .section h1 {
-            text-align: center;
-            font-size: 3rem;
-            font-style: italic;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-shadow: 2px 2px 5px red;
-            padding: 20px;
-            margin: 15px;
-            opacity: 0.8;
-            z-index: 1;
-        }
-
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        video {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .overlay h3 {
-            color: #fff;
-            font-size: 1.5rem;
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        @media only screen and (max-width: 1024px) {
-            .video {
-                width: calc(33.33% - 20px);
+                color: #00ff00;
+                text-shadow: 0 0 20px #00ff00;
             }
         }
         
-        @media only screen and (max-width: 768px) {
-            .video {
-                width: calc(50% - 20px);
-            }
-        }
-        
-        @media only screen and (max-width: 480px) {
-            .video {
-                width: calc(100% - 20px);
-            }
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.5s;
-        }
-
-        .modal-content {
-            position: relative;
-            background-color: #222;
-            margin: auto;
-            padding: 0;
-            border: none;
-            width: 90%;
-            max-width: 900px;
-            border-radius: 10px;
-            overflow: hidden;
-            animation: zoomIn 0.5s;
-        }
-
-        .modal-content video {
-            width: 100%;
-            height: auto;
-        }
-
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            color: #bbb;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: white;
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.3s;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-        }
-
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .prev {
-            left: 0;
-            border-radius: 3px 3px 0 0;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(255,255,255,0.8);
-            color: black;
-        }
-       
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
+        
         @keyframes zoomIn {
             from { transform: scale(0.5); }
             to { transform: scale(1); }
         }
+        
     </style>
 </head>
-<body>    
-    <div class="section">
-        <h1>VIDEOS</h1>
-        <div class="video-container">
-            <video autoplay muted loop playsinline preload="none" id="video-container">
+<body>
+    <!-- Hero Section with Background Video -->
+  
+    <section class="hero-section">
+        <h1 class="hero-title">VIDEOS</h1>
+        <div class="video-background">
+            <video id="background-video" autoplay muted loop playsinline>
                 <source src="collins.MP4" type="video/mp4">
             </video>
         </div>
-    </div>
+    </section>
 
+    <!-- Navigation -->
     <nav>
         <ul>
-            <li><a href="./">Home</a></li>
-            <li><a href="./Photos">Photos</a></li>
-            <li><a href="./About">About</a></li>
-            <li><a href="./Contact" class = "book-now">Book Now</a></li>
+            <li><a href="./" class="font-impact">Home</a></li>
+            <li><a href="./Photos" class="font-impact">Photos</a></li>
+            <li><a href="./About" class="font-impact">About</a></li>
+            <li><a href="./Contact" class="font-impact book-now">Book Now</a></li>
         </ul>
     </nav>
- <div class="container">
-     <div class="container">
-        <div class ="video" data-video="KAYJA.MP4">
-            <img src="kayja.jpg" alt="SOPHISTICATED">
-                <div class="overlay">
-            <h3>SOPHISTICATED</h3>
-        </div>
-        </div>
- <div class="container">
-     <div class="container">
-        <div class ="video" data-video="Timeline 1.MP4">
-            <img src="valentine.jpg" alt="DON'T BE SHY, GIVE HER FLOWERS">
-                <div class="overlay">
-            <h3>DON'T BE SHY, GIVE HER FLOWERS</h3>
-        </div>
-        </div>
-  <div class="container">
-     <div class="container">
-        <div class ="video" data-video="mtm.MP4">
-            <img src="mtm.jpg" alt="MOODTOMOVE X ADIDASORIGINALS">
-                <div class="overlay">
-            <h3>MOODTOMOVE X ADIDASORIGINALS</h3>
-        </div>
-        </div>
+
+    <!-- Video Gallery -->
     <div class="container">
-        <div class="video" data-video="820.MP4">
-            <img src="signals.jpg" alt="SIGNALS">
-            <div class="overlay">
-                <h3>SIGNALS</h3>
-            </div>
+        <div class="video-grid" id="video-gallery">
+            <!-- Videos will be dynamically inserted here -->
         </div>
-    <div class="container">
-        <div class="video" data-video="chasegraduation.MP4">
-            <img src="chasegraduation.jpg" alt="CHASE'S GRADUATION VIDEO">
-            <div class="overlay">
-                <h3>CHASE'S GRADUATION VIDEO</h3>
-            </div>
-        </div>
-        <div class="video" data-video="runclub.MP4">
-            <img src="runclub.jpg" alt="ROSADO STUDIOS RUN CLUB">
-            <div class="overlay">
-                <h3>ROSADO STUDIOS RUN CLUB</h3>
-            </div>
-        </div>
-       
     </div>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <video controls></video>
-            <a class="prev">&#10094;</a>
-            <a class="next">&#10095;</a>
+            <button id="close-modal" class="close-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <video id="modal-video" controls class="modal-video"></video>
+            
+            <button id="prev-video" class="nav-button prev-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <button id="next-video" class="nav-button next-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            
+            <div class="modal-info">
+                <h2 id="modal-title" class="modal-title"></h2>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById("myModal");
-            const modalVideo = modal.querySelector("video");
-            const closeBtn = modal.querySelector(".close");
-            const prevBtn = modal.querySelector(".prev");
-            const nextBtn = modal.querySelector(".next");
-            let currentIndex = 0;
-            const videos = Array.from(document.querySelectorAll('.video'));
+            // Video data
+            const videos = [
+                {
+                    id: 1,
+                    title: "SOPHISTICATED",
+                    thumbnail: "kayja.jpg",
+                    src: "KAYJA.MP4"
+                },
+                {
+                    id: 2,
+                    title: "DON'T BE SHY, GIVE HER FLOWERS",
+                    thumbnail: "valentine.jpg",
+                    src: "Timeline 1.MP4"
+                },
+                {
+                    id: 3,
+                    title: "MOODTOMOVE X ADIDASORIGINALS",
+                    thumbnail: "mtm.jpg",
+                    src: "mtm.MP4"
+                },
+                {
+                    id: 4,
+                    title: "SIGNALS",
+                    thumbnail: "signals.jpg",
+                    src: "820.MP4"
+                },
+                {
+                    id: 5,
+                    title: "CHASE'S GRADUATION VIDEO",
+                    thumbnail: "chasegraduation.jpg",
+                    src: "chasegraduation.MP4"
+                },
+                {
+                    id: 6,
+                    title: "ROSADO STUDIOS RUN CLUB",
+                    thumbnail: "runclub.jpg",
+                    src: "runclub.MP4"
+                }
+            ];
             
-            const openModal = (index) => {
-                currentIndex = index;
-                const videoSrc = videos[currentIndex].getAttribute('data-video');
-                modalVideo.src = videoSrc;
-                modal.style.display = "flex";
-            };
-
-            const closeModal = () => {
-                modal.style.display = "none";
-                modalVideo.pause();
-                modalVideo.src = "";
-            };
-
-            const showNext = () => {
-                currentIndex = (currentIndex + 1) % videos.length;
-                openModal(currentIndex);
-            };
-
-            const showPrev = () => {
-                currentIndex = (currentIndex - 1 + videos.length) % videos.length;
-                openModal(currentIndex);
-            };
-
-            videos.forEach((item, index) => {
-                item.addEventListener('click', () => openModal(index));
+            // DOM elements
+            const videoGallery = document.getElementById('video-gallery');
+            const modal = document.getElementById('video-modal');
+            const modalVideo = document.getElementById('modal-video');
+            const modalTitle = document.getElementById('modal-title');
+            const closeButton = document.getElementById('close-modal');
+            const prevButton = document.getElementById('prev-video');
+            const nextButton = document.getElementById('next-video');
+            const backgroundVideo = document.getElementById('background-video');
+            
+            // Current video index
+            let currentIndex = 0;
+            
+            // Try to play background video
+            backgroundVideo.play().catch(error => {
+                console.log("Autoplay prevented:", error);
             });
-
-            closeBtn.onclick = closeModal;
-
-            prevBtn.onclick = (event) => {
-                event.stopPropagation();
+            
+            // Populate video gallery
+            videos.forEach((video, index) => {
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
+                videoItem.innerHTML = `
+                    <img src="${video.thumbnail}" alt="${video.title}">
+                    <div class="video-overlay">
+                        <h3 class="video-title">${video.title}</h3>
+                        <div class="play-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </div>
+                    </div>
+                `;
+                videoItem.addEventListener('click', () => openModal(index));
+                videoGallery.appendChild(videoItem);
+            });
+            
+            // Open modal function
+            function openModal(index) {
+                currentIndex = index;
+                modalVideo.src = videos[index].src;
+                modalTitle.textContent = videos[index].title;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                modalVideo.load();
+                modalVideo.play().catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+            
+            // Close modal function
+            function closeModal() {
+                modal.style.display = 'none';
+                modalVideo.pause();
+                modalVideo.src = '';
+                document.body.style.overflow = '';
+            }
+            
+            // Show next video
+            function showNext() {
+                currentIndex = (currentIndex + 1) % videos.length;
+                modalVideo.src = videos[currentIndex].src;
+                modalTitle.textContent = videos[currentIndex].title;
+                modalVideo.load();
+                modalVideo.play().catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+            
+            // Show previous video
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+                modalVideo.src = videos[currentIndex].src;
+                modalTitle.textContent = videos[currentIndex].title;
+                modalVideo.load();
+                modalVideo.play().catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+            
+            // Event listeners
+            closeButton.addEventListener('click', closeModal);
+            
+            prevButton.addEventListener('click', (e) => {
+                e.stopPropagation();
                 showPrev();
-            };
-
-            nextBtn.onclick = (event) => {
-                event.stopPropagation();
+            });
+            
+            nextButton.addEventListener('click', (e) => {
+                e.stopPropagation();
                 showNext();
-            };
-
-            window.onclick = (event) => {
-                if (event.target == modal) {
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
                     closeModal();
                 }
-            };
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (modal.style.display !== 'flex') return;
+                
+                if (e.key === 'Escape') {
+                    closeModal();
+                } else if (e.key === 'ArrowRight') {
+                    showNext();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrev();
+                }
+            });
         });
     </script>
 </body>
 </html>
-
