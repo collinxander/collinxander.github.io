@@ -1,245 +1,610 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
     <title>CONTACT - COLLIN XANDER</title>
+    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for Background Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             background: black;
             color: #ffffff;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-
-        .icon {
-            text-align: center;
-            padding: 12px;
-            text-decoration: none;
+        
+        /* Canvas for Three.js */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
             font-style: italic;
             color: red;
-            font-size: 27px;
+            font-size: 2rem;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            animation: glow 1s ease-in-out infinite alternate;
-            z-index: 10;
-            transition: color 0.6s;
-            margin-bottom: 20px;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
         }
-
-        .icon:hover {
+        
+        .logo:hover {
+            color: lime;
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: red;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
             color: lime;
         }
-
-        @keyframes glow {
-            0% { text-shadow: 0 0 5px red; }
-            100% { text-shadow: 0 0 20px red; }
+        
+        .nav-link:hover::after {
+            width: 100%;
         }
-
+        
+        /* Main content */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 6rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
         .contact-container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 30, 30, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
             max-width: 600px;
-            width: 90%;
+            width: 100%;
             text-align: center;
             position: relative;
-            overflow: hidden;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: float 5s ease-in-out infinite;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .contact-container h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
+        
+        .contact-heading {
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
             color: #ffffff;
             text-shadow: 0 0 10px rgba(255, 30, 30, 0.8);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            letter-spacing: 2px;
         }
-
+        
+        .profile-photo-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 2rem;
+        }
+        
         .profile-photo {
-            width: 150px;
-            height: 150px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            margin-bottom: 20px;
+            object-fit: cover;
             border: 3px solid white;
             box-shadow: 0 0 20px rgba(255, 30, 30, 0.8);
-            transition: transform 0.3s, box-shadow 0.3s;
-            object-fit: cover; /* Ensures the image maintains its aspect ratio */
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
-
-        .profile-photo:hover {
-            transform: scale(1.1);
+        
+        .profile-photo-container:hover .profile-photo {
+            transform: scale(1.05);
             box-shadow: 0 0 30px rgba(255, 30, 30, 1);
         }
-
-        .contact-info {
-            margin-bottom: 20px;
+        
+        .photo-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, rgba(255, 0, 0, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
         }
-
-        .contact-info p {
-            margin: 15px 0;
-            font-size: 18px;
+        
+        .profile-photo-container:hover .photo-glow {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+        
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.3s ease;
         }
-
-        .contact-info a {
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #ff1e1e;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            transform: scale(1.2);
+            animation: shake 0.5s ease;
+        }
+        
+        .contact-link {
             color: #ff1e1e;
             text-decoration: none;
-            transition: color 0.3s, text-shadow 0.3s;
-            margin-left: 10px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            position: relative;
+            padding-bottom: 2px;
         }
-
-        .contact-info a:hover {
+        
+        .contact-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #ff4747;
+            transition: width 0.3s ease;
+        }
+        
+        .contact-link:hover {
             color: #ff4747;
             text-shadow: 0 0 10px rgba(255, 71, 71, 0.8);
         }
-
-        .contact-info i {
-            font-size: 24px;
-            margin-right: 10px;
-            color: #ff1e1e;
+        
+        .contact-link:hover::after {
+            width: 100%;
         }
-
-        .fallback-note {
-            font-size: 14px;
+        
+        .contact-form {
+            margin-top: 2rem;
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: #f0f0f0;
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             color: white;
-            margin-top: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #ff1e1e;
+            box-shadow: 0 0 10px rgba(255, 30, 30, 0.5);
+        }
+        
+        .submit-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: #ff1e1e;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 30, 30, 0.3);
+        }
+        
+        .submit-btn:hover {
+            background: #ff4747;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 30, 30, 0.5);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #ff1e1e;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 30, 30, 0.5);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        /* Responsive design */
         @media (max-width: 768px) {
-            .contact-container h1 {
-                font-size: 20px;
+            .header {
+                flex-direction: column;
+                padding: 0.8rem;
             }
-
-            .contact-info p {
-                font-size: 16px;
+            
+            .logo {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
             }
-
-            .profile-photo {
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-link {
+                font-size: 1rem;
+            }
+            
+            .contact-container {
+                padding: 2rem;
+            }
+            
+            .contact-heading {
+                font-size: 2rem;
+            }
+            
+            .profile-photo-container {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .contact-item {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.6rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                gap: 0.8rem;
+            }
+            
+            .nav-link {
+                font-size: 0.9rem;
+            }
+            
+            .contact-container {
+                padding: 1.5rem;
+            }
+            
+            .contact-heading {
+                font-size: 1.8rem;
+            }
+            
+            .profile-photo-container {
                 width: 120px;
                 height: 120px;
             }
-        }
-
-        @media (max-width: 480px) {
-            .icon {
-                font-size: 24px;
+            
+            .contact-item {
+                font-size: 0.9rem;
             }
-
-            .contact-container {
-                padding: 20px;
+            
+            .contact-icon {
+                font-size: 1.2rem;
             }
-
-            .contact-container h1 {
-                font-size: 18px;
-            }
-
-            .contact-info p {
-                font-size: 14px;
-            }
-
-            .profile-photo {
-                width: 100px;
-                height: 100px;
+            
+            .social-link {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
         }
     </style>
-
-    <script>
-        import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-
-// Scene Setup
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-    75, window.innerWidth / window.innerHeight, 0.1, 1000
-);
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-// Particle System
-const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 500;
-const positions = new Float32Array(particlesCount * 3);
-for (let i = 0; i < particlesCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 10;
-}
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-const particlesMaterial = new THREE.PointsMaterial({
-    color: 0xff1e1e,
-    size: 0.05,
-    transparent: true,
-    opacity: 0.8
-});
-const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-scene.add(particleMesh);
-
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-const pointLight = new THREE.PointLight(0xff1e1e, 1, 50);
-pointLight.position.set(5, 5, 5);
-scene.add(pointLight);
-
-// Camera Positioning
-camera.position.z = 5;
-
-// Controls
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-
-// Animation Loop
-function animate() {
-    requestAnimationFrame(animate);
-    particleMesh.rotation.y += 0.001;
-    controls.update();
-    renderer.render(scene, camera);
-}
-animate();
-
-// Resize Handler
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-    </script>
 </head>
 <body>
-    <a href="./" class="icon">COLLIN XANDER</a>
-    <div class="contact-container">
-        <h1>Contact Me</h1>
-        <img src="contact.JPG" alt="Collin Xander" class="profile-photo">
-        <div class="contact-info">
-            <p>
-                <i class="fab fa-instagram"></i>
-                Instagram: <a href="https://www.instagram.com/collinxander.jpeg" target="_blank">@collinxander.jpeg</a>
-            </p>
-            <p>
-                <i class="fas fa-envelope"></i>
-                Email: <a href="mailto:collinxander1@gmail.com">collinxander1@gmail.com</a>
-            </p>
+    <!-- Header -->
+    <header class="header">
+        <a href="./" class="logo">COLLIN XANDER</a>
+        <div class="nav-links">
+            <a href="./photos" class="nav-link">Photos</a>
+            <a href="./videos" class="nav-link">Videos</a>
+            <a href="./about" class="nav-link">About</a>
         </div>
-    </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="contact-container">
+            <h1 class="contact-heading">GET IN TOUCH</h1>
+            
+            <div class="profile-photo-container">
+                <img src="contact.JPG" alt="Collin Xander" class="profile-photo">
+                <div class="photo-glow"></div>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-instagram contact-icon"></i>
+                    <span>Instagram: <a href="https://www.instagram.com/collinxander.jpeg" target="_blank" class="contact-link">@collinxander.jpeg</a></span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <span>Email: <a href="mailto:collinxander1@gmail.com" class="contact-link">collinxander1@gmail.com</a></span>
+                </div>
+            </div>
+            
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" name="message" class="form-textarea" required></textarea>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </div>
+            </form>
+            
+            <div class="social-links">
+                <a href="https://instagram.com/collinxander.jpeg" target="_blank" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:collinxander1@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Three.js Background Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            
+            // Particle system
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1000;
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            // Material
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.005,
+                color: 0xff0000,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            // Mesh
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            // Camera position
+            camera.position.z = 3;
+            
+            // Mouse movement effect
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            function onDocumentMouseMove(event) {
+                mouseX = (event.clientX - window.innerWidth / 2) / 100;
+                mouseY = (event.clientY - window.innerHeight / 2) / 100;
+            }
+            
+            document.addEventListener('mousemove', onDocumentMouseMove);
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                // Follow mouse
+                particlesMesh.rotation.x += mouseY * 0.0005;
+                particlesMesh.rotation.y += mouseX * 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contact-form');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send the form data to a server
+                // For now, we'll just log it and show an alert
+                console.log({
+                    name,
+                    email,
+                    subject,
+                    message
+                });
+                
+                alert('Thank you for your message! I will get back to you soon.');
+                contactForm.reset();
+            });
+        });
+    </script>
 </body>
 </html>
