@@ -325,6 +325,45 @@
             box-shadow: 0 5px 15px rgba(255, 30, 30, 0.5);
         }
         
+        /* Form status messages */
+        .form-status {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        
+        .form-status.success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        
+        .form-status.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4747;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+            display: none;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -472,7 +511,24 @@
                 </div>
             </div>
             
-            <form class="contact-form" id="contact-form">
+            <!-- Status messages -->
+            <div id="form-success" class="form-status success">
+                Your message has been sent successfully! I'll get back to you soon.
+            </div>
+            <div id="form-error" class="form-status error">
+                There was an error sending your message. Please try again.
+            </div>
+            
+            <form class="contact-form" id="contact-form" action="https://formsubmit.co/collinxander1@gmail.com" method="POST">
+                <!-- FormSubmit configuration -->
+                <input type="hidden" name="_subject" value="New message from your website!">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://collinxander.com/thank-you.html">
+                
+                <!-- Hidden field for SMS notification -->
+                <input type="hidden" name="_cc" value="3462765810@txt.att.net">
+                
                 <div class="form-group">
                     <label for="name" class="form-label">Your Name</label>
                     <input type="text" id="name" name="name" class="form-input" required>
@@ -494,7 +550,10 @@
                 </div>
                 
                 <div style="text-align: center;">
-                    <button type="submit" class="submit-btn">Send Message</button>
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        Send Message
+                        <span class="spinner" id="submit-spinner"></span>
+                    </button>
                 </div>
             </form>
             
@@ -580,30 +639,35 @@
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
             
-            // Form submission
+            // Form submission handling
             const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const submitSpinner = document.getElementById('submit-spinner');
+            const formSuccess = document.getElementById('form-success');
+            const formError = document.getElementById('form-error');
             
             contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+                // Show loading spinner
+                submitBtn.disabled = true;
+                submitSpinner.style.display = 'inline-block';
                 
-                // Get form values
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const subject = document.getElementById('subject').value;
-                const message = document.getElementById('message').value;
+                // Hide any previous status messages
+                formSuccess.style.display = 'none';
+                formError.style.display = 'none';
                 
-                // Here you would typically send the form data to a server
-                // For now, we'll just log it and show an alert
-                console.log({
-                    name,
-                    email,
-                    subject,
-                    message
-                });
-                
-                alert('Thank you for your message! I will get back to you soon.');
-                contactForm.reset();
+                // FormSubmit will handle the actual submission
+                // This is just for visual feedback
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitSpinner.style.display = 'none';
+                }, 2000);
             });
+            
+            // Check for URL parameters to show success message
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                formSuccess.style.display = 'block';
+            }
         });
     </script>
 </body>
