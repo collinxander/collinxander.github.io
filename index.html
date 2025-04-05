@@ -349,7 +349,7 @@
     <!-- Video Background -->
     <div class="video-background">
         <video autoplay muted loop playsinline>
-            <source src="homevideo.MP4" type="video/mp4">
+            <source src="homevideo.MP4 type="video/mp4">
         </video>
     </div>
     
@@ -401,26 +401,5 @@
             &copy; <span id="current-year"></span> Collin Xander. All Rights Reserved.
         </div>
     </footer>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set current year in footer
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-            
-            // Ensure video plays
-            const video = document.querySelector('video');
-            video.play().catch(error => {
-                console.log("Video autoplay prevented:", error);
-            });
-            
-            // Add parallax effect to video
-            document.addEventListener('mousemove', function(e) {
-                const mouseX = e.clientX / window.innerWidth - 0.5;
-                const mouseY = e.clientY / window.innerHeight - 0.5;
-                
-                video.style.transform = `translate(${mouseX * -20}px, ${mouseY * -20}px)`;
-            });
-        });
-    </script>
 </body>
 </html>
