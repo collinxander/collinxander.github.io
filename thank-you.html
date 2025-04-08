@@ -36,7 +36,6 @@
             position: relative;
         }
 
-        /* Canvas for Three.js */
         canvas {
             position: fixed;
             top: 0;
@@ -179,7 +178,7 @@
             line-height: 1.5;
         }
 
-        button {
+        .home-button {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             color: var(--text-color);
             border-radius: 50px;
@@ -189,17 +188,20 @@
             font-weight: bold;
             border: 2px solid var(--text-color);
             transition: all var(--transition-speed) ease;
-            box-shadow: var(--button-shadow), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
+            box-shadow: var(--button-shadow);
             cursor: pointer;
             backdrop-filter: blur(5px);
             position: relative;
             overflow: hidden;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            text-transform: uppercase;
+            outline: none;
+            text-decoration: none;
         }
 
-        button::before {
+        .home-button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -210,16 +212,21 @@
             transition: left 0.7s ease;
         }
 
-        button:hover::before {
-            left: 100%;
-        }
-
-        button:hover {
+        .home-button:hover {
             color: var(--hover-color);
             background: rgba(0, 0, 0, 0.8);
             transform: translateY(-5px) scale(1.05);
-            box-shadow: var(--button-hover-shadow), inset 0 -10px 20px rgba(255, 255, 255, 0.3);
+            box-shadow: var(--button-hover-shadow);
             border-color: var(--hover-color);
+        }
+
+        .home-button:hover::before {
+            left: 100%;
+        }
+
+        .home-button:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
         }
 
         .btn-icon {
@@ -228,8 +235,13 @@
             transition: transform 0.3s ease;
         }
 
-        button:hover .btn-icon {
+        .home-button:hover .btn-icon {
             transform: scale(1.2);
+        }
+
+        .home-button:focus {
+            outline: 2px solid var(--hover-color);
+            outline-offset: 2px;
         }
 
         footer {
@@ -246,7 +258,6 @@
             animation-delay: 1.3s;
         }
 
-        /* Social icons in footer */
         .social-icons {
             display: flex;
             justify-content: center;
@@ -267,7 +278,6 @@
             transform: translateY(-3px);
         }
 
-        /* Enhanced responsive design */
         @media screen and (max-width: 820px) {
             .icon {
                 font-size: 20px;
@@ -310,7 +320,7 @@
                 font-size: 40px;
             }
 
-            button {
+            .home-button {
                 font-size: 18px;
                 padding: 12px 25px;
             }
@@ -319,10 +329,8 @@
 </head>
 <body>
     <div class="page-container">
-        <!-- Logo/Brand -->
         <a href="./" class="icon" aria-label="Collin Xander Home">COLLIN XANDER</a>
 
-        <!-- Main content -->
         <div class="container">
             <div class="thank-you-card">
                 <i class="fa-solid fa-circle-check success-icon" aria-hidden="true"></i>
@@ -339,16 +347,13 @@
                     </ol>
                 </div>
 
-                <a href="./">
-                    <button aria-label="Return to Home">
-                        <i class="fa-solid fa-house btn-icon" aria-hidden="true"></i>
-                        HOME
-                    </button>
+                <a href="./" class="home-button">
+                    <i class="fa-solid fa-house btn-icon" aria-hidden="true"></i>
+                    HOME
                 </a>
             </div>
         </div>
 
-        <!-- Footer with social icons -->
         <footer>
             <div>© <span id="currentYear"></span> Collin Xander. All rights reserved.</div>
             <div class="social-icons">
@@ -364,18 +369,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Set current year in footer
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
-            // Three.js Background Animation
-            // Scene setup
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.body.appendChild(renderer.domElement);
             
-            // Particle system
             const particlesGeometry = new THREE.BufferGeometry();
             const particlesCount = 1000;
             const posArray = new Float32Array(particlesCount * 3);
@@ -386,7 +387,6 @@
             
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
             
-            // Material
             const particlesMaterial = new THREE.PointsMaterial({
                 size: 0.005,
                 color: 0xff0000,
@@ -395,14 +395,11 @@
                 blending: THREE.AdditiveBlending
             });
             
-            // Mesh
             const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
             scene.add(particlesMesh);
             
-            // Camera position
             camera.position.z = 3;
             
-            // Mouse movement effect
             let mouseX = 0;
             let mouseY = 0;
             
@@ -413,14 +410,12 @@
             
             document.addEventListener('mousemove', onDocumentMouseMove);
             
-            // Animation loop
             function animate() {
                 requestAnimationFrame(animate);
                 
                 particlesMesh.rotation.x += 0.0005;
                 particlesMesh.rotation.y += 0.0005;
                 
-                // Follow mouse
                 particlesMesh.rotation.x += mouseY * 0.0005;
                 particlesMesh.rotation.y += mouseX * 0.0005;
                 
@@ -429,21 +424,18 @@
             
             animate();
             
-            // Handle window resize
             window.addEventListener('resize', function() {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
             
-            // Ensure smooth animations when page loads
             setTimeout(function() {
                 document.querySelector('.page-container').style.opacity = '1';
             }, 100);
             
-            // Add hover effect for button
-            const button = document.querySelector('button');
-            button.addEventListener('mouseover', function() {
+            const homeButton = document.querySelector('.home-button');
+            homeButton.addEventListener('mouseover', function() {
                 this.style.transition = 'all 0.5s ease';
                 const icon = this.querySelector('.btn-icon');
                 if (icon) {
@@ -451,15 +443,13 @@
                     icon.style.transition = 'transform 0.3s ease';
                 }
                 
-                // Create particle burst effect on button hover
                 if (particlesMesh) {
-                    // Increase particle rotation speed temporarily
                     particlesMesh.rotation.x += 0.01;
                     particlesMesh.rotation.y += 0.01;
                 }
             });
             
-            button.addEventListener('mouseout', function() {
+            homeButton.addEventListener('mouseout', function() {
                 this.style.transition = 'all 0.8s ease';
                 const icon = this.querySelector('.btn-icon');
                 if (icon) {
@@ -467,16 +457,13 @@
                 }
             });
             
-            // Add click effect
-            button.addEventListener('click', function() {
+            homeButton.addEventListener('click', function() {
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 150);
                 
-                // Create particle explosion effect on click
                 if (particlesMesh) {
-                    // Increase particle rotation speed temporarily
                     particlesMesh.rotation.x += 0.05;
                     particlesMesh.rotation.y += 0.05;
                 }
