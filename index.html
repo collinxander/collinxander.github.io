@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -44,6 +45,10 @@
         .page-container {
             animation: fadeIn 1.5s ease-in-out forwards;
             opacity: 0;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
 
         @keyframes fadeIn {
@@ -51,22 +56,17 @@
             100% { opacity: 1; }
         }
 
-        .background-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5), rgba(0,0,0,0.8));
-            z-index: 1;
-        }
+        /* Removed the dark background overlay */
 
         video {
             object-fit: cover;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            filter: brightness(1.5); /* Increased brightness */
         }
 
         .video-loader {
@@ -80,6 +80,10 @@
             transition: opacity 0.5s ease;
         }
 
+        .video-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
 
         .icon {
             overflow: hidden;
@@ -377,8 +381,10 @@
         <!-- Background video -->
         <video autoplay loop muted playsinline id="bgVideo">
             <source src="homevideo.MP4" type="video/mp4">
+    
         </video>
-        <div class="background-overlay"></div>
+        
+        <!-- Removed the background overlay div that was making it dark -->
 
         <!-- Logo/Brand -->
         <a href="./" class="icon" aria-label="Collin Xander Home">COLLIN XANDER</a>
