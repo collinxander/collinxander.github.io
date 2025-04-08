@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You | COLLIN XANDER</title>
-    <meta name="description" content="Thank you for booking a shoot with Collin Xander. Your session has been confirmed.">
+    <title>THANK YOU - COLLIN XANDER</title>
+    <meta name="description" content="Thank you for contacting Collin Xander. Your message has been received.">
     <link rel="icon" href="profilepic.jpg" type="image/x-icon">
-    <!-- Preload video for better performance -->
-    <link rel="preload" href="homevideo.MP4" as="video" type="video/mp4">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for Background Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -36,35 +36,28 @@
             position: relative;
         }
 
+        /* Canvas for Three.js */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
         .page-container {
             animation: fadeIn 1.5s ease-in-out forwards;
             opacity: 0;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
 
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
-        }
-
-        .background-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5), rgba(0,0,0,0.8));
-            z-index: 1;
-        }
-
-        video {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            filter: brightness(1.3);
         }
 
         .icon {
@@ -123,6 +116,8 @@
             animation: slideUp 0.8s ease-out forwards;
             opacity: 0;
             transform: translateY(30px);
+            position: relative;
+            z-index: 10;
         }
 
         @keyframes slideUp {
@@ -161,24 +156,6 @@
             margin-bottom: 30px;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.9);
-        }
-
-        .booking-details {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 3px solid var(--success-color);
-        }
-
-        .booking-details p {
-            margin-bottom: 10px;
-            font-size: 16px;
-            text-align: left;
-        }
-
-        .booking-details strong {
-            color: var(--success-color);
         }
 
         .next-steps {
@@ -337,10 +314,6 @@
                 font-size: 18px;
                 padding: 12px 25px;
             }
-
-            .booking-details {
-                padding: 15px;
-            }
         }
     </style>
 </head>
@@ -357,8 +330,6 @@
                 <div class="message">
                     <p>Thank you for contacting Collin Xander. Your message has been received, and he will be in touch within the next 24-48 hours</p>
                 </div>
-
-                
 
                 <div class="next-steps">
                     <h2>What's Next?</h2>
@@ -396,18 +367,74 @@
             // Set current year in footer
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
-            // Simulate booking details (in a real implementation, these would come from your booking system)
-            // You would replace this with actual data from your form submission or database
-            const urlParams = new URLSearchParams(window.location.search);
+            // Three.js Background Animation
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
             
-            // If parameters exist in the URL, use them, otherwise use placeholders
-            const date = urlParams.get('date') || 'Your selected date and time';
-            const location = urlParams.get('location') || 'Your selected location';
-            const package = urlParams.get('package') || 'Your selected package';
+            // Particle system
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1000;
+            const posArray = new Float32Array(particlesCount * 3);
             
-            document.getElementById('bookingDate').textContent = date;
-            document.getElementById('bookingLocation').textContent = location;
-            document.getElementById('bookingPackage').textContent = package;
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            // Material
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.005,
+                color: 0xff0000,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            // Mesh
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            // Camera position
+            camera.position.z = 3;
+            
+            // Mouse movement effect
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            function onDocumentMouseMove(event) {
+                mouseX = (event.clientX - window.innerWidth / 2) / 100;
+                mouseY = (event.clientY - window.innerHeight / 2) / 100;
+            }
+            
+            document.addEventListener('mousemove', onDocumentMouseMove);
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                // Follow mouse
+                particlesMesh.rotation.x += mouseY * 0.0005;
+                particlesMesh.rotation.y += mouseX * 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
             
             // Ensure smooth animations when page loads
             setTimeout(function() {
@@ -423,6 +450,13 @@
                     icon.style.transform = 'scale(1.2)';
                     icon.style.transition = 'transform 0.3s ease';
                 }
+                
+                // Create particle burst effect on button hover
+                if (particlesMesh) {
+                    // Increase particle rotation speed temporarily
+                    particlesMesh.rotation.x += 0.01;
+                    particlesMesh.rotation.y += 0.01;
+                }
             });
             
             button.addEventListener('mouseout', function() {
@@ -430,6 +464,21 @@
                 const icon = this.querySelector('.btn-icon');
                 if (icon) {
                     icon.style.transform = 'scale(1)';
+                }
+            });
+            
+            // Add click effect
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Create particle explosion effect on click
+                if (particlesMesh) {
+                    // Increase particle rotation speed temporarily
+                    particlesMesh.rotation.x += 0.05;
+                    particlesMesh.rotation.y += 0.05;
                 }
             });
         });
