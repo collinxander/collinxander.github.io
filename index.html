@@ -1,24 +1,42 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COLLIN XANDER</title>
+    <title>COLLIN XANDER | Photography & Video</title>
+    <meta name="description" content="Collin Xander's portfolio featuring photography, videos, and the Xander Mix sound visualizer.">
+    <meta name="keywords" content="Collin Xander, photography, videography, sound visualizer">
     <link rel="icon" href="profilepic.jpg" type="image/x-icon">
+    <!-- Preload video for better performance -->
+    <link rel="preload" href="homevideo.MP4" as="video" type="video/mp4">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-
         * {
             box-sizing: border-box;
             padding: 0;
             margin: 0;
         }
 
+        @font-face {
+            font-family: 'Impact';
+            font-display: swap;
+        }
+
+        :root {
+            --primary-color: #ff0000;
+            --hover-color: #00ff00;
+            --xander-mix-color: #87CEEB;
+            --text-color: #ffffff;
+            --button-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            --button-hover-shadow: 0 10px 25px rgba(0, 255, 0, 0.3);
+            --transition-speed: 0.5s;
+        }
+
         body {
             background-color: black;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            color: white;
+            color: var(--text-color);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -26,6 +44,7 @@
 
         .page-container {
             animation: fadeIn 1.5s ease-in-out forwards;
+            opacity: 0;
         }
 
         @keyframes fadeIn {
@@ -43,17 +62,32 @@
             z-index: 1;
         }
 
-       video {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    filter: brightness(1.3); /* Increase brightness (1 is default) */
-}
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            filter: brightness(1.3);
+        }
 
+        .video-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: var(--primary-color);
+            font-size: 24px;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .video-loader.hidden {
+            opacity: 0;
+        }
 
         .icon {
             overflow: hidden;
@@ -63,7 +97,7 @@
             padding: 12px;
             text-decoration: none;
             font-style: italic;
-            color: red;
+            color: var(--primary-color);
             font-size: 27px;
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5);
             transform: perspective(500px) rotateX(15deg);
@@ -73,7 +107,8 @@
         }
 
         .icon:hover {
-            color: lime;
+            color: var(--hover-color);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.5);
         }
 
         @keyframes glow {
@@ -128,16 +163,16 @@
         }
 
         button {
-            font-family: myFont, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            color: white;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: var(--text-color);
             border-radius: 50px;
             background: rgba(0, 0, 0, 0.5);
             padding: 20px 30px;
             font-size: 25px;
             font-weight: bold;
-            border: 2px solid white;
-            transition: all 0.5s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--text-color);
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--button-shadow), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
             cursor: pointer;
             backdrop-filter: blur(5px);
@@ -149,34 +184,54 @@
             min-width: 200px;
         }
 
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
         button:hover {
-            color: lime;
+            color: var(--hover-color);
             background: rgba(0, 0, 0, 0.8);
             transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.3), inset 0 -10px 20px rgba(255, 255, 255, 0.3);
-            border-color: lime;
+            box-shadow: var(--button-hover-shadow), inset 0 -10px 20px rgba(255, 255, 255, 0.3);
+            border-color: var(--hover-color);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.3), var(--button-shadow);
         }
 
         .prices button {
-            color: red;
-            border: 2px solid white;
+            color: var(--primary-color);
+            border: 2px solid var(--text-color);
         }
 
         .prices button:hover {
-            color: lime;
-            border-color: lime;
+            color: var(--hover-color);
+            border-color: var(--hover-color);
         }
 
         /* XANDER MIX button styling */
         #buttonXanderMix {
-            color: #87CEEB; /* Light blue */
-            border-color: #87CEEB;
+            color: var(--xander-mix-color);
+            border-color: var(--xander-mix-color);
             box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3), inset 0 -5px 10px rgba(255, 255, 255, 0.2);
         }
 
         #buttonXanderMix:hover {
-            color: lime;
-            border-color: lime;
+            color: var(--hover-color);
+            border-color: var(--hover-color);
             box-shadow: 0 10px 25px rgba(0, 255, 0, 0.3), inset 0 -10px 20px rgba(255, 255, 255, 0.3);
         }
 
@@ -184,11 +239,11 @@
         .btn-icon {
             margin-right: 12px;
             font-size: 0.9em;
+            transition: transform 0.3s ease;
         }
 
         button:hover .btn-icon {
             transform: scale(1.2);
-            transition: transform 0.3s ease;
         }
 
         footer {
@@ -197,7 +252,7 @@
             width: 100%;
             text-align: center;
             font-size: 14px;
-            color: white;
+            color: var(--text-color);
             z-index: 10;
             text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
             opacity: 0;
@@ -214,14 +269,14 @@
         }
 
         .social-icon {
-            color: white;
+            color: var(--text-color);
             font-size: 18px;
             transition: all 0.3s ease;
             opacity: 0.7;
         }
 
         .social-icon:hover {
-            color: lime;
+            color: var(--hover-color);
             opacity: 1;
             transform: translateY(-3px);
         }
@@ -277,52 +332,99 @@
                 margin-right: 8px;
             }
         }
+
+        /* Button glow effect to match screenshot */
+        .nav-button {
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .nav-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50px;
+            box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-button:hover::after {
+            opacity: 1;
+        }
+
+        /* Loading animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
     </style>
 </head>
 <body>
     <div class="page-container">
+        <!-- Loading indicator for video -->
+        <div class="video-loader" id="videoLoader">
+            <div class="loading-spinner"></div>
+        </div>
+
         <!-- Background video -->
-        <video autoplay loop muted playsinline>
+        <video autoplay loop muted playsinline id="bgVideo">
             <source src="homevideo.MP4" type="video/mp4">
             <!-- Fallback for browsers that don't support video -->
+            <img src="LAMBO1.jpg" alt="Night city view" style="width:100%;height:100%;object-fit:cover;">
         </video>
         <div class="background-overlay"></div>
 
         <!-- Logo/Brand -->
-        <a href="./" class="icon">COLLIN XANDER</a>
+        <a href="./" class="icon" aria-label="Collin Xander Home">COLLIN XANDER</a>
 
         <!-- Main content -->
         <div class="container">
             <div class="button-container">
                 <form action="./Photos">
-                    <button id="btnOne">
-                        <i class="fa-solid fa-camera btn-icon"></i>
+                    <button id="btnOne" class="nav-button" aria-label="View Photos">
+                        <i class="fa-solid fa-camera btn-icon" aria-hidden="true"></i>
                         PHOTOS
                     </button>
                 </form>
                 <form action="./videos">
-                    <button id="buttonTwo">
-                        <i class="fa-solid fa-video btn-icon"></i>
+                    <button id="buttonTwo" class="nav-button" aria-label="View Videos">
+                        <i class="fa-solid fa-video btn-icon" aria-hidden="true"></i>
                         VIDEOS
                     </button>
                 </form>
                 <form action="./About">
-                    <button id="buttonAbout">
-                        <i class="fa-solid fa-user btn-icon"></i>
+                    <button id="buttonAbout" class="nav-button" aria-label="About Collin Xander">
+                        <i class="fa-solid fa-user btn-icon" aria-hidden="true"></i>
                         ABOUT
                     </button>
                 </form>
             </div>
             <div class="button-container prices">
                 <form action="./Contact">
-                    <button id="buttonPrices">
-                        <i class="fa-solid fa-envelope btn-icon"></i>
+                    <button id="buttonPrices" class="nav-button" aria-label="Contact Collin Xander">
+                        <i class="fa-solid fa-envelope btn-icon" aria-hidden="true"></i>
                         CONTACT
                     </button>
                 </form>
                 <form action="https://collinxander.com/Sound-Visualizer/">
-                    <button id="buttonXanderMix">
-                        <i class="fa-solid fa-music btn-icon"></i>
+                    <button id="buttonXanderMix" class="nav-button" aria-label="Experience Xander Mix Sound Visualizer">
+                        <i class="fa-solid fa-music btn-icon" aria-hidden="true"></i>
                         XANDER MIX
                     </button>
                 </form>
@@ -331,13 +433,43 @@
 
         <!-- Footer with social icons -->
         <footer>
-            <div>© <script>document.write(new Date().getFullYear())</script> Collin Xander. All rights reserved.</div>
+            <div>© <span id="currentYear"></span> Collin Xander. All rights reserved.</div>
+            <div class="social-icons">
+                <a href="https://instagram.com/" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://youtube.com/" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                    <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                </a>
+                <a href="https://twitter.com/" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <i class="fa-brands fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="mailto:contact@collinxander.com" class="social-icon" aria-label="Email">
+                    <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                </a>
+            </div>
         </footer>
     </div>
 
     <script>
-        // Add any JavaScript functionality here
         document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Video loading handling
+            const video = document.getElementById('bgVideo');
+            const loader = document.getElementById('videoLoader');
+            
+            // Hide loader when video is loaded
+            video.addEventListener('loadeddata', function() {
+                loader.classList.add('hidden');
+            });
+            
+            // Fallback if video takes too long to load
+            setTimeout(function() {
+                loader.classList.add('hidden');
+            }, 5000);
+            
             // Ensure smooth animations when page loads
             setTimeout(function() {
                 document.querySelector('.page-container').style.opacity = '1';
@@ -362,6 +494,25 @@
                         icon.style.transform = 'scale(1)';
                     }
                 });
+                
+                // Add click effect
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // Preload images for better performance
+            const preloadImages = [
+                'profilepic.jpg',
+                'fallback-image.jpg'
+            ];
+            
+            preloadImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
             });
         });
     </script>
