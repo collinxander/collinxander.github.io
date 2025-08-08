@@ -1,442 +1,1207 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
     <title>VIDEOS - COLLIN XANDER</title>
+    <meta name="description" content="Explore Collin Xander's video portfolio featuring creative videography work.">
+    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Resetting default margin and padding */
+        :root {
+            --primary-color: #ff0000;
+            --hover-color: #00ff00;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --text-secondary: #b0b0b0;
+            --transition-speed: 0.3s;
+            --border-radius: 12px;
+        }
+        
+        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        /* Styling the body */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Montserrat', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Typography */
+        .font-impact {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .text-shadow-red {
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+        
+        /* Header with enhanced logo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            position: relative;
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--hover-color);
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover {
+            color: var(--hover-color);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-link {
+            position: relative;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--hover-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+            background-color: var(--hover-color);
+        }
+        
+        .book-now {
+            background-color: var(--primary-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .book-now:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 4px 20px rgba(0, 255, 0, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .book-now::after {
+            display: none;
+        }
+        
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            color: var(--hover-color);
+        }
+        
+        /* Hero section */
+        .hero-section {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-style: italic;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.4);
+            animation: pulsate 2s infinite alternate;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .video-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+        }
+        
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Category filter */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 0 1rem;
+        }
+        
+        .filter-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button:hover, .filter-button.active {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        /* Video gallery */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            padding: 0 1.5rem;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .video-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--card-bg);
+        }
+        
+        .video-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--border-radius);
+            padding: 2px;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.5), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        .video-item:hover::before {
+            opacity: 1;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .video-item:hover .video-thumbnail {
+            transform: scale(1.1);
+        }
+        
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .video-item:hover .video-overlay {
+            opacity: 1;
+        }
+        
+        .video-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-duration {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+        
+        .video-item:hover .play-button {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .play-button:hover {
+            background-color: rgba(255, 0, 0, 1);
+            transform: translate(-50%, -50%) scale(1.1) !important;
+        }
+        
+        /* Video tags */
+        .video-tags {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .video-tag {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: var(--text-color);
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease-in-out;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             background-color: #000;
-            color: #fff;
-            background-image: linear-gradient(to right, #000, #333);
+        }
+        
+        .modal-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .close-button:hover {
+            background-color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+        
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+        
+        .prev-button {
+            left: 1rem;
+        }
+        
+        .next-button {
+            right: 1rem;
+        }
+        
+        .nav-button:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .modal-info {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
         }
         
-        /* Styling the header */
-        header {
-            font-style: italic;
-            text-align: center;
-            background-color: #444;
-            color: #fff;
-            padding: 20px;
-            font-size: 2.5rem;
-            font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-shadow: 2px 2px 5px red;
+        .modal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
         
-        /* Styling the navigation */
-        nav {
-            background-color: #1b1b1b;
-            text-align: center;
-            padding: 10px 0;
+        .modal-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
-        nav ul {
-            list-style: none;
-            padding: 0;
+        .modal-meta-icon {
+            color: var(--primary-color);
         }
         
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
+        /* Video progress bar */
+        .progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: 5;
         }
         
-        nav ul li a {
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: var(--primary-color);
+            transition: width 0.1s linear;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+            display: none;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 0 1.5rem;
+        }
+        
+        .footer-logo {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .footer-text {
+            max-width: 300px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            color: var(--text-color);
             font-size: 1.2rem;
-            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
         }
-
-        nav ul li a:hover {
-            transform: scale(1.1);
-            background-color: #000;
-            animation: pulse 0.5s infinite alternate;
+        
+        .footer-link:hover {
+            color: var(--primary-color);
         }
-
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Animations */
+        @keyframes pulsate {
+            0% {
+                text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.4);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.6);
+            }
+        }
+        
         @keyframes pulse {
-            from {
+            0% {
                 transform: scale(1);
                 color: white;
                 text-shadow: 0 0 10px white;
             }
-            to {
+            100% {
                 transform: scale(1.1);
-                color: lime;
-                text-shadow: 0 0 20px lime;
-            }
-        }
-
-        /* Styling the book now button */
-        .book-now {
-            display: inline-block;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 1.2rem;
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            background-color: red;
-            transition: background-color 0.3s, transform 0.3s;
-            margin-left: 20px;
-        }
-
-        .book-now:hover {
-            background-color: darkred;
-            transform: scale(1.1);
-        }
-        
-        /* Styling the container for videos */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        /* Styling the individual video items */
-        .video {
-            width: calc(25% - 20px);
-            margin: 10px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 2px solid #444;
-        }
-        
-        .video:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .video img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .video:hover img {
-            transform: scale(1.05);
-        }
-        
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .video:hover .overlay {
-            opacity: 1;
-        }
-
-        .section {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .section h1 {
-            text-align: center;
-            font-size: 3rem;
-            font-style: italic;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-shadow: 2px 2px 5px red;
-            padding: 20px;
-            margin: 15px;
-            opacity: 0.8;
-            z-index: 1;
-        }
-
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        video {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .overlay h3 {
-            color: #fff;
-            font-size: 1.5rem;
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        @media only screen and (max-width: 1024px) {
-            .video {
-                width: calc(33.33% - 20px);
+                color: var(--hover-color);
+                text-shadow: 0 0 20px var(--hover-color);
             }
         }
         
-        @media only screen and (max-width: 768px) {
-            .video {
-                width: calc(50% - 20px);
-            }
-        }
-        
-        @media only screen and (max-width: 480px) {
-            .video {
-                width: calc(100% - 20px);
-            }
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.5s;
-        }
-
-        .modal-content {
-            position: relative;
-            background-color: #222;
-            margin: auto;
-            padding: 0;
-            border: none;
-            width: 90%;
-            max-width: 900px;
-            border-radius: 10px;
-            overflow: hidden;
-            animation: zoomIn 0.5s;
-        }
-
-        .modal-content video {
-            width: 100%;
-            height: auto;
-        }
-
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            color: #bbb;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: white;
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.3s;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-        }
-
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .prev {
-            left: 0;
-            border-radius: 3px 3px 0 0;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(255,255,255,0.8);
-            color: black;
-        }
-       
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
+        
         @keyframes zoomIn {
-            from { transform: scale(0.5); }
-            to { transform: scale(1); }
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 1rem;
+                gap: 1rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero-section {
+                height: 50vh;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1.2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .modal-title {
+                font-size: 1.2rem;
+            }
+            
+            .nav-button {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+            
+            .prev-button {
+                left: 0.5rem;
+            }
+            
+            .next-button {
+                right: 0.5rem;
+            }
         }
     </style>
 </head>
-<body>    
-    <div class="section">
-        <h1>VIDEOS</h1>
-        <div class="video-container">
-            <video autoplay muted loop playsinline preload="none" id="video-container">
-                <source src="collins.MP4" type="video/mp4">
+<body>
+    <!-- Header with Logo and Navigation -->
+    <header class="header">
+        <a href="./" class="logo">COLLIN XANDER</a>
+        
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav class="nav-links" id="nav-links">
+            <a href="./" class="nav-link">Home</a>
+            <a href="./Photos" class="nav-link">Photos</a>
+            <a href="./About" class="nav-link">About</a>
+            <a href="./Contact" class="nav-link book-now">Book Now</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Background Video -->
+    <section class="hero-section">
+        <div class="video-background">
+            <video id="background-video" autoplay muted loop playsinline>
+                <source src="yea.MP4" type="video/mp4">
             </video>
         </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">VIDEOS</h1>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <div class="filter-container">
+        <button class="filter-button active" data-filter="all">All Videos</button>
+        <button class="filter-button" data-filter="portrait">Portrait</button>
+        <button class="filter-button" data-filter="event">Event</button>
+        <button class="filter-button" data-filter="commercial">Commercial</button>
     </div>
 
-    <nav>
-        <ul>
-            <li><a href="./">Home</a></li>
-            <li><a href="./Photos">Photos</a></li>
-            <li><a href="./About">About</a></li>
-            <li><a href="./Contact" class = "book-now">Book Now</a></li>
-        </ul>
-    </nav>
- <div class="container">
-     <div class="container">
-        <div class ="video" data-video="KAYJA.MP4">
-            <img src="kayja.jpg" alt="SOPHISTICATED">
-                <div class="overlay">
-            <h3>SOPHISTICATED</h3>
+    <!-- Video Gallery -->
+    <div class="gallery-container">
+        <div class="video-grid" id="video-gallery">
+            <!-- Videos will be dynamically inserted here -->
         </div>
-        </div>
- <div class="container">
-     <div class="container">
-        <div class ="video" data-video="Timeline 1.MP4">
-            <img src="valentine.jpg" alt="DON'T BE SHY, GIVE HER FLOWERS">
-                <div class="overlay">
-            <h3>DON'T BE SHY, GIVE HER FLOWERS</h3>
-        </div>
-        </div>
-  <div class="container">
-     <div class="container">
-        <div class ="video" data-video="mtm.MP4">
-            <img src="mtm.jpg" alt="MOODTOMOVE X ADIDASORIGINALS">
-                <div class="overlay">
-            <h3>MOODTOMOVE X ADIDASORIGINALS</h3>
-        </div>
-        </div>
-    <div class="container">
-        <div class="video" data-video="820.MP4">
-            <img src="signals.jpg" alt="SIGNALS">
-            <div class="overlay">
-                <h3>SIGNALS</h3>
-            </div>
-        </div>
-    <div class="container">
-        <div class="video" data-video="chasegraduation.MP4">
-            <img src="chasegraduation.jpg" alt="CHASE'S GRADUATION VIDEO">
-            <div class="overlay">
-                <h3>CHASE'S GRADUATION VIDEO</h3>
-            </div>
-        </div>
-        <div class="video" data-video="runclub.MP4">
-            <img src="runclub.jpg" alt="ROSADO STUDIOS RUN CLUB">
-            <div class="overlay">
-                <h3>ROSADO STUDIOS RUN CLUB</h3>
-            </div>
-        </div>
-       
     </div>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <video controls></video>
-            <a class="prev">&#10094;</a>
-            <a class="next">&#10095;</a>
+            <button id="close-modal" class="close-button" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-video-container">
+                <div class="loading-spinner" id="video-spinner"></div>
+                <video id="modal-video" controls class="modal-video"></video>
+                <div class="progress-container">
+                    <div class="progress-bar" id="video-progress"></div>
+                </div>
+            </div>
+            
+            <button id="prev-video" class="nav-button prev-button" aria-label="Previous video">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <button id="next-video" class="nav-button next-button" aria-label="Next video">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="modal-info">
+                <h2 id="modal-title" class="modal-title"></h2>
+                <p id="modal-description" class="modal-description"></p>
+                
+                <div class="modal-meta">
+                    <div class="modal-meta-item">
+                        <i class="fas fa-calendar modal-meta-icon"></i>
+                        <span id="modal-date">2023</span>
+                    </div>
+                    <div class="modal-meta-item">
+                        <i class="fas fa-clock modal-meta-icon"></i>
+                        <span id="modal-duration">00:00</span>
+                    </div>
+                    <div class="modal-meta-item">
+                        <i class="fas fa-tag modal-meta-icon"></i>
+                        <span id="modal-category">Category</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">COLLIN XANDER</div>
+                <p class="footer-text">Capturing moments and creating visual stories through photography and videography.</p>
+                <div class="footer-social">
+                    <a href="https://instagram.com/collinxander.jpeg" class="social-icon" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="mailto:collinxander1@gmail.com" class="social-icon" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Navigation</h3>
+                <div class="footer-links">
+                    <a href="./" class="footer-link">Home</a>
+                    <a href="./Photos" class="footer-link">Photos</a>
+                    <a href="./videos" class="footer-link">Videos</a>
+                    <a href="./About" class="footer-link">About</a>
+                    <a href="./Contact" class="footer-link">Contact</a>
+                </div>
+            </div>
+            
+        
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Collin Xander. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById("myModal");
-            const modalVideo = modal.querySelector("video");
-            const closeBtn = modal.querySelector(".close");
-            const prevBtn = modal.querySelector(".prev");
-            const nextBtn = modal.querySelector(".next");
-            let currentIndex = 0;
-            const videos = Array.from(document.querySelectorAll('.video'));
+            // Set current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
             
-            const openModal = (index) => {
-                currentIndex = index;
-                const videoSrc = videos[currentIndex].getAttribute('data-video');
-                modalVideo.src = videoSrc;
-                modal.style.display = "flex";
-            };
-
-            const closeModal = () => {
-                modal.style.display = "none";
-                modalVideo.pause();
-                modalVideo.src = "";
-            };
-
-            const showNext = () => {
-                currentIndex = (currentIndex + 1) % videos.length;
-                openModal(currentIndex);
-            };
-
-            const showPrev = () => {
-                currentIndex = (currentIndex - 1 + videos.length) % videos.length;
-                openModal(currentIndex);
-            };
-
-            videos.forEach((item, index) => {
-                item.addEventListener('click', () => openModal(index));
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
             });
-
-            closeBtn.onclick = closeModal;
-
-            prevBtn.onclick = (event) => {
-                event.stopPropagation();
+            
+            // Enhanced video data with more metadata
+            const videos = [
+                 {
+                    id: 1,
+                    title: "THE FIFTH LOOK",
+                    description: "Five styles. One moment. A journey through visual identity.",
+                    thumbnail: "5thlook.png",
+                    src: "5thlook.MP4",
+                    category: "commercial",
+                    date: "June 26th 2025",
+                    duration: "00:55",
+                    tags: ["concept", "creative"]
+                },
+                   {
+                    id: 2,
+                    title: "DISSIMILAR",
+                    description: "A scene showcasing different motions happening at once.",
+                    thumbnail: "dissimilar.jpg",
+                    src: "dissimilar.MP4",
+                    category: "commercial",
+                    date: "May 6th 2025",
+                    duration: "00:53",
+                    tags: ["commercial", "lifestyle"]
+                },
+                {
+                    id: 3,
+                    title: "SOPHISTICATED",
+                    description: "A stylish portrait video showcasing elegant aesthetics and sophisticated visuals.",
+                    thumbnail: "kayja.jpg",
+                    src: "KAYJA.MP4",
+                    category: "portrait",
+                    date: "March 2025",
+                    duration: "00:44",
+                    tags: ["portrait", "fashion"]
+                },
+                {
+                    id: 4,
+                    title: "DON'T BE SHY, GIVE HER FLOWERS",
+                    description: "A romantic visual narrative about appreciation and thoughtful gestures.",
+                    thumbnail: "valentine.jpg",
+                    src: "Timeline 1.MP4",
+                    category: "portrait",
+                    date: "Febuary 2025",
+                    duration: "00:42",
+                    tags: ["portrait", "lifestyle"]
+                },
+                {
+                    id: 5,
+                    title: "MOODTOMOVE X ADIDASORIGINALS",
+                    description: "Commercial collaboration featuring Adidas Originals with dynamic movement and style.",
+                    thumbnail: "mtm.jpg",
+                    src: "mtm.MP4",
+                    category: "commercial",
+                    date: "December 2024",
+                    duration: "00:33",
+                    tags: ["commercial", "sports"]
+                },
+                {
+                    id: 6,
+                    title: "SIGNALS",
+                    description: "An artistic exploration of visual communication and subtle cues.",
+                    thumbnail: "signals.jpg",
+                    src: "820.MP4",
+                    category: "portrait",
+                    date: "July 2024",
+                    duration: "00:28",
+                    tags: ["artistic", "experimental"]
+                },
+                {
+                    id: 7,
+                    title: "CHASE'S GRADUATION VIDEO",
+                    description: "Capturing the milestone celebration of academic achievement and new beginnings.",
+                    thumbnail: "chasegraduation.jpg",
+                    src: "chasegraduation.MP4",
+                    category: "event",
+                    date: "May 2024",
+                    duration: "0:46",
+                    tags: ["event", "celebration"]
+                },
+                {
+                    id: 8,
+                    title: "ROSADO STUDIOS RUN CLUB",
+                    description: "Energetic footage showcasing the community and spirit of the Rosado Studios Run Club.",
+                    thumbnail: "runclub.jpg",
+                    src: "runclub.MP4",
+                    category: "event",
+                    date: "March 2024",
+                    duration: "00:45",
+                    tags: ["event", "sports"]
+                }
+            ];
+            
+            // DOM elements
+            const videoGallery = document.getElementById('video-gallery');
+            const modal = document.getElementById('video-modal');
+            const modalVideo = document.getElementById('modal-video');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalDate = document.getElementById('modal-date');
+            const modalDuration = document.getElementById('modal-duration');
+            const modalCategory = document.getElementById('modal-category');
+            const closeButton = document.getElementById('close-modal');
+            const prevButton = document.getElementById('prev-video');
+            const nextButton = document.getElementById('next-video');
+            const backgroundVideo = document.getElementById('background-video');
+            const videoSpinner = document.getElementById('video-spinner');
+            const videoProgress = document.getElementById('video-progress');
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            // Current video index
+            let currentIndex = 0;
+            let currentFilter = 'all';
+            
+            // Try to play background video
+            backgroundVideo.play().catch(error => {
+                console.log("Autoplay prevented:", error);
+            });
+            
+            // Filter functionality
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Get filter value
+                    currentFilter = button.getAttribute('data-filter');
+                    
+                    // Filter videos
+                    filterVideos(currentFilter);
+                });
+            });
+            
+            // Filter videos function
+            function filterVideos(filter) {
+                // Clear gallery
+                videoGallery.innerHTML = '';
+                
+                // Filter videos
+                const filteredVideos = filter === 'all' 
+                    ? videos 
+                    : videos.filter(video => video.category === filter);
+                
+                // Populate gallery with filtered videos
+                populateGallery(filteredVideos);
+            }
+            
+            // Populate gallery function
+            function populateGallery(videosArray) {
+                videosArray.forEach((video, index) => {
+                    const videoItem = document.createElement('div');
+                    videoItem.className = 'video-item';
+                    videoItem.setAttribute('data-index', index);
+                    
+                    // Create tags HTML
+                    let tagsHTML = '';
+                    if (video.tags && video.tags.length > 0) {
+                        tagsHTML = `
+                            <div class="video-tags">
+                                ${video.tags.map(tag => `<span class="video-tag">${tag}</span>`).join('')}
+                            </div>
+                        `;
+                    }
+                    
+                    videoItem.innerHTML = `
+                        ${tagsHTML}
+                        <img src="${video.thumbnail}" alt="${video.title}" class="video-thumbnail">
+                        <div class="video-overlay">
+                            <h3 class="video-title">${video.title}</h3>
+                            <span class="video-duration">${video.duration}</span>
+                        </div>
+                        <div class="play-button">
+                            <i class="fas fa-play" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                    `;
+                    
+                    videoItem.addEventListener('click', () => openModal(index, videosArray));
+                    videoGallery.appendChild(videoItem);
+                });
+            }
+            
+            // Open modal function
+            function openModal(index, videosArray = videos) {
+                currentIndex = index;
+                const video = videosArray[index];
+                
+                // Show loading spinner
+                videoSpinner.style.display = 'block';
+                
+                // Set modal content
+                modalVideo.src = video.src;
+                modalTitle.textContent = video.title;
+                modalDescription.textContent = video.description;
+                modalDate.textContent = video.date;
+                modalDuration.textContent = video.duration;
+                modalCategory.textContent = video.category.charAt(0).toUpperCase() + video.category.slice(1);
+                
+                // Show modal
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // Load and play video
+                modalVideo.load();
+                modalVideo.addEventListener('canplay', () => {
+                    videoSpinner.style.display = 'none';
+                    modalVideo.play().catch(error => {
+                        console.log("Autoplay prevented:", error);
+                    });
+                });
+                
+                // Update progress bar
+                modalVideo.addEventListener('timeupdate', updateProgressBar);
+            }
+            
+            // Update progress bar
+            function updateProgressBar() {
+                const percentage = (modalVideo.currentTime / modalVideo.duration) * 100;
+                videoProgress.style.width = `${percentage}%`;
+            }
+            
+            // Close modal function
+            function closeModal() {
+                modal.style.display = 'none';
+                modalVideo.pause();
+                modalVideo.src = '';
+                document.body.style.overflow = '';
+                modalVideo.removeEventListener('timeupdate', updateProgressBar);
+            }
+            
+            // Show next video
+            function showNext() {
+                const filteredVideos = currentFilter === 'all' 
+                    ? videos 
+                    : videos.filter(video => video.category === currentFilter);
+                
+                currentIndex = (currentIndex + 1) % filteredVideos.length;
+                openModal(currentIndex, filteredVideos);
+            }
+            
+            // Show previous video
+            function showPrev() {
+                const filteredVideos = currentFilter === 'all' 
+                    ? videos 
+                    : videos.filter(video => video.category === currentFilter);
+                
+                currentIndex = (currentIndex - 1 + filteredVideos.length) % filteredVideos.length;
+                openModal(currentIndex, filteredVideos);
+            }
+            
+            // Event listeners
+            closeButton.addEventListener('click', closeModal);
+            
+            prevButton.addEventListener('click', (e) => {
+                e.stopPropagation();
                 showPrev();
-            };
-
-            nextBtn.onclick = (event) => {
-                event.stopPropagation();
+            });
+            
+            nextButton.addEventListener('click', (e) => {
+                e.stopPropagation();
                 showNext();
-            };
-
-            window.onclick = (event) => {
-                if (event.target == modal) {
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
                     closeModal();
                 }
-            };
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (modal.style.display !== 'flex') return;
+                
+                if (e.key === 'Escape') {
+                    closeModal();
+                } else if (e.key === 'ArrowRight') {
+                    showNext();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrev();
+                } else if (e.key === ' ') {
+                    // Space bar to play/pause
+                    e.preventDefault();
+                    if (modalVideo.paused) {
+                        modalVideo.play();
+                    } else {
+                        modalVideo.pause();
+                    }
+                }
+            });
+            
+            // Initialize gallery
+            populateGallery(videos);
         });
     </script>
 </body>
 </html>
-

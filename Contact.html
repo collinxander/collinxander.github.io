@@ -1,245 +1,1198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
     <title>CONTACT - COLLIN XANDER</title>
+    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for Background Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background: black;
+            font-family: 'Arial', sans-serif;
+            background: #000;
             color: #ffffff;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Canvas for Three.js */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Floating particles overlay */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff1e1e, transparent);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(255, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 4px 40px rgba(255, 0, 0, 0.5);
+        }
+        
+        .logo {
+            font-style: italic;
+            color: #ff1e1e;
+            font-size: 2rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-decoration: none;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .logo:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .logo:hover {
+            color: #00ff00;
+            transform: scale(1.1);
+            text-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .nav-link:hover::before {
+            left: 100%;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff1e1e, #00ff00);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #00ff00;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Main content */
+        .main-content {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            padding: 8rem 1rem 4rem;
+            position: relative;
+            z-index: 2;
         }
-
-        .icon {
-            text-align: center;
-            padding: 12px;
-            text-decoration: none;
-            font-style: italic;
-            color: red;
-            font-size: 27px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            animation: glow 1s ease-in-out infinite alternate;
-            z-index: 10;
-            transition: color 0.6s;
-            margin-bottom: 20px;
-        }
-
-        .icon:hover {
-            color: lime;
-        }
-
-        @keyframes glow {
-            0% { text-shadow: 0 0 5px red; }
-            100% { text-shadow: 0 0 20px red; }
-        }
-
+        
         .contact-container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 30, 30, 0.5);
-            max-width: 600px;
-            width: 90%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(255, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 700px;
+            width: 100%;
             text-align: center;
             position: relative;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 1s ease forwards 0.5s;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: float 5s ease-in-out infinite;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        
+        .contact-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 0, 0, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+            z-index: -1;
         }
-
-        .contact-container h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
+        
+        .contact-container::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 23px;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .contact-heading {
+            margin-bottom: 2rem;
+            font-size: 3rem;
             color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 30, 30, 0.8);
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            letter-spacing: 3px;
+            position: relative;
+            animation: glow 2s ease-in-out infinite alternate;
         }
-
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 40px rgba(255, 0, 0, 0.8);
+            }
+        }
+        
+        .profile-photo-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            cursor: pointer;
+        }
+        
         .profile-photo {
-            width: 150px;
-            height: 150px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            margin-bottom: 20px;
-            border: 3px solid white;
-            box-shadow: 0 0 20px rgba(255, 30, 30, 0.8);
-            transition: transform 0.3s, box-shadow 0.3s;
-            object-fit: cover; /* Ensures the image maintains its aspect ratio */
+            object-fit: cover;
+            border: 4px solid #ff1e1e;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 0, 0.8),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
         }
-
-        .profile-photo:hover {
+        
+        .profile-photo-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #ff1e1e, #00ff00, #ff1e1e);
+            animation: spin 3s linear infinite;
+            z-index: 1;
+        }
+        
+        .profile-photo-container::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: #000;
+            z-index: 1;
+        }
+        
+        .profile-photo-container:hover .profile-photo {
             transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(255, 30, 30, 1);
+            box-shadow: 
+                0 0 50px rgba(255, 0, 0, 1),
+                0 0 100px rgba(255, 0, 0, 0.5);
         }
-
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         .contact-info {
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
         }
-
-        .contact-info p {
-            margin: 15px 0;
-            font-size: 18px;
+        
+        .contact-item {
+            margin: 2rem 0;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+            padding: 1rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .contact-info a {
+        
+        .contact-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+        
+        .contact-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: #ff1e1e;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            transform: scale(1.3) rotate(360deg);
+            color: #00ff00;
+        }
+        
+        .contact-link {
             color: #ff1e1e;
             text-decoration: none;
-            transition: color 0.3s, text-shadow 0.3s;
-            margin-left: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem;
+            border-radius: 8px;
         }
-
-        .contact-info a:hover {
-            color: #ff4747;
-            text-shadow: 0 0 10px rgba(255, 71, 71, 0.8);
+        
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 0, 0, 0.2), rgba(0, 255, 0, 0.2));
+            transition: width 0.3s ease;
+            border-radius: 8px;
+            z-index: -1;
         }
-
-        .contact-info i {
-            font-size: 24px;
-            margin-right: 10px;
+        
+        .contact-link:hover::before {
+            width: 100%;
+        }
+        
+        .contact-link:hover {
+            color: #00ff00;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+        }
+        
+        .contact-form {
+            margin-top: 3rem;
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            color: #f0f0f0;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-textarea {
+            min-height: 140px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #ff1e1e;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 0, 0.5),
+                inset 0 0 20px rgba(255, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .form-input:focus + .form-label,
+        .form-textarea:focus + .form-label {
             color: #ff1e1e;
         }
-
-        .fallback-note {
-            font-size: 14px;
+        
+        /* Input validation styles */
+        .form-input.valid,
+        .form-textarea.valid {
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+        
+        .form-input.invalid,
+        .form-textarea.invalid {
+            border-color: #ff4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
+        
+        .validation-message {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        
+        .validation-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .validation-message.error {
+            color: #ff4444;
+        }
+        
+        .validation-message.success {
+            color: #00ff00;
+        }
+        
+        .submit-btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(45deg, #ff1e1e, #ff4444);
             color: white;
-            margin-top: 10px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 30, 30, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #ff4444, #00ff00);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 30, 30, 0.6);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .social-links {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.3), transparent);
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .social-link:hover::before {
+            transform: scale(1);
+        }
+        
+        .social-link:hover {
+            background: #ff1e1e;
+            transform: translateY(-8px) rotate(360deg);
+            box-shadow: 0 10px 25px rgba(255, 30, 30, 0.5);
+        }
+        
+        /* Form status messages */
+        .form-status {
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+            font-weight: bold;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .form-status.success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+        
+        .form-status.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4444;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+            display: none;
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff1e1e;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-indicator:hover {
+            color: #00ff00;
+            transform: translateX(-50%) scale(1.2);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive design */
         @media (max-width: 768px) {
-            .contact-container h1 {
-                font-size: 20px;
+            .header {
+                flex-direction: column;
+                padding: 1rem;
             }
-
-            .contact-info p {
-                font-size: 16px;
+            
+            .logo {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
             }
-
-            .profile-photo {
-                width: 120px;
-                height: 120px;
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-link {
+                font-size: 1rem;
+                padding: 0.3rem 0.8rem;
+            }
+            
+            .contact-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .contact-heading {
+                font-size: 2.2rem;
+            }
+            
+            .profile-photo-container {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .contact-item {
+                font-size: 1.1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-icon {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                gap: 1.5rem;
+            }
+            
+            .social-link {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
             }
         }
-
+        
         @media (max-width: 480px) {
-            .icon {
-                font-size: 24px;
+            .main-content {
+                padding: 6rem 0.5rem 2rem;
             }
-
+            
             .contact-container {
-                padding: 20px;
+                padding: 1.5rem;
             }
-
-            .contact-container h1 {
-                font-size: 18px;
+            
+            .contact-heading {
+                font-size: 1.8rem;
             }
-
-            .contact-info p {
-                font-size: 14px;
+            
+            .profile-photo-container {
+                width: 140px;
+                height: 140px;
             }
-
-            .profile-photo {
-                width: 100px;
-                height: 100px;
+            
+            .contact-item {
+                font-size: 1rem;
+                margin: 1.5rem 0;
+                padding: 0.8rem;
+            }
+            
+            .contact-icon {
+                font-size: 1.5rem;
+            }
+            
+            .form-input,
+            .form-textarea {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .submit-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
             }
         }
     </style>
-
-    <script>
-        import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-
-// Scene Setup
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-    75, window.innerWidth / window.innerHeight, 0.1, 1000
-);
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-// Particle System
-const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 500;
-const positions = new Float32Array(particlesCount * 3);
-for (let i = 0; i < particlesCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 10;
-}
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-const particlesMaterial = new THREE.PointsMaterial({
-    color: 0xff1e1e,
-    size: 0.05,
-    transparent: true,
-    opacity: 0.8
-});
-const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-scene.add(particleMesh);
-
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-const pointLight = new THREE.PointLight(0xff1e1e, 1, 50);
-pointLight.position.set(5, 5, 5);
-scene.add(pointLight);
-
-// Camera Positioning
-camera.position.z = 5;
-
-// Controls
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-
-// Animation Loop
-function animate() {
-    requestAnimationFrame(animate);
-    particleMesh.rotation.y += 0.001;
-    controls.update();
-    renderer.render(scene, camera);
-}
-animate();
-
-// Resize Handler
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-    </script>
 </head>
 <body>
-    <a href="./" class="icon">COLLIN XANDER</a>
-    <div class="contact-container">
-        <h1>Contact Me</h1>
-        <img src="contact.JPG" alt="Collin Xander" class="profile-photo">
-        <div class="contact-info">
-            <p>
-                <i class="fab fa-instagram"></i>
-                Instagram: <a href="https://www.instagram.com/collinxander.jpeg" target="_blank">@collinxander.jpeg</a>
-            </p>
-            <p>
-                <i class="fas fa-envelope"></i>
-                Email: <a href="mailto:collinxander1@gmail.com">collinxander1@gmail.com</a>
-            </p>
+    <!-- Floating particles -->
+    <div class="floating-particles" id="floating-particles"></div>
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <a href="./" class="logo">COLLIN XANDER</a>
+        <div class="nav-links">
+            <a href="./Photos" class="nav-link">Photos</a>
+            <a href="./videos" class="nav-link">Videos</a>
+            <a href="./About" class="nav-link">About</a>
         </div>
+    </header>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" id="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
     </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="contact-container">
+            <h1 class="contact-heading">BOOKINGS</h1>
+            
+            <div class="profile-photo-container">
+                <img src="contact.JPG" alt="Collin Xander" class="profile-photo">
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-instagram contact-icon"></i>
+                    <span>Instagram: <a href="https://www.instagram.com/collinxander.jpeg" target="_blank" class="contact-link">@collinxander.jpeg</a></span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <span>Email: <a href="mailto:collinxander1@gmail.com" class="contact-link">collinxander1@gmail.com</a></span>
+                </div>
+            </div>
+            
+            <!-- Status messages -->
+            <div id="form-success" class="form-status success">
+                <i class="fas fa-check-circle"></i>
+                Your message has been sent successfully! I'll get back to you soon.
+            </div>
+            <div id="form-error" class="form-status error">
+                <i class="fas fa-exclamation-triangle"></i>
+                There was an error sending your message. Please try again.
+            </div>
+            
+            <form class="contact-form" id="contact-form" action="https://formsubmit.co/collinxander1@gmail.com" method="POST">
+                <!-- FormSubmit configuration -->
+                <input type="hidden" name="_subject" value="New message from your website!">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://collinxander.com/thank-you">
+                <input type="hidden" name="_cc" value="3462765810@txt.att.net">
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name *</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                    <div class="validation-message" id="name-validation"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address *</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                    <div class="validation-message" id="email-validation"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject" class="form-label">Inquiry Type *</label>
+                    <input type="text" id="subject" name="subject" class="form-input" required placeholder="e.g., Portrait Session, Event Photography, Commercial Work">
+                    <div class="validation-message" id="subject-validation"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">Message *</label>
+                    <textarea id="message" name="message" class="form-textarea" required placeholder="Tell me about your project, preferred dates, location, and any specific requirements..."></textarea>
+                    <div class="validation-message" id="message-validation"></div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        Send Message
+                        <span class="spinner" id="submit-spinner"></span>
+                    </button>
+                </div>
+            </form>
+            
+    </main>
+
+    <script>
+        // Enhanced JavaScript functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Three.js Enhanced Background Animation
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            
+            // Enhanced particle system with multiple layers
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1500;
+            const posArray = new Float32Array(particlesCount * 3);
+            const colorArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i += 3) {
+                // Position
+                posArray[i] = (Math.random() - 0.5) * 15;
+                posArray[i + 1] = (Math.random() - 0.5) * 15;
+                posArray[i + 2] = (Math.random() - 0.5) * 15;
+                
+                // Color variation
+                colorArray[i] = Math.random() * 0.5 + 0.5; // Red
+                colorArray[i + 1] = Math.random() * 0.2; // Green
+                colorArray[i + 2] = Math.random() * 0.2; // Blue
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.008,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            // Add secondary particle layer
+            const secondaryGeometry = new THREE.BufferGeometry();
+            const secondaryCount = 800;
+            const secondaryArray = new Float32Array(secondaryCount * 3);
+            
+            for(let i = 0; i < secondaryCount * 3; i++) {
+                secondaryArray[i] = (Math.random() - 0.5) * 20;
+            }
+            
+            secondaryGeometry.setAttribute('position', new THREE.BufferAttribute(secondaryArray, 3));
+            
+            const secondaryMaterial = new THREE.PointsMaterial({
+                size: 0.003,
+                color: 0x00ff00,
+                transparent: true,
+                opacity: 0.4,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const secondaryMesh = new THREE.Points(secondaryGeometry, secondaryMaterial);
+            scene.add(secondaryMesh);
+            
+            camera.position.z = 5;
+            
+            // Enhanced mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            
+            function onDocumentMouseMove(event) {
+                mouseX = (event.clientX - window.innerWidth / 2) / 100;
+                mouseY = (event.clientY - window.innerHeight / 2) / 100;
+            }
+            
+            document.addEventListener('mousemove', onDocumentMouseMove);
+            
+            // Animation loop with smooth interpolation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Smooth mouse following
+                targetX += (mouseX - targetX) * 0.02;
+                targetY += (mouseY - targetY) * 0.02;
+                
+                // Primary particles
+                particlesMesh.rotation.x += 0.0008;
+                particlesMesh.rotation.y += 0.0008;
+                particlesMesh.rotation.x += targetY * 0.0003;
+                particlesMesh.rotation.y += targetX * 0.0003;
+                
+                // Secondary particles (opposite direction)
+                secondaryMesh.rotation.x -= 0.0005;
+                secondaryMesh.rotation.y -= 0.0005;
+                secondaryMesh.rotation.x -= targetY * 0.0002;
+                secondaryMesh.rotation.y -= targetX * 0.0002;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Floating particles overlay
+            function createFloatingParticles() {
+                const container = document.getElementById('floating-particles');
+                
+                setInterval(() => {
+                    if (Math.random() > 0.7) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                        particle.style.animationDelay = Math.random() * 2 + 's';
+                        container.appendChild(particle);
+                        
+                        setTimeout(() => {
+                            particle.remove();
+                        }, 8000);
+                    }
+                }, 500);
+            }
+            
+            createFloatingParticles();
+            
+            // Header scroll effect
+            const header = document.getElementById('header');
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                    scrollIndicator.style.opacity = '0';
+                } else {
+                    header.classList.remove('scrolled');
+                    scrollIndicator.style.opacity = '1';
+                }
+            });
+            
+            // Scroll indicator click
+            scrollIndicator.addEventListener('click', () => {
+                document.querySelector('.contact-container').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Enhanced form validation
+            const form = document.getElementById('contact-form');
+            const inputs = form.querySelectorAll('.form-input, .form-textarea');
+            
+            // Real-time validation
+            inputs.forEach(input => {
+                input.addEventListener('input', () => validateField(input));
+                input.addEventListener('blur', () => validateField(input));
+            });
+            
+            function validateField(field) {
+                const value = field.value.trim();
+                const fieldName = field.name;
+                const validationMsg = document.getElementById(fieldName + '-validation');
+                
+                let isValid = true;
+                let message = '';
+                
+                switch(fieldName) {
+                    case 'name':
+                        if (value.length < 2) {
+                            isValid = false;
+                            message = 'Name must be at least 2 characters long';
+                        } else if (!/^[a-zA-Z\s]+$/.test(value)) {
+                            isValid = false;
+                            message = 'Name can only contain letters and spaces';
+                        } else {
+                            message = 'Looks good!';
+                        }
+                        break;
+                        
+                    case 'email':
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            isValid = false;
+                            message = 'Please enter a valid email address';
+                        } else {
+                            message = 'Valid email address';
+                        }
+                        break;
+                        
+                    case 'subject':
+                        if (value.length < 3) {
+                            isValid = false;
+                            message = 'Please specify your inquiry type';
+                        } else {
+                            message = 'Thank you for specifying';
+                        }
+                        break;
+                        
+                    case 'message':
+                        if (value.length < 10) {
+                            isValid = false;
+                            message = 'Message must be at least 10 characters long';
+                        } else if (value.length > 1000) {
+                            isValid = false;
+                            message = 'Message is too long (max 1000 characters)';
+                        } else {
+                            message = `${value.length}/1000 characters`;
+                        }
+                        break;
+                }
+                
+                // Update field appearance
+                field.classList.remove('valid', 'invalid');
+                field.classList.add(isValid ? 'valid' : 'invalid');
+                
+                // Update validation message
+                validationMsg.textContent = message;
+                validationMsg.classList.remove('show', 'error', 'success');
+                if (message) {
+                    validationMsg.classList.add('show', isValid ? 'success' : 'error');
+                }
+                
+                return isValid;
+            }
+            
+            // Enhanced form submission
+            const submitBtn = document.getElementById('submit-btn');
+            const submitSpinner = document.getElementById('submit-spinner');
+            const formSuccess = document.getElementById('form-success');
+            const formError = document.getElementById('form-error');
+            
+            form.addEventListener('submit', function(e) {
+                // Validate all fields before submission
+                let allValid = true;
+                inputs.forEach(input => {
+                    if (!validateField(input)) {
+                        allValid = false;
+                    }
+                });
+                
+                if (!allValid) {
+                    e.preventDefault();
+                    formError.textContent = 'Please fix the errors above before submitting.';
+                    formError.style.display = 'block';
+                    formSuccess.style.display = 'none';
+                    return;
+                }
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Sending... <span class="spinner" style="display: inline-block;"></span>';
+                
+                // Hide previous messages
+                formSuccess.style.display = 'none';
+                formError.style.display = 'none';
+                
+                // Add a small delay for better UX
+                setTimeout(() => {
+                    // Form will be submitted normally after this
+                }, 1000);
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Check for success parameter in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                formSuccess.style.display = 'block';
+                // Scroll to success message
+                setTimeout(() => {
+                    formSuccess.scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+            }
+            
+            // Add typing effect to heading
+            const heading = document.querySelector('.contact-heading');
+            const originalText = heading.textContent;
+            heading.textContent = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < originalText.length) {
+                    heading.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 150);
+                }
+            }
+            
+            // Start typing effect after page load
+            setTimeout(typeWriter, 1000);
+            
+            // Add click effects to interactive elements
+            document.querySelectorAll('.contact-item, .social-link, .nav-link').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 0, 0, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                        z-index: 1000;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+            
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
 </body>
 </html>

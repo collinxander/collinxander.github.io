@@ -4,353 +4,1232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHOTOS - COLLIN XANDER</title>
+    <meta name="description" content="Explore Collin Xander's photography portfolio featuring creative and artistic photography work.">
     <link rel="icon" href="profilepic.jpg" type="image/x-icon">
-   <script src="https://kit.fontawesome.com/71405c46cc.js" crossorigin="anonymous" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
     <style>
-        body {
-            margin: 0;
-            background: rgba(39, 37, 37, 0.87);
-            background-image: linear-gradient(to right, black, rgb(61, 61, 61));
+        :root {
+            --primary-color: #ff0000;
+            --hover-color: #00ff00;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --text-secondary: #b0b0b0;
+            --transition-speed: 0.3s;
+            --border-radius: 12px;
         }
-
-        .section {
-            position: relative;
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Typography */
+        .font-impact {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .text-shadow-red {
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+        
+        /* Header with enhanced logo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 300px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            position: relative;
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--hover-color);
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover {
+            color: var(--hover-color);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-link {
+            position: relative;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--hover-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+            background-color: var(--hover-color);
+        }
+        
+        .book-now {
+            background-color: var(--primary-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .book-now:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 4px 20px rgba(0, 255, 0, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .book-now::after {
+            display: none;
+        }
+        
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            color: var(--hover-color);
+        }
+        
+        /* Hero section */
+        .hero-section {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            margin-top: 70px;
         }
-
-        .section h1 {
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
             text-align: center;
-            font-size: 3rem;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
             font-style: italic;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-shadow: 2px 2px 5px red;
-            padding: 20px;
-            margin: 15px;
-            opacity: 0.8;
-            z-index: 1;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.4);
+            animation: pulsate 2s infinite alternate;
         }
-
-        .video-container {
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .video-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
         }
-
-        video {
-            display: block;
+        
+        .video-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+        }
+        
+        .video-background video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
-        .navbar {
-            background-color: #000000;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .navbar a:hover {
-            transform: scale(1.1);
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            animation: pulse 0.5s infinite alternate;
-        }
-
-        .navbar a {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 1.2rem;
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.3s;
+        
+        /* Category filter */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 0 1rem;
         }
         
-        .navbar a i {
-            margin-right: 5px; /* Add some space between the icon and text */
+        .filter-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .book-now {
-            background-color: #ff0000; /* Red background */
-            color: white; /* White text */
-            padding: 10px 20px; /* Some padding */
-            text-align: center; /* Centered text */
-            text-decoration: none; /* No underline */
-            display: inline-block; /* Make the link a block element */
-            font-size: 16px; /* Increase font size */
-            margin: 4px 2px; /* Some margin */
-            cursor: pointer; /* Pointer/hand icon on hover */
-            border-radius: 5px; /* Rounded corners */
-            transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+        
+        .filter-button:hover, .filter-button.active {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
         }
-
-        .book-now:hover {
-            background-color: white; /* White background on hover */
-            color: black; /* Black text on hover */
-            transform: scale(1.1); /* Slightly larger on hover */
+        
+        /* Gallery sections */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            padding: 0 1.5rem;
         }
-
+        
         .gallery-section {
-            margin: 20px;
-            padding: 10px;
-            border: 1px solid #444;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            background-color: rgba(30, 30, 30, 0.7);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
         }
-
-        .gallery-section h2 {
+        
+        .gallery-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2);
+        }
+        
+        .gallery-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.5), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        
+        .gallery-title {
             text-align: center;
             font-size: 2rem;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
-
+        
+        .gallery-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+        }
+        
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            grid-gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
-
-        .gallery img {
-            padding: 10px;
-            object-fit: cover;
-            transition: 0.3s;
+        
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--card-bg);
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--border-radius);
+            padding: 2px;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.5), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .gallery-item img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
         }
-
-        .gallery img:hover {
+        
+        .gallery-item:hover img {
             transform: scale(1.1);
-            filter: grayscale(100%);
         }
-
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-icon {
+            color: white;
+            font-size: 2rem;
+            transform: scale(0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+        }
+        
+        .gallery-item:hover .gallery-icon {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        /* Photo tags */
+        .photo-tags {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 5;
+        }
+        
+        .photo-tag {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: var(--text-color);
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Lightbox customization */
+        .lb-data .lb-caption {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .lb-data .lb-number {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .lb-nav a.lb-prev,
+        .lb-nav a.lb-next {
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lb-nav a.lb-prev:hover,
+        .lb-nav a.lb-next:hover {
+            opacity: 1;
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 0 1.5rem;
+        }
+        
+        .footer-logo {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .footer-text {
+            max-width: 300px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Animations */
+        @keyframes pulsate {
+            0% {
+                text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.4);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.6);
+            }
+        }
+        
         @keyframes pulse {
             0% {
-                scale: 1;
+                transform: scale(1);
+                color: white;
+                text-shadow: 0 0 10px white;
             }
-
-            65% {
-                scale: 0.9;
-            }
-
             100% {
-                scale: 1;
+                transform: scale(1.1);
+                color: var(--hover-color);
+                text-shadow: 0 0 20px var(--hover-color);
             }
         }
-
-        /* Media Queries for responsiveness */
-        @media only screen and (max-width: 768px) {
-            .section h1 {
-                font-size: 2rem;
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.5rem;
             }
             
-            .navbar a {
-                font-size: 18px;
-            }
-
             .gallery {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 1.5rem;
             }
         }
-
-        @media only screen and (max-width: 480px) {
-            .section h1 {
-                font-size: 2rem;
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
             }
             
-            .navbar a {
-                font-size: 16px;
+            .logo {
+                font-size: 1.5rem;
             }
-
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 1rem;
+                gap: 1rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero-section {
+                height: 50vh;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
             .gallery {
-                grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1.2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+            
+            .filter-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .gallery-title {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="section">
-        <h1>PHOTOS</h1>
-        <div class="video-container">
-            <video autoplay muted loop playsinline preload="none" id="video-container">
-                <source src="balcony.MP4" type="video/mp4">
+    <!-- Header with Logo and Navigation -->
+    <header class="header">
+        <a href="./" class="logo">COLLIN XANDER</a>
+        
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav class="nav-links" id="nav-links">
+            <a href="./" class="nav-link">Home</a>
+            <a href="./videos" class="nav-link">Videos</a>
+            <a href="./About" class="nav-link">About</a>
+            <a href="./Contact" class="nav-link book-now">Book Now</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Background Video -->
+    <section class="hero-section">
+        <div class="video-background">
+            <video id="background-video" autoplay muted loop playsinline>
+                <source src="video.MP4" type="video/mp4">
             </video>
         </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">PHOTOS</h1>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <div class="filter-container">
+        <button class="filter-button active" data-filter="all">All Photos</button>
+        <button class="filter-button" data-filter="portraits">Portraits</button>
+        <button class="filter-button" data-filter="events">Events</button>
+        <button class="filter-button" data-filter="automotive">Automotive</button>
+        <button class="filter-button" data-filter="art">Art</button>
+    </div>
+
+    <!-- Gallery Sections -->
+    <div class="gallery-container">
+      <div class="gallery-section" data-category="portraits events">
+            <h2 class="gallery-title">VOL. 22</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="camvol1.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                    <div class="photo-tags">
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="camvol1.jpg" loading="lazy" alt="VOL. 22 Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="camvol2.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                    <div class="photo-tags">
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="camvol2.jpg" loading="lazy" alt="VOL. 22 Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="camvol3.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                    <div class="photo-tags">
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="camvol3.jpg" loading="lazy" alt="VOL. 22 Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="camvol4.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                    <div class="photo-tags">
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="camvol4.jpg" loading="lazy" alt="VOL. 22 Photo 4">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="camvol5.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                    <div class="photo-tags">
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="camvol5.jpg" loading="lazy" alt="VOL. 22 Photo 5">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="camvol6.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                    <div class="photo-tags">
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="camvol6.jpg" loading="lazy" alt="VOL. 22 Photo 6">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="gallery-section" data-category="events">
+            <h2 class="gallery-title">MOTH HTX</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="mothhtx1.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="mothhtx1.jpg" loading="lazy" alt="MOTH HTX Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="mothhtx2.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="mothhtx2.jpg" loading="lazy" alt="MOTH HTX Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="mothhtx3.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="mothhtx3.jpg" loading="lazy" alt="MOTH HTX Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="mothhtx4.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="mothhtx4.jpg" loading="lazy" alt="MOTH HTX Photo 4">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="mothhtx5.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="mothhtx5.jpg" loading="lazy" alt="MOTH HTX Photo 5">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="mothhtx7.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="mothhtx7.jpg" loading="lazy" alt="MOTH HTX Photo 6">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="gallery-section" data-category="art">
+            <h2 class="gallery-title">SKELETONS & SOULS</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="art1.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">art</span>
+                    </div>
+                    <img src="art1.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="art2.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">art</span>
+                    </div>
+                    <img src="art2.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="art3.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">art</span>
+                    </div>
+                    <img src="art3.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="art4.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">art</span>
+                    </div>
+                    <img src="art4.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 4">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="art5.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">art</span>
+                    </div>
+                    <img src="art5.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 5">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="gallery-section" data-category="portraits events">
+            <h2 class="gallery-title">VICTORIA'S BIRTHDAY PICS</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="victoria1.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="victoria1.JPG" loading="lazy" alt="VICTORIA'S BIRTHDAY Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="victoria2.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="victoria2.JPG" loading="lazy" alt="VICTORIA'S BIRTHDAY Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="victoria3.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="victoria3.JPG" loading="lazy" alt="VICTORIA'S BIRTHDAY Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="gallery-section" data-category="automotive">
+            <h2 class="gallery-title">TAYLOR'S LAMBORGHINI PICS</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="LAMBO4.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">automotive</span>
+                    </div>
+                    <img src="LAMBO4.jpg" loading="lazy" alt="LAMBORGHINI Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="lambo3.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">automotive</span>
+                    </div>
+                    <img src="lambo3.jpg" loading="lazy" alt="LAMBORGHINI Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="LAMBO2.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">automotive</span>
+                    </div>
+                    <img src="LAMBO2.jpg" loading="lazy" alt="LAMBORGHINI Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="LAMBO1.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">automotive</span>
+                    </div>
+                    <img src="LAMBO1.jpg" loading="lazy" alt="LAMBORGHINI Photo 4">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="gallery-section" data-category="portraits events">
+            <h2 class="gallery-title">CHASE'S GRADUATION PICS</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="chasegrad3.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="chasegrad3.jpg" loading="lazy" alt="CHASE'S GRADUATION Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="chasegrad2.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="chasegrad2.jpg" loading="lazy" alt="CHASE'S GRADUATION Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="chasegrad1.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="chasegrad1.jpg" loading="lazy" alt="CHASE'S GRADUATION Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Additional gallery sections continue with the same pattern -->
+        
+        <div class="gallery-section" data-category="portraits events">
+            <h2 class="gallery-title">BLITZ POOL SHOOT</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="poolparty3.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="poolparty3.jpg" loading="lazy" alt="BLITZ POOL SHOOT Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="poolparty2.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="poolparty2.jpg" loading="lazy" alt="BLITZ POOL SHOOT Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="poolparty1.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                        <span class="photo-tag">portrait</span>
+                    </div>
+                    <img src="poolparty1.jpg" loading="lazy" alt="BLITZ POOL SHOOT Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Remaining gallery sections -->
+        
+        <div class="gallery-section" data-category="events">
+            <h2 class="gallery-title">RUN CLUB</h2>
+            <div class="gallery">
+                <a class="gallery-item" href="RUNCLUB1.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="RUNCLUB1.jpg" loading="lazy" alt="RUN CLUB Photo 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="RUNCLUB2.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="RUNCLUB2.jpg" loading="lazy" alt="RUN CLUB Photo 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="RUNCLUB3.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="RUNCLUB3.jpg" loading="lazy" alt="RUN CLUB Photo 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+                <a class="gallery-item" href="RUNCLUB4.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                    <div class="photo-tags">
+                        <span class="photo-tag">event</span>
+                    </div>
+                    <img src="RUNCLUB4.jpg" loading="lazy" alt="RUN CLUB Photo 4">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus gallery-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
     
-    <div class="navbar">
-        <a href="./">Home</a>
-        <a href="./videos">Videos</a>
-        <a href="./About">About</a>
-        <a href="./Contact" class="book-now">Book Now</a>
-    </div>
-    <div class ="gallery-section">
-        <h2>VOL. 22</h2>
-        <div class ="gallery">
-            <a class = "camvol1" href="camvol1.jpg" data-lightbox="gallery"><img src="camvol1.jpg" loading="lazy" alt="camvol1.jpg"></a>
-            <a class = "camvol2" href="camvol2.jpg" data-lightbox="gallery"><img src="camvol2.jpg" loading="lazy" alt="camvol2.jpg"></a>
-            <a class = "camvol3" href="camvol3.jpg" data-lightbox="gallery"><img src="camvol3.jpg" loading="lazy" alt="camvol3.jpg"></a>
-            <a class = "camvol4" href="camvol4.jpg" data-lightbox="gallery"><img src="camvol4.jpg" loading="lazy" alt="camvol4.jpg"></a>
-            <a class = "camvol5" href="camvol5.jpg" data-lightbox="gallery"><img src="camvol5.jpg" loading="lazy" alt="camvol5.jpg"></a>
-            <a class = "camvol6" href="camvol6.jpg" data-lightbox="gallery"><img src="camvol6.jpg" loading="lazy" alt="camvol6.jpg"></a>
-          </div>
-        </div>
-      <div class="gallery-section">
-        <h2>MOTH HTX</h2>
-        <div class="gallery">
-            <a class="mothhtx1" href="mothhtx1.jpg" data-lightbox="gallery"><img src="mothhtx1.jpg" loading="lazy" alt="mothhtx1"></a>
-            <a class="mothhtx2" href="mothhtx2.jpg" data-lightbox="gallery"><img src="mothhtx2.jpg" loading="lazy" alt="mothhtx2"></a>
-            <a class="mothhtx3" href="mothhtx3.jpg" data-lightbox="gallery"><img src="mothhtx3.jpg" loading="lazy" alt="mothhtx3"></a>
-            <a class="mothhtx4" href="mothhtx4.jpg" data-lightbox="gallery"><img src="mothhtx4.jpg" loading="lazy" alt="mothhtx4"></a>
-            <a class="mothhtx5" href="mothhtx5.jpg" data-lightbox="gallery"><img src="mothhtx5.jpg" loading="lazy" alt="mothhtx5"></a>
-            <a class="mothhtx7" href="mothhtx7.jpg" data-lightbox="gallery"><img src="mothhtx7.jpg" loading="lazy" alt="mothhtx7"></a>
-          </div>
-        </div>
-    </div>
-     <div class="gallery-section">
-        <h2>SKELETONS & SOULS</h2>
-        <div class="gallery">
-            <a class="art1" href="art1.jpg" data-lightbox="gallery"><img src="art1.jpg" loading="lazy" alt="art1"></a>
-            <a class="art2" href="art2.jpg" data-lightbox="gallery"><img src="art2.jpg" loading="lazy" alt="art2"></a>
-            <a class="art3" href="art3.jpg" data-lightbox="gallery"><img src="art3.jpg" loading="lazy" alt="art3"></a>
-            <a class="art4" href="art4.jpg" data-lightbox="gallery"><img src="art4.jpg" loading="lazy" alt="art4"></a>
-            <a class="art5" href="art5.jpg" data-lightbox="gallery"><img src="art5.jpg" loading="lazy" alt="art5"></a>
-        </div>
-    </div>
-    <div class="gallery-section">
-        <h2>VICTORIA'S BIRTHDAY PICS</h2>
-        <div class="gallery">
-            <a class="victoria1" href="victoria1.JPG" data-lightbox="gallery"><img src="victoria1.JPG" loading="lazy" alt="victoria1"></a>
-            <a class="victoria2" href="victoria2.JPG" data-lightbox="gallery"><img src="victoria2.JPG" loading="lazy" alt="victoria2"></a>
-            <a class="victoria3" href="victoria3.JPG" data-lightbox="gallery"><img src="victoria3.JPG" loading="lazy" alt="victoria3"></a>
-        </div>
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scroll-top">
+        <i class="fas fa-arrow-up"></i>
     </div>
     
-    <div class="gallery-section">
-        <h2>TAYLOR'S LAMBORGHINI PICS</h2>
-        <div class="gallery">
-            <a class="LAMBO4" href="LAMBO4.jpg" data-lightbox="gallery"><img src="LAMBO4.jpg" loading="lazy" alt="LAMB4"></a>
-            <a class="LAMBO3" href="lambo3.jpg" data-lightbox="gallery"><img src="lambo3.jpg" loading="lazy" alt="LAMBO3"></a>
-            <a class="LAMBO2" href="LAMBO2.jpg" data-lightbox="gallery"><img src="LAMBO2.jpg" loading="lazy" alt="LAMBO2"></a>
-            <a class="LAMBO1" href="LAMBO1.jpg" data-lightbox="gallery"><img src="LAMBO1.jpg" loading="lazy" alt="LAMBO1"></a>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">COLLIN XANDER</div>
+                <p class="footer-text">Capturing moments and creating visual stories through photography and videography.</p>
+                <div class="footer-social">
+                    <a href="https://instagram.com/collinxander.jpeg" class="social-icon" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="mailto:collinxander1@gmail.com" class="social-icon" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Navigation</h3>
+                <div class="footer-links">
+                    <a href="./" class="footer-link">Home</a>
+                    <a href="./Photos" class="footer-link">Photos</a>
+                    <a href="./videos" class="footer-link">Videos</a>
+                    <a href="./About" class="footer-link">About</a>
+                    <a href="./Contact" class="footer-link">Contact</a>
+                </div>
+            </div>
         </div>
-    </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Collin Xander. All rights reserved.</p>
+        </div>
+    </footer>
 
-    <div class="gallery-section">
-        <h2>CHASE'S GRADUATION PICS</h2>
-        <div class="gallery">
-            <a class="chasegrad3" href="chasegrad3.jpg" data-lightbox="gallery"><img src="chasegrad3.jpg" loading="lazy" alt="chasegrad3"></a>
-            <a class="chasegrad2" href="chasegrad2.jpg" data-lightbox="gallery"><img src="chasegrad2.jpg" loading="lazy" alt="chasegrad2"></a>
-            <a class="chasegrad1" href="chasegrad1.jpg" data-lightbox="gallery"><img src="chasegrad1.jpg" loading="lazy" alt="chasegrad1"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>BLITZ POOL SHOOT</h2>
-        <div class="gallery">
-            <a class="poolparty3" href="poolparty3.jpg" data-lightbox="gallery"><img src="poolparty3.jpg" loading="lazy" alt="poolparty3"></a>
-            <a class="poolparty2" href="poolparty2.jpg" data-lightbox="gallery"><img src="poolparty2.jpg" loading="lazy" alt="poolparty2"></a>
-            <a class="poolparty1" href="poolparty1.jpg" data-lightbox="gallery"><img src="poolparty1.jpg" loading="lazy" alt="poolparty1"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>CAMERON'S BIRTHDAY PICS</h2>
-        <div class="gallery">
-            <a class="cameron3" href="cameron3.jpg" data-lightbox="gallery"><img src="cameron3.jpg" loading="lazy" alt="cameron3"></a>
-            <a class="cameron2" href="cameron2.jpg" data-lightbox="gallery"><img src="cameron2.jpg" loading="lazy" alt="cameron2"></a>
-            <a class="cameron1" href="cameron1.jpg" data-lightbox="gallery"><img src="cameron1.jpg" loading="lazy" alt="cameron1"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>RUN CLUB</h2>
-        <div class="gallery">
-            <a class="RUNCLUB1" href="RUNCLUB1.jpg" data-lightbox="gallery"><img src="RUNCLUB1.jpg" loading="lazy" alt="RUNCLUB1"></a>
-            <a class="RUNCLUB2" href="RUNCLUB2.jpg" data-lightbox="gallery"><img src="RUNCLUB2.jpg" loading="lazy" alt="RUNCLUB2"></a>
-            <a class="RUNCLUB3" href="RUNCLUB3.jpg" data-lightbox="gallery"><img src="RUNCLUB3.jpg" loading="lazy" alt="RUNCLUB3"></a>
-            <a class="RUNCLUB4" href="RUNCLUB4.jpg" data-lightbox="gallery"><img src="RUNCLUB4.jpg" loading="lazy" alt="RUNCLUB4"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>MISCELLANOUS</h2>
-        <div class="gallery">
-            <a class="lj" href="Lj.jpg" data-lightbox="gallery"><img src="Lj.jpg" loading="lazy" alt="Lj"></a>
-            <a class="funso" href="funso.jpg" data-lightbox="gallery"><img src="funso.jpg" loading="lazy" alt="funso"></a>
-            <a class="mise" href="mise.jpg" data-lightbox="gallery"><img src="mise.jpg" loading="lazy" alt="mise"></a>
-            <a class="elijha" href="elijha.jpg" data-lightbox="gallery"><img src="elijha.jpg" loading="lazy" alt="elijha"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>COLLECTIVES</h2>
-        <div class="gallery">
-            <a class="collectives" href="Collectives.jpg" data-lightbox="gallery"><img src="Collectives.jpg" loading="lazy" alt="Collectives"></a>
-            <a class="collectives2" href="Collectives2.jpg" data-lightbox="gallery"><img src="Collectives2.jpg" loading="lazy" alt="Collectives2"></a>
-            <a class="collectives3" href="Collectives3.jpg" data-lightbox="gallery"><img src="Collectives3.jpg" loading="lazy" alt="Collectives3"></a>
-            <a class="collectives4" href="Collectives4.jpg" data-lightbox="gallery"><img src="Collectives4.jpg" loading="lazy" alt="Collectives4"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>JOANNA'S BIRTHDAY PICS</h2>
-        <div class="gallery">
-            <a class="joanna1" href="joanna1.jpg" data-lightbox="gallery"><img src="joanna1.jpg" loading="lazy" alt="joanna1"></a>
-            <a class="Joanna2" href="joanna2.jpg" data-lightbox="gallery"><img src="joanna2.jpg" loading="lazy" alt="joanna2"></a>
-            <a class="Joanna3" href="joanna3.jpg" data-lightbox="gallery"><img src="joanna3.jpg" loading="lazy" alt="joanna3"></a>
-            <a class="Joanna4" href="joanna4.jpg" data-lightbox="gallery"><img src="joanna4.jpg" loading="lazy" alt="joanna4"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>HUBBLED VISION</h2>
-        <div class="gallery">
-            <a class="Party1" href="Party1.jpg" data-lightbox="gallery"><img src="Party1.jpg" loading="lazy" alt="Party1"></a>
-            <a class="Party2" href="Party2.jpg" data-lightbox="gallery"><img src="Party2.jpg" loading="lazy" alt="Party2"></a>
-            <a class="Party3" href="Party3.jpg" data-lightbox="gallery"><img src="Party3.jpg" loading="lazy" alt="Party3"></a>
-            <a class="Party4" href="Party4.jpg" data-lightbox="gallery"><img src="Party4.jpg" loading="lazy" alt="Party4"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>TONY'S CAR PICS</h2>
-        <div class="gallery">
-            <a class="tony1" href="Tony1.JPG" data-lightbox="gallery"><img src="Tony1.JPG" loading="lazy" alt="Tony1"></a>
-            <a class="tony2" href="Tony2.JPG" data-lightbox="gallery"><img src="Tony2.JPG" loading="lazy" alt="Tony2"></a>
-            <a class="tony3" href="Tony3.JPG" data-lightbox="gallery"><img src="Tony3.JPG" loading="lazy" alt="Tony3"></a>
-            <a class="tony4" href="Tony4.JPG" data-lightbox="gallery"><img src="Tony4.JPG" loading="lazy" alt="Tony4"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>JOSH'S PICS</h2>
-        <div class="gallery">
-            <a class="josh1" href="josh1.JPG" data-lightbox="gallery"><img src="josh1.JPG" loading="lazy" alt="josh1"></a>
-            <a class="josh2" href="josh2.JPG" data-lightbox="gallery"><img src="josh2.JPG" loading="lazy" alt="josh2"></a>
-            <a class="josh3" href="josh3.JPG" data-lightbox="gallery"><img src="josh3.JPG" loading="lazy" alt="josh3"></a>
-            <a class="josh4" href="josh4.JPG" data-lightbox="gallery"><img src="josh4.JPG" loading="lazy" alt="josh4"></a>
-        </div>
-    </div>
-
-    <div class="gallery-section">
-        <h2>JACKPOT AUTOMATIONS</h2>
-        <div class="gallery">
-            <a class="jpaauto" href="jpaauto.jpg" data-lightbox="gallery"><img src="jpaauto.jpg" loading="lazy" alt="jpaauto"></a>
-            <a class="jpaauto2" href="jpaauto2.jpg" data-lightbox="gallery"><img src="jpaauto2.jpg" loading="lazy" alt="jpaauto2"></a>
-            <a class="jpaauto3" href="jpaauto3.jpg" data-lightbox="gallery"><img src="jpaauto3.jpg" loading="lazy" alt="jpaauto3"></a>
-        </div>
-    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Initialize Lightbox
+            lightbox.option({
+                'resizeDuration': 300,
+                'wrapAround': true,
+                'fadeDuration': 300,
+                'imageFadeDuration': 300,
+                'albumLabel': "Image %1 of %2"
+            });
+            
+            // Background video autoplay
+            const backgroundVideo = document.getElementById('background-video');
+            backgroundVideo.play().catch(error => {
+                console.log("Autoplay prevented:", error);
+            });
+            
+            // Scroll to top button
+            const scrollTopBtn = document.getElementById('scroll-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('active');
+                } else {
+                    scrollTopBtn.classList.remove('active');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-button');
+            const gallerySections = document.querySelectorAll('.gallery-section');
+            
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Show/hide gallery sections based on filter
+                    gallerySections.forEach(section => {
+                        if (filter === 'all') {
+                            section.style.display = 'block';
+                            setTimeout(() => {
+                                section.style.opacity = 1;
+                                section.style.transform = 'translateY(0)';
+                            }, 50);
+                        } else {
+                            const categories = section.getAttribute('data-category');
+                            if (categories && categories.includes(filter)) {
+                                section.style.display = 'block';
+                                setTimeout(() => {
+                                    section.style.opacity = 1;
+                                    section.style.transform = 'translateY(0)';
+                                }, 50);
+                            } else {
+                                section.style.opacity = 0;
+                                section.style.transform = 'translateY(20px)';
+                                setTimeout(() => {
+                                    section.style.display = 'none';
+                                }, 300);
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Add animation on scroll
+            const animateOnScroll = function() {
+                const sections = document.querySelectorAll('.gallery-section');
+                
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (sectionTop < windowHeight * 0.8) {
+                        section.style.opacity = 1;
+                        section.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Run animation on load and scroll
+            window.addEventListener('load', animateOnScroll);
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
 </body>
 </html>
