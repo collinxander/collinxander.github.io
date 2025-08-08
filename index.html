@@ -146,41 +146,14 @@
             z-index: 5;
         }
 
-        /* Enhanced video styling with fallback */
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
         video {
             object-fit: cover;
+            z-index: -1;
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-        }
-
-        /* Fallback background for when video fails */
-        .video-fallback {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #000000, #1a1a1a, #000000);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
 
         .button-container {
@@ -433,33 +406,6 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        /* Enhanced loading animation for video */
-        .video-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 18px;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .loading-spinner {
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-
-        .video-error {
-            color: #ff6b6b;
-            text-align: center;
-        }
-
         /* Enhanced Responsive Design */
         @media screen and (max-width: 1024px) {
             button {
@@ -606,6 +552,27 @@
             }
         }
 
+        /* Loading animation for video */
+        .video-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            z-index: 1;
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
         /* Accessibility improvements */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -697,22 +664,13 @@
                 </form>
             </div>
         </div>
-        
-        <!-- Enhanced video container with fallback -->
-        <div class="video-container">
-            <div class="video-fallback"></div>
-            <div class="video-loading" id="videoLoading">
-                <div class="loading-spinner"></div>
-                Loading video...
-            </div>
-            <video autoplay muted loop playsinline preload="metadata" id="backgroundVideo">
-                <!-- Multiple source formats for better compatibility -->
-                <source src="./homevideo.mp4" type="video/mp4">
-                <source src="./homevideo.webm" type="video/webm">
-                <source src="./homevideo.mov" type="video/quicktime">
-            </video>
+        <div class="video-loading" id="videoLoading">
+            <div class="loading-spinner"></div>
+            Loading...
         </div>
-        
+        <video autoplay muted loop playsinline preload="none" id="backgroundVideo">
+            <source src="homevideo.MP4" type="video/mp4">
+        </video>
         <footer>&copy; 2025 Collin Xander</footer>
     </div>
 
@@ -978,111 +936,30 @@
             }
         }
 
-        // Enhanced Video Manager with better error handling
+        // Enhanced Video Manager
         class VideoManager {
             constructor() {
                 this.video = document.getElementById('backgroundVideo');
                 this.videoLoading = document.getElementById('videoLoading');
-                this.fallback = document.querySelector('.video-fallback');
-                this.retryCount = 0;
-                this.maxRetries = 3;
                 this.init();
             }
 
             init() {
-                if (!this.video) return;
-
-                // Show loading initially
-                this.showLoading();
-
-                // Set up event listeners
                 this.video.addEventListener('loadstart', () => {
-                    console.log('Video loading started...');
-                    this.showLoading();
-                });
-
-                this.video.addEventListener('loadedmetadata', () => {
-                    console.log('Video metadata loaded');
+                    this.videoLoading.style.display = 'block';
                 });
 
                 this.video.addEventListener('canplay', () => {
-                    console.log('Video can start playing');
-                    this.hideLoading();
-                    this.video.style.opacity = '1';
+                    this.videoLoading.style.display = 'none';
                 });
 
-                this.video.addEventListener('canplaythrough', () => {
-                    console.log('Video can play through without buffering');
-                    this.hideLoading();
+                this.video.addEventListener('error', () => {
+                    this.videoLoading.innerHTML = '<div style="color: #ff6b6b;">Video failed to load</div>';
                 });
-
-                this.video.addEventListener('error', (e) => {
-                    console.error('Video error:', e);
-                    this.handleVideoError();
-                });
-
-                this.video.addEventListener('stalled', () => {
-                    console.warn('Video stalled');
-                    if (this.retryCount < this.maxRetries) {
-                        this.retryVideo();
-                    }
-                });
-
-                // Try to load the video
-                this.loadVideo();
 
                 // Performance optimization for mobile
                 if (window.innerWidth <= 768) {
                     this.video.preload = 'metadata';
-                }
-            }
-
-            loadVideo() {
-                try {
-                    this.video.load();
-                } catch (error) {
-                    console.error('Error loading video:', error);
-                    this.handleVideoError();
-                }
-            }
-
-            retryVideo() {
-                this.retryCount++;
-                console.log(`Retrying video load (attempt ${this.retryCount}/${this.maxRetries})`);
-                
-                setTimeout(() => {
-                    this.loadVideo();
-                }, 1000 * this.retryCount);
-            }
-
-            handleVideoError() {
-                console.error('Video failed to load after retries');
-                this.videoLoading.innerHTML = `
-                    <div class="video-error">
-                        <div>Video temporarily unavailable</div>
-                        <div style="font-size: 14px; margin-top: 10px;">Using animated background</div>
-                    </div>
-                `;
-                
-                // Hide video and show fallback
-                this.video.style.display = 'none';
-                this.fallback.style.zIndex = '-1';
-                
-                // Hide loading after a delay
-                setTimeout(() => {
-                    this.hideLoading();
-                }, 3000);
-            }
-
-            showLoading() {
-                if (this.videoLoading) {
-                    this.videoLoading.style.display = 'block';
-                }
-            }
-
-            hideLoading() {
-                if (this.videoLoading) {
-                    this.videoLoading.style.display = 'none';
                 }
             }
         }
