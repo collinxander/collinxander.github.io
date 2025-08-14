@@ -919,7 +919,8 @@
                     category: "portrait",
                     date: "August 7th 2025",
                     duration: "01:26",
-                    tags: ["concept", "creative"]
+                    tags: ["concept", "creative"],
+                    externalLink: "https://vimeo.com/1110021978?share=copy"
                 },
                  {
                     id: 2,
@@ -1097,16 +1098,25 @@
                         </div>
                     `;
                     
-                    videoItem.addEventListener('click', () => openModal(index, videosArray));
+                    videoItem.addEventListener('click', () => handleVideoClick(video));
                     videoGallery.appendChild(videoItem);
                 });
             }
             
-            // Open modal function
-            function openModal(index, videosArray = videos) {
-                currentIndex = index;
-                const video = videosArray[index];
+            // Enhanced video click handler with external link support
+            function handleVideoClick(video) {
+                if (video.externalLink) {
+                    window.open(video.externalLink, '_blank');
+                    return;
+                }
                 
+                // Original modal opening logic for other videos
+                currentIndex = videos.findIndex(v => v.id === video.id);
+                openModal(video);
+            }
+            
+            // Open modal function
+            function openModal(video) {
                 // Show loading spinner
                 videoSpinner.style.display = 'block';
                 
@@ -1157,7 +1167,7 @@
                     : videos.filter(video => video.category === currentFilter);
                 
                 currentIndex = (currentIndex + 1) % filteredVideos.length;
-                openModal(currentIndex, filteredVideos);
+                openModal(filteredVideos[currentIndex]);
             }
             
             // Show previous video
@@ -1167,7 +1177,7 @@
                     : videos.filter(video => video.category === currentFilter);
                 
                 currentIndex = (currentIndex - 1 + filteredVideos.length) % filteredVideos.length;
-                openModal(currentIndex, filteredVideos);
+                openModal(filteredVideos[currentIndex]);
             }
             
             // Event listeners
