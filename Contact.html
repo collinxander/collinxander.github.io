@@ -1109,10 +1109,10 @@
                 formSuccess.style.display = 'none';
                 formError.style.display = 'none';
                 
-                // Add a small delay for better UX
-                setTimeout(() => {
-                    // Form will be submitted normally after this
-                }, 1000);
+                console.log('[v0] Form submitted successfully, redirecting to thank-you page');
+                
+                // FormSubmit will handle the email notification and redirect automatically
+                // No need to prevent default - let the form submit naturally
             });
             
             // Handle window resize
