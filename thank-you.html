@@ -45,6 +45,17 @@
             z-index: 0;
         }
 
+        /* Added confetti canvas for celebration effect */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
         .page-container {
             animation: fadeIn 1.5s ease-in-out forwards;
             opacity: 0;
@@ -59,6 +70,7 @@
             100% { opacity: 1; }
         }
 
+        /* Enhanced icon with more dynamic animations */
         .icon {
             overflow: hidden;
             position: absolute;
@@ -71,14 +83,15 @@
             font-size: 27px;
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5);
             transform: perspective(500px) rotateX(15deg);
-            animation: glow 1.5s ease-in-out infinite alternate, rotate3d 10s linear infinite;
+            animation: glow 1.5s ease-in-out infinite alternate, rotate3d 10s linear infinite, float 3s ease-in-out infinite;
             z-index: 10;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .icon:hover {
             color: var(--hover-color);
             text-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.5);
+            transform: perspective(500px) rotateX(15deg) scale(1.1);
         }
 
         @keyframes glow {
@@ -89,6 +102,12 @@
         @keyframes rotate3d {
             0% { transform: perspective(500px) rotateY(0deg); }
             100% { transform: perspective(500px) rotateY(360deg); }
+        }
+
+        /* Added floating animation */
+        @keyframes float {
+            0%, 100% { transform: perspective(500px) rotateX(15deg) translateY(0px); }
+            50% { transform: perspective(500px) rotateX(15deg) translateY(-10px); }
         }
 
         .container {
@@ -103,6 +122,7 @@
             text-align: center;
         }
 
+        /* Enhanced card with more sophisticated animations */
         .thank-you-card {
             background: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
@@ -112,11 +132,17 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            animation: slideUp 0.8s ease-out forwards;
+            animation: slideUp 0.8s ease-out forwards, cardGlow 4s ease-in-out infinite;
             opacity: 0;
             transform: translateY(30px);
             position: relative;
             z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .thank-you-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 0, 0.2);
         }
 
         @keyframes slideUp {
@@ -130,11 +156,25 @@
             }
         }
 
+        /* Added subtle glow animation to card */
+        @keyframes cardGlow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+            50% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 0, 0, 0.1); }
+        }
+
+        /* Enhanced success icon with more dynamic animation */
         .success-icon {
             font-size: 60px;
             color: var(--success-color);
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            animation: pulse 2s infinite, successBounce 0.8s ease-out;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .success-icon:hover {
+            transform: scale(1.2) rotate(360deg);
+            color: #00ffff;
         }
 
         @keyframes pulse {
@@ -143,11 +183,29 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
+        /* Added bounce animation for success icon */
+        @keyframes successBounce {
+            0% { transform: scale(0) rotate(-180deg); }
+            50% { transform: scale(1.3) rotate(0deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
         h1 {
             font-size: 36px;
             margin-bottom: 20px;
             color: var(--text-color);
             text-transform: uppercase;
+            animation: typewriter 2s steps(30) 0.5s forwards;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--success-color);
+            width: 0;
+        }
+
+        /* Added typewriter effect to heading */
+        @keyframes typewriter {
+            0% { width: 0; }
+            100% { width: 100%; border-right: none; }
         }
 
         .message {
@@ -155,10 +213,22 @@
             margin-bottom: 30px;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.9);
+            animation: fadeInUp 0.8s ease-out 1s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Added staggered fade-in animation */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .next-steps {
             margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out 1.5s forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .next-steps h2 {
@@ -173,11 +243,24 @@
             margin-bottom: 20px;
         }
 
+        /* Enhanced list items with staggered animations */
         .next-steps li {
             margin-bottom: 10px;
             line-height: 1.5;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInLeft 0.6s ease-out forwards;
         }
 
+        .next-steps li:nth-child(1) { animation-delay: 2s; }
+        .next-steps li:nth-child(2) { animation-delay: 2.3s; }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Enhanced button with more sophisticated effects */
         .home-button {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             color: var(--text-color);
@@ -199,6 +282,9 @@
             text-transform: uppercase;
             outline: none;
             text-decoration: none;
+            animation: fadeInUp 0.8s ease-out 2.5s forwards, buttonPulse 3s ease-in-out infinite 3s;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .home-button::before {
@@ -210,6 +296,19 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.7s ease;
+        }
+
+        .home-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(0, 255, 0, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            border-radius: 50%;
         }
 
         .home-button:hover {
@@ -224,9 +323,20 @@
             left: 100%;
         }
 
+        .home-button:hover::after {
+            width: 100px;
+            height: 100px;
+        }
+
         .home-button:active {
             transform: scale(0.95);
             transition: transform 0.1s ease;
+        }
+
+        /* Added subtle pulse animation to button */
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: var(--button-shadow); }
+            50% { box-shadow: var(--button-shadow), 0 0 20px rgba(255, 0, 0, 0.3); }
         }
 
         .btn-icon {
@@ -236,7 +346,7 @@
         }
 
         .home-button:hover .btn-icon {
-            transform: scale(1.2);
+            transform: scale(1.2) rotate(360deg);
         }
 
         .home-button:focus {
@@ -244,6 +354,7 @@
             outline-offset: 2px;
         }
 
+        /* Enhanced footer with better animations */
         footer {
             position: absolute;
             bottom: 10px;
@@ -255,7 +366,7 @@
             text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
             opacity: 0;
             animation: fadeIn 0.8s ease-out forwards;
-            animation-delay: 1.3s;
+            animation-delay: 3s;
         }
 
         .social-icons {
@@ -265,17 +376,67 @@
             margin-top: 10px;
         }
 
+        /* Enhanced social icons with more dynamic effects */
         .social-icon {
             color: var(--text-color);
             font-size: 18px;
             transition: all 0.3s ease;
             opacity: 0.7;
+            position: relative;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            z-index: -1;
         }
 
         .social-icon:hover {
             color: var(--hover-color);
             opacity: 1;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.2);
+        }
+
+        .social-icon:hover::before {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Added progress indicator */
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--hover-color));
+            z-index: 100;
+            animation: progressFill 3s ease-out forwards;
+        }
+
+        @keyframes progressFill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Added floating particles */
+        .floating-particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--success-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
         }
 
         @media screen and (max-width: 820px) {
@@ -328,6 +489,12 @@
     </style>
 </head>
 <body>
+    <!-- Added progress indicator -->
+    <div class="progress-indicator"></div>
+    
+    <!-- Added confetti canvas -->
+    <canvas id="confetti-canvas"></canvas>
+    
     <div class="page-container">
         <a href="./" class="icon" aria-label="Collin Xander Home">COLLIN XANDER</a>
 
@@ -378,21 +545,32 @@
             document.body.appendChild(renderer.domElement);
             
             const particlesGeometry = new THREE.BufferGeometry();
-            const particlesCount = 1000;
+            const particlesCount = 2000;
             const posArray = new Float32Array(particlesCount * 3);
+            const colorArray = new Float32Array(particlesCount * 3);
             
             for(let i = 0; i < particlesCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 10;
+                posArray[i] = (Math.random() - 0.5) * 15;
+                
+                // Add color variation
+                if (i % 3 === 0) { // Red component
+                    colorArray[i] = Math.random() * 0.5 + 0.5;
+                } else if (i % 3 === 1) { // Green component
+                    colorArray[i] = Math.random() * 0.3;
+                } else { // Blue component
+                    colorArray[i] = Math.random() * 0.2;
+                }
             }
             
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
             
             const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.005,
-                color: 0xff0000,
+                size: 0.008,
                 transparent: true,
                 opacity: 0.8,
-                blending: THREE.AdditiveBlending
+                blending: THREE.AdditiveBlending,
+                vertexColors: true
             });
             
             const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -402,6 +580,7 @@
             
             let mouseX = 0;
             let mouseY = 0;
+            let time = 0;
             
             function onDocumentMouseMove(event) {
                 mouseX = (event.clientX - window.innerWidth / 2) / 100;
@@ -413,25 +592,107 @@
             function animate() {
                 requestAnimationFrame(animate);
                 
-                particlesMesh.rotation.x += 0.0005;
-                particlesMesh.rotation.y += 0.0005;
+                time += 0.01;
+                
+                particlesMesh.rotation.x += 0.0005 + Math.sin(time) * 0.0002;
+                particlesMesh.rotation.y += 0.0005 + Math.cos(time) * 0.0002;
                 
                 particlesMesh.rotation.x += mouseY * 0.0005;
                 particlesMesh.rotation.y += mouseX * 0.0005;
+                
+                // Add pulsing effect
+                particlesMesh.scale.setScalar(1 + Math.sin(time * 2) * 0.05);
                 
                 renderer.render(scene, camera);
             }
             
             animate();
             
+            function createConfetti() {
+                const canvas = document.getElementById('confetti-canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                const confettiPieces = [];
+                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                
+                for (let i = 0; i < 100; i++) {
+                    confettiPieces.push({
+                        x: Math.random() * canvas.width,
+                        y: -10,
+                        vx: (Math.random() - 0.5) * 4,
+                        vy: Math.random() * 3 + 2,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        size: Math.random() * 8 + 4,
+                        rotation: Math.random() * 360,
+                        rotationSpeed: (Math.random() - 0.5) * 10
+                    });
+                }
+                
+                function animateConfetti() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    confettiPieces.forEach((piece, index) => {
+                        piece.x += piece.vx;
+                        piece.y += piece.vy;
+                        piece.rotation += piece.rotationSpeed;
+                        piece.vy += 0.1; // gravity
+                        
+                        ctx.save();
+                        ctx.translate(piece.x, piece.y);
+                        ctx.rotate(piece.rotation * Math.PI / 180);
+                        ctx.fillStyle = piece.color;
+                        ctx.fillRect(-piece.size/2, -piece.size/2, piece.size, piece.size);
+                        ctx.restore();
+                        
+                        if (piece.y > canvas.height + 10) {
+                            confettiPieces.splice(index, 1);
+                        }
+                    });
+                    
+                    if (confettiPieces.length > 0) {
+                        requestAnimationFrame(animateConfetti);
+                    }
+                }
+                
+                animateConfetti();
+            }
+            
+            function createFloatingParticles() {
+                setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'floating-particle';
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.top = window.innerHeight + 'px';
+                    document.body.appendChild(particle);
+                    
+                    const animation = particle.animate([
+                        { transform: 'translateY(0px) scale(1)', opacity: 0.7 },
+                        { transform: `translateY(-${window.innerHeight + 100}px) scale(0)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'ease-out'
+                    });
+                    
+                    animation.onfinish = () => particle.remove();
+                }, 500);
+            }
+            
             window.addEventListener('resize', function() {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                
+                const canvas = document.getElementById('confetti-canvas');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             });
             
             setTimeout(function() {
                 document.querySelector('.page-container').style.opacity = '1';
+                createConfetti(); // Trigger confetti after page loads
+                createFloatingParticles(); // Start floating particles
             }, 100);
             
             const homeButton = document.querySelector('.home-button');
@@ -439,7 +700,7 @@
                 this.style.transition = 'all 0.5s ease';
                 const icon = this.querySelector('.btn-icon');
                 if (icon) {
-                    icon.style.transform = 'scale(1.2)';
+                    icon.style.transform = 'scale(1.2) rotate(360deg)';
                     icon.style.transition = 'transform 0.3s ease';
                 }
                 
@@ -453,7 +714,7 @@
                 this.style.transition = 'all 0.8s ease';
                 const icon = this.querySelector('.btn-icon');
                 if (icon) {
-                    icon.style.transform = 'scale(1)';
+                    icon.style.transform = 'scale(1) rotate(0deg)';
                 }
             });
             
@@ -466,6 +727,27 @@
                 if (particlesMesh) {
                     particlesMesh.rotation.x += 0.05;
                     particlesMesh.rotation.y += 0.05;
+                }
+                
+                createConfetti();
+            });
+            
+            const successIcon = document.querySelector('.success-icon');
+            successIcon.addEventListener('click', function() {
+                createConfetti();
+                this.style.animation = 'successBounce 0.8s ease-out, pulse 2s infinite';
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    if (e.target === homeButton) {
+                        homeButton.click();
+                    }
+                }
+                
+                // Easter egg: press 'c' for confetti
+                if (e.key.toLowerCase() === 'c') {
+                    createConfetti();
                 }
             });
         });
