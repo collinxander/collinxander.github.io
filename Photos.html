@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHOTOS - COLLIN XANDER</title>
     <meta name="description" content="Explore Collin Xander's photography portfolio featuring creative and artistic photography work.">
-    <link rel="icon" href="profilepic.jpg" type="image/x-icon">
+    <link rel="icon" href="profilepic.jpg" type="image/jpeg">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -103,6 +103,7 @@
         .nav-links {
             display: flex;
             gap: 1.5rem;
+            list-style: none;
         }
         
         .nav-link {
@@ -161,10 +162,16 @@
             font-size: 1.5rem;
             cursor: pointer;
             transition: color 0.3s ease;
+            padding: 0.5rem;
         }
         
         .menu-toggle:hover {
             color: var(--hover-color);
+        }
+        
+        .menu-toggle:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
         }
         
         /* Hero section */
@@ -257,6 +264,11 @@
             box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
         }
         
+        .filter-button:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        
         /* Gallery sections */
         .gallery-container {
             max-width: 1400px;
@@ -290,9 +302,6 @@
             width: 100%;
             height: 3px;
             background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.5), transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
         }
         
         .gallery-title {
@@ -341,9 +350,6 @@
             border-radius: var(--border-radius);
             padding: 2px;
             background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.5), transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -458,6 +464,7 @@
             transition: all 0.3s ease;
             z-index: 99;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: none;
         }
         
         .scroll-top.active {
@@ -468,6 +475,11 @@
         .scroll-top:hover {
             background-color: var(--hover-color);
             transform: translateY(-5px);
+        }
+        
+        .scroll-top:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
         }
         
         /* Footer */
@@ -511,6 +523,7 @@
             color: var(--text-color);
             font-size: 1.2rem;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
         
         .social-icon:hover {
@@ -550,6 +563,23 @@
             font-size: 0.8rem;
         }
         
+        /* Skip to content link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1000;
+            border-radius: 4px;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
         /* Animations */
         @keyframes pulsate {
             0% {
@@ -557,19 +587,6 @@
             }
             100% {
                 text-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.6);
-            }
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                color: white;
-                text-shadow: 0 0 10px white;
-            }
-            100% {
-                transform: scale(1.1);
-                color: var(--hover-color);
-                text-shadow: 0 0 20px var(--hover-color);
             }
         }
         
@@ -671,18 +688,30 @@
                 font-size: 1.5rem;
             }
         }
+        
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Header with Logo and Navigation -->
     <header class="header">
         <a href="./" class="logo">COLLIN XANDER</a>
         
-        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
-            <i class="fas fa-bars"></i>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
         
-        <nav class="nav-links" id="nav-links">
+        <nav class="nav-links" id="nav-links" role="navigation">
             <a href="./" class="nav-link">Home</a>
             <a href="./videos" class="nav-link">Videos</a>
             <a href="./About" class="nav-link">About</a>
@@ -691,10 +720,11 @@
     </header>
 
     <!-- Hero Section with Background Video -->
-    <section class="hero-section">
+    <section class="hero-section" role="banner">
         <div class="video-background">
-            <video id="background-video" autoplay muted loop playsinline>
+            <video id="background-video" autoplay muted loop playsinline aria-label="Background video">
                 <source src="video.MP4" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
         </div>
         
@@ -703,453 +733,448 @@
         </div>
     </section>
 
-    <!-- Category Filter -->
-    <div class="filter-container">
-        <button class="filter-button active" data-filter="all">All Photos</button>
-        <button class="filter-button" data-filter="portraits">Portraits</button>
-        <button class="filter-button" data-filter="events">Events</button>
-        <button class="filter-button" data-filter="automotive">Automotive</button>
-        <button class="filter-button" data-filter="art">Art</button>
-    </div>
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Category Filter -->
+        <section class="filter-container" role="tablist" aria-label="Photo category filters">
+            <button class="filter-button active" data-filter="all" role="tab" aria-selected="true">All Photos</button>
+            <button class="filter-button" data-filter="portraits" role="tab" aria-selected="false">Portraits</button>
+            <button class="filter-button" data-filter="events" role="tab" aria-selected="false">Events</button>
+            <button class="filter-button" data-filter="automotive" role="tab" aria-selected="false">Automotive</button>
+            <button class="filter-button" data-filter="art" role="tab" aria-selected="false">Art</button>
+        </section>
 
-    <!-- Gallery Sections -->
+        <!-- Gallery Sections -->
+        <div class="gallery-container">
+            <section class="gallery-section" data-category="portraits events">
+                <h2 class="gallery-title">ID NUPES</h2>
+                <div class="gallery" role="group" aria-label="ID Nupes photo gallery">
+                    <a class="gallery-item" href="idnupes1.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="idnupes1.jpg" loading="lazy" alt="ID Nupes group photography session - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="idnupes2.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="idnupes2.jpg" loading="lazy" alt="ID Nupes group photography session - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="idnupes3.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="idnupes3.jpg" loading="lazy" alt="ID Nupes group photography session - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="idnupes4.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="idnupes4.jpg" loading="lazy" alt="ID Nupes group photography session - Photo 4">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="idnupes5.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="idnupes5.jpg" loading="lazy" alt="ID Nupes group photography session - Photo 5">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="idnupes6.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="idnupes6.jpg" loading="lazy" alt="ID Nupes group photography session - Photo 6">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                </div>
+            </section>
 
-
-      <div class="gallery-container">
-      <div class="gallery-section" data-category="portraits events">
-            <h2 class="gallery-title">ID NUPES</h2>
-            <div class="gallery">
-     <a class="gallery-item" href="idnupes1.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
-                <div class="photo-tags">
-                    <span class="photo-tag">portrait</span>
+            <section class="gallery-section" data-category="portraits events">
+                <h2 class="gallery-title">VOL. 22</h2>
+                <div class="gallery" role="group" aria-label="VOL. 22 photo gallery">
+                    <a class="gallery-item" href="camvol1.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="camvol1.jpg" loading="lazy" alt="VOL. 22 creative portrait series - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="camvol2.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="camvol2.jpg" loading="lazy" alt="VOL. 22 creative portrait series - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="camvol3.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="camvol3.jpg" loading="lazy" alt="VOL. 22 creative portrait series - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="camvol4.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="camvol4.jpg" loading="lazy" alt="VOL. 22 creative portrait series - Photo 4">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="camvol5.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="camvol5.jpg" loading="lazy" alt="VOL. 22 creative portrait series - Photo 5">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="camvol6.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
+                        <div class="photo-tags">
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="camvol6.jpg" loading="lazy" alt="VOL. 22 creative portrait series - Photo 6">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-                <img src="idnupes1.jpg" loading="lazy" alt="ID Nupes Photo 1">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus gallery-icon"></i>
+            </section>
+            
+            <section class="gallery-section" data-category="events">
+                <h2 class="gallery-title">MOTH HTX</h2>
+                <div class="gallery" role="group" aria-label="MOTH HTX photo gallery">
+                    <a class="gallery-item" href="mothhtx1.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="mothhtx1.jpg" loading="lazy" alt="MOTH HTX event photography - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="mothhtx2.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="mothhtx2.jpg" loading="lazy" alt="MOTH HTX event photography - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="mothhtx3.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="mothhtx3.jpg" loading="lazy" alt="MOTH HTX event photography - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="mothhtx4.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="mothhtx4.jpg" loading="lazy" alt="MOTH HTX event photography - Photo 4">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="mothhtx5.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="mothhtx5.jpg" loading="lazy" alt="MOTH HTX event photography - Photo 5">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="mothhtx7.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="mothhtx7.jpg" loading="lazy" alt="MOTH HTX event photography - Photo 6">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            <a class="gallery-item" href="idnupes2.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
-                <div class="photo-tags">
-                    <span class="photo-tag">portrait</span>
+            </section>
+            
+            <section class="gallery-section" data-category="art">
+                <h2 class="gallery-title">SKELETONS & SOULS</h2>
+                <div class="gallery" role="group" aria-label="Skeletons & Souls photo gallery">
+                    <a class="gallery-item" href="art1.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">art</span>
+                        </div>
+                        <img src="art1.jpg" loading="lazy" alt="Skeletons & Souls artistic photography - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="art2.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">art</span>
+                        </div>
+                        <img src="art2.jpg" loading="lazy" alt="Skeletons & Souls artistic photography - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="art3.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">art</span>
+                        </div>
+                        <img src="art3.jpg" loading="lazy" alt="Skeletons & Souls artistic photography - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="art4.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">art</span>
+                        </div>
+                        <img src="art4.jpg" loading="lazy" alt="Skeletons & Souls artistic photography - Photo 4">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="art5.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">art</span>
+                        </div>
+                        <img src="art5.jpg" loading="lazy" alt="Skeletons & Souls artistic photography - Photo 5">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-                <img src="idnupes2.jpg" loading="lazy" alt="ID Nupes Photo 2">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus gallery-icon"></i>
+            </section>
+            
+            <section class="gallery-section" data-category="portraits events">
+                <h2 class="gallery-title">VICTORIA'S BIRTHDAY PICS</h2>
+                <div class="gallery" role="group" aria-label="Victoria's Birthday photo gallery">
+                    <a class="gallery-item" href="victoria1.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="victoria1.JPG" loading="lazy" alt="Victoria's birthday event photography - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="victoria2.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="victoria2.JPG" loading="lazy" alt="Victoria's birthday event photography - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="victoria3.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="victoria3.JPG" loading="lazy" alt="Victoria's birthday event photography - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            <a class="gallery-item" href="idnupes3.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
-                <div class="photo-tags">
-                    <span class="photo-tag">portrait</span>
+            </section>
+            
+            <section class="gallery-section" data-category="automotive">
+                <h2 class="gallery-title">TAYLOR'S LAMBORGHINI PICS</h2>
+                <div class="gallery" role="group" aria-label="Taylor's Lamborghini photo gallery">
+                    <a class="gallery-item" href="LAMBO4.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">automotive</span>
+                        </div>
+                        <img src="LAMBO4.jpg" loading="lazy" alt="Taylor's Lamborghini automotive photography - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="lambo3.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">automotive</span>
+                        </div>
+                        <img src="lambo3.jpg" loading="lazy" alt="Taylor's Lamborghini automotive photography - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="LAMBO2.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">automotive</span>
+                        </div>
+                        <img src="LAMBO2.jpg" loading="lazy" alt="Taylor's Lamborghini automotive photography - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="LAMBO1.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">automotive</span>
+                        </div>
+                        <img src="LAMBO1.jpg" loading="lazy" alt="Taylor's Lamborghini automotive photography - Photo 4">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-                <img src="idnupes3.jpg" loading="lazy" alt="ID Nupes Photo 3">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus gallery-icon"></i>
+            </section>
+            
+            <section class="gallery-section" data-category="portraits events">
+                <h2 class="gallery-title">CHASE'S GRADUATION PICS</h2>
+                <div class="gallery" role="group" aria-label="Chase's Graduation photo gallery">
+                    <a class="gallery-item" href="chasegrad3.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="chasegrad3.jpg" loading="lazy" alt="Chase's graduation event photography - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="chasegrad2.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="chasegrad2.jpg" loading="lazy" alt="Chase's graduation event photography - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="chasegrad1.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="chasegrad1.jpg" loading="lazy" alt="Chase's graduation event photography - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            <a class="gallery-item" href="idnupes4.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
-                <div class="photo-tags">
-                    <span class="photo-tag">portrait</span>
+            </section>
+            
+            <section class="gallery-section" data-category="portraits events">
+                <h2 class="gallery-title">BLITZ POOL SHOOT</h2>
+                <div class="gallery" role="group" aria-label="Blitz Pool Shoot photo gallery">
+                    <a class="gallery-item" href="poolparty3.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="poolparty3.jpg" loading="lazy" alt="Blitz pool shoot event photography - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="poolparty2.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="poolparty2.jpg" loading="lazy" alt="Blitz pool shoot event photography - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="poolparty1.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                            <span class="photo-tag">portrait</span>
+                        </div>
+                        <img src="poolparty1.jpg" loading="lazy" alt="Blitz pool shoot event photography - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-                <img src="idnupes4.jpg" loading="lazy" alt="ID Nupes Photo 4">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus gallery-icon"></i>
+            </section>
+            
+            <section class="gallery-section" data-category="events">
+                <h2 class="gallery-title">RUN CLUB</h2>
+                <div class="gallery" role="group" aria-label="Run Club photo gallery">
+                    <a class="gallery-item" href="RUNCLUB1.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="RUNCLUB1.jpg" loading="lazy" alt="Run Club event photography - Photo 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="RUNCLUB2.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="RUNCLUB2.jpg" loading="lazy" alt="Run Club event photography - Photo 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="RUNCLUB3.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="RUNCLUB3.jpg" loading="lazy" alt="Run Club event photography - Photo 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <a class="gallery-item" href="RUNCLUB4.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
+                        <div class="photo-tags">
+                            <span class="photo-tag">event</span>
+                        </div>
+                        <img src="RUNCLUB4.jpg" loading="lazy" alt="Run Club event photography - Photo 4">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus gallery-icon" aria-hidden="true"></i>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            <a class="gallery-item" href="idnupes5.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
-                <div class="photo-tags">
-                    <span class="photo-tag">portrait</span>
-                </div>
-                <img src="idnupes5.jpg" loading="lazy" alt="ID Nupes Photo 5">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus gallery-icon"></i>
-                </div>
-            </a>
-            <a class="gallery-item" href="idnupes6.jpg" data-lightbox="idnupes" data-title="ID Nupes - Group Photography">
-                <div class="photo-tags">
-                    <span class="photo-tag">portrait</span>
-                </div>
-                <img src="idnupes6.jpg" loading="lazy" alt="ID Nupes Photo 6">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus gallery-icon"></i>
-                </div>
-            </a>
+            </section>
         </div>
-    </div>
-
-          
-    <div class="gallery-container">
-      <div class="gallery-section" data-category="portraits events">
-            <h2 class="gallery-title">VOL. 22</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="camvol1.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
-                    <div class="photo-tags">
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="camvol1.jpg" loading="lazy" alt="VOL. 22 Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="camvol2.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
-                    <div class="photo-tags">
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="camvol2.jpg" loading="lazy" alt="VOL. 22 Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="camvol3.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
-                    <div class="photo-tags">
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="camvol3.jpg" loading="lazy" alt="VOL. 22 Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="camvol4.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
-                    <div class="photo-tags">
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="camvol4.jpg" loading="lazy" alt="VOL. 22 Photo 4">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="camvol5.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
-                    <div class="photo-tags">
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="camvol5.jpg" loading="lazy" alt="VOL. 22 Photo 5">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="camvol6.jpg" data-lightbox="vol22" data-title="VOL. 22 - Creative Portrait Series">
-                    <div class="photo-tags">
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="camvol6.jpg" loading="lazy" alt="VOL. 22 Photo 6">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <div class="gallery-section" data-category="events">
-            <h2 class="gallery-title">MOTH HTX</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="mothhtx1.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="mothhtx1.jpg" loading="lazy" alt="MOTH HTX Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="mothhtx2.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="mothhtx2.jpg" loading="lazy" alt="MOTH HTX Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="mothhtx3.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="mothhtx3.jpg" loading="lazy" alt="MOTH HTX Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="mothhtx4.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="mothhtx4.jpg" loading="lazy" alt="MOTH HTX Photo 4">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="mothhtx5.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="mothhtx5.jpg" loading="lazy" alt="MOTH HTX Photo 5">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="mothhtx7.jpg" data-lightbox="mothhtx" data-title="MOTH HTX - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="mothhtx7.jpg" loading="lazy" alt="MOTH HTX Photo 6">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <div class="gallery-section" data-category="art">
-            <h2 class="gallery-title">SKELETONS & SOULS</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="art1.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">art</span>
-                    </div>
-                    <img src="art1.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="art2.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">art</span>
-                    </div>
-                    <img src="art2.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="art3.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">art</span>
-                    </div>
-                    <img src="art3.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="art4.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">art</span>
-                    </div>
-                    <img src="art4.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 4">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="art5.jpg" data-lightbox="art" data-title="SKELETONS & SOULS - Artistic Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">art</span>
-                    </div>
-                    <img src="art5.jpg" loading="lazy" alt="SKELETONS & SOULS Photo 5">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <div class="gallery-section" data-category="portraits events">
-            <h2 class="gallery-title">VICTORIA'S BIRTHDAY PICS</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="victoria1.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="victoria1.JPG" loading="lazy" alt="VICTORIA'S BIRTHDAY Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="victoria2.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="victoria2.JPG" loading="lazy" alt="VICTORIA'S BIRTHDAY Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="victoria3.JPG" data-lightbox="victoria" data-title="VICTORIA'S BIRTHDAY - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="victoria3.JPG" loading="lazy" alt="VICTORIA'S BIRTHDAY Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <div class="gallery-section" data-category="automotive">
-            <h2 class="gallery-title">TAYLOR'S LAMBORGHINI PICS</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="LAMBO4.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">automotive</span>
-                    </div>
-                    <img src="LAMBO4.jpg" loading="lazy" alt="LAMBORGHINI Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="lambo3.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">automotive</span>
-                    </div>
-                    <img src="lambo3.jpg" loading="lazy" alt="LAMBORGHINI Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="LAMBO2.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">automotive</span>
-                    </div>
-                    <img src="LAMBO2.jpg" loading="lazy" alt="LAMBORGHINI Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="LAMBO1.jpg" data-lightbox="lambo" data-title="TAYLOR'S LAMBORGHINI - Automotive Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">automotive</span>
-                    </div>
-                    <img src="LAMBO1.jpg" loading="lazy" alt="LAMBORGHINI Photo 4">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <div class="gallery-section" data-category="portraits events">
-            <h2 class="gallery-title">CHASE'S GRADUATION PICS</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="chasegrad3.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="chasegrad3.jpg" loading="lazy" alt="CHASE'S GRADUATION Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="chasegrad2.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="chasegrad2.jpg" loading="lazy" alt="CHASE'S GRADUATION Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="chasegrad1.jpg" data-lightbox="chasegrad" data-title="CHASE'S GRADUATION - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="chasegrad1.jpg" loading="lazy" alt="CHASE'S GRADUATION Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Additional gallery sections continue with the same pattern -->
-        
-        <div class="gallery-section" data-category="portraits events">
-            <h2 class="gallery-title">BLITZ POOL SHOOT</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="poolparty3.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="poolparty3.jpg" loading="lazy" alt="BLITZ POOL SHOOT Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="poolparty2.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="poolparty2.jpg" loading="lazy" alt="BLITZ POOL SHOOT Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="poolparty1.jpg" data-lightbox="poolparty" data-title="BLITZ POOL SHOOT - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                        <span class="photo-tag">portrait</span>
-                    </div>
-                    <img src="poolparty1.jpg" loading="lazy" alt="BLITZ POOL SHOOT Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Remaining gallery sections -->
-        
-        <div class="gallery-section" data-category="events">
-            <h2 class="gallery-title">RUN CLUB</h2>
-            <div class="gallery">
-                <a class="gallery-item" href="RUNCLUB1.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="RUNCLUB1.jpg" loading="lazy" alt="RUN CLUB Photo 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="RUNCLUB2.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="RUNCLUB2.jpg" loading="lazy" alt="RUN CLUB Photo 2">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="RUNCLUB3.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="RUNCLUB3.jpg" loading="lazy" alt="RUN CLUB Photo 3">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-                <a class="gallery-item" href="RUNCLUB4.jpg" data-lightbox="runclub" data-title="RUN CLUB - Event Photography">
-                    <div class="photo-tags">
-                        <span class="photo-tag">event</span>
-                    </div>
-                    <img src="RUNCLUB4.jpg" loading="lazy" alt="RUN CLUB Photo 4">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus gallery-icon"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+    </main>
     
     <!-- Scroll to top button -->
-    <div class="scroll-top" id="scroll-top">
-        <i class="fas fa-arrow-up"></i>
-    </div>
+    <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
     
     <!-- Footer -->
     <footer class="footer">
@@ -1158,24 +1183,24 @@
                 <div class="footer-logo">COLLIN XANDER</div>
                 <p class="footer-text">Capturing moments and creating visual stories through photography and videography.</p>
                 <div class="footer-social">
-                    <a href="https://instagram.com/collinxander.jpeg" class="social-icon" target="_blank" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
+                    <a href="https://instagram.com/collinxander.jpeg" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
                     </a>
-                    <a href="mailto:collinxander1@gmail.com" class="social-icon" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
+                    <a href="mailto:collinxander1@gmail.com" class="social-icon" aria-label="Send email">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
             
             <div>
                 <h3 class="footer-heading">Navigation</h3>
-                <div class="footer-links">
+                <nav class="footer-links">
                     <a href="./" class="footer-link">Home</a>
                     <a href="./Photos" class="footer-link">Photos</a>
                     <a href="./videos" class="footer-link">Videos</a>
                     <a href="./About" class="footer-link">About</a>
                     <a href="./Contact" class="footer-link">Contact</a>
-                </div>
+                </nav>
             </div>
         </div>
         
@@ -1197,7 +1222,17 @@
             const navLinks = document.getElementById('nav-links');
             
             menuToggle.addEventListener('click', () => {
+                const isExpanded = navLinks.classList.contains('active');
                 navLinks.classList.toggle('active');
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
             });
             
             // Initialize Lightbox
@@ -1209,22 +1244,26 @@
                 'albumLabel': "Image %1 of %2"
             });
             
-            // Background video autoplay
+            // Background video autoplay with error handling
             const backgroundVideo = document.getElementById('background-video');
-            backgroundVideo.play().catch(error => {
-                console.log("Autoplay prevented:", error);
-            });
+            if (backgroundVideo) {
+                backgroundVideo.play().catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
             
             // Scroll to top button
             const scrollTopBtn = document.getElementById('scroll-top');
             
-            window.addEventListener('scroll', function() {
+            function toggleScrollButton() {
                 if (window.pageYOffset > 300) {
                     scrollTopBtn.classList.add('active');
                 } else {
                     scrollTopBtn.classList.remove('active');
                 }
-            });
+            }
+            
+            window.addEventListener('scroll', toggleScrollButton);
             
             scrollTopBtn.addEventListener('click', function() {
                 window.scrollTo({
@@ -1233,17 +1272,21 @@
                 });
             });
             
-            // Filter functionality
+            // Filter functionality with improved accessibility
             const filterButtons = document.querySelectorAll('.filter-button');
             const gallerySections = document.querySelectorAll('.gallery-section');
             
             filterButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    filterButtons.forEach(b => b.classList.remove('active'));
+                    // Remove active class and aria-selected from all buttons
+                    filterButtons.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-selected', 'false');
+                    });
                     
-                    // Add active class to clicked button
+                    // Add active class and aria-selected to clicked button
                     this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
                     
                     const filter = this.getAttribute('data-filter');
                     
@@ -1275,24 +1318,34 @@
                 });
             });
             
-            // Add animation on scroll
-            const animateOnScroll = function() {
-                const sections = document.querySelectorAll('.gallery-section');
-                
-                sections.forEach(section => {
-                    const sectionTop = section.getBoundingClientRect().top;
-                    const windowHeight = window.innerHeight;
-                    
-                    if (sectionTop < windowHeight * 0.8) {
-                        section.style.opacity = 1;
-                        section.style.transform = 'translateY(0)';
-                    }
-                });
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
             };
             
-            // Run animation on load and scroll
-            window.addEventListener('load', animateOnScroll);
-            window.addEventListener('scroll', animateOnScroll);
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all gallery sections
+            gallerySections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Keyboard navigation for gallery items
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close mobile menu on escape
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
         });
     </script>
 </body>
