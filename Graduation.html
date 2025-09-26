@@ -1924,19 +1924,18 @@
             }
 
             const nextBtn = document.getElementById('next-btn');
-            const originalText = nextBtn.innerHTML; // Store original HTML content
+            const originalText = nextBtn.innerHTML;
             nextBtn.innerHTML = '<div class="spinner"></div> Submitting...';
             nextBtn.disabled = true;
 
             // Calculate total price
             const totalPrice = bookingData.price + (bookingData.cinematicVideo ? bookingData.videoPrice : 0);
 
-            // Prepare email template parameters
             const templateParams = {
-                to_email: 'collinxander1@gmail.com', // Your recipient email
-                from_name: `${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}`,
-                from_email: bookingData.clientInfo.email,
-                phone: bookingData.clientInfo.phone,
+                to_email: 'collinxander1@gmail.com',
+                client_name: `${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}`,
+                client_email: bookingData.clientInfo.email,
+                client_phone: bookingData.clientInfo.phone,
                 service_name: bookingData.serviceName,
                 service_price: `$${bookingData.price}`,
                 session_date: bookingData.date,
@@ -1948,33 +1947,46 @@
                 graduation_date: bookingData.clientInfo.graduationDate || 'Not specified',
                 university: bookingData.clientInfo.university || 'Not specified',
                 special_requests: bookingData.clientInfo.specialRequests || 'None',
-                booking_summary: `
-                    Service: ${bookingData.serviceName} (${bookingData.duration})
-                    Date & Time: ${bookingData.date} at ${bookingData.time}
-                    Location: ${bookingData.location}
-                    Cinematic Video: ${bookingData.cinematicVideo ? 'Yes (+$75)' : 'No'}
-                    Total Price: $${totalPrice}
-                    
-                    Client Information:
-                    Name: ${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}
-                    Email: ${bookingData.clientInfo.email}
-                    Phone: ${bookingData.clientInfo.phone}
-                    Graduation Date: ${bookingData.clientInfo.graduationDate || 'Not specified'}
-                    University: ${bookingData.clientInfo.university || 'Not specified'}
-                    Special Requests: ${bookingData.clientInfo.specialRequests || 'None'}
-                `
+                message: `New Graduation Photography Booking Request:
+
+Service: ${bookingData.serviceName} (${bookingData.duration})
+Date & Time: ${bookingData.date} at ${bookingData.time}
+Location: ${bookingData.location}
+Cinematic Video: ${bookingData.cinematicVideo ? 'Yes (+$75)' : 'No'}
+Total Price: $${totalPrice}
+
+Client Information:
+Name: ${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}
+Email: ${bookingData.clientInfo.email}
+Phone: ${bookingData.clientInfo.phone}
+Graduation Date: ${bookingData.clientInfo.graduationDate || 'Not specified'}
+University: ${bookingData.clientInfo.university || 'Not specified'}
+Special Requests: ${bookingData.clientInfo.specialRequests || 'None'}`
             };
 
-            // Send email using EmailJS
-            emailjs.send('service_gfttp4s', 'YOUR_TEMPLATE_ID', templateParams) // Replace with your actual Service ID and Template ID
+            console.log('[v0] Sending email with EmailJS...', templateParams);
+            
+            // Send email using EmailJS - you need to create a template in your EmailJS dashboard
+            emailjs.send('service_gfttp4s', 'template_booking', templateParams)
                 .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
+                    console.log('[v0] EmailJS SUCCESS!', response.status, response.text);
                     // Redirect to booking confirmation page
                     window.location.href = 'https://collinxander.com/booking-confirmed';
                 }, function(error) {
-                    console.log('FAILED...', error);
-                    alert('There was an error sending your booking request. Please try again or contact us directly.');
-                    nextBtn.innerHTML = originalText; // Restore original button text
+                    console.log('[v0] EmailJS FAILED...', error);
+                    
+                    // More detailed error handling
+                    let errorMessage = 'There was an error sending your booking request. ';
+                    if (error.status === 400) {
+                        errorMessage += 'Please check that you have created an email template named "template_booking" in your EmailJS dashboard.';
+                    } else if (error.status === 401) {
+                        errorMessage += 'Authentication failed. Please check your EmailJS configuration.';
+                    } else {
+                        errorMessage += 'Please try again or contact us directly at collinxander1@gmail.com';
+                    }
+                    
+                    alert(errorMessage);
+                    nextBtn.innerHTML = originalText;
                     nextBtn.disabled = false;
                 });
         }
