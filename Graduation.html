@@ -1352,7 +1352,7 @@
                         </div>
                         
                         <div class="video-option-description">
-                            • Professional cinematic video (1-2 minutes)<br>
+                            • Professional cinematic video (Up to 45 seconds)<br>
                             • Includes music and color grading<br>
                             • Perfect for social media sharing<br>
                             • Delivered in high-resolution format
@@ -1513,7 +1513,7 @@
                             <span id="total-amount">$0</span>
                         </div>
                         <p class="payment-note">
-                            A 25% deposit will be required to secure your booking. 
+                            A $75 deposit will be required to secure your booking. 
                             Payment options will be provided via email.
                         </p>
                     </div>
@@ -1967,7 +1967,7 @@ Special Requests: ${bookingData.clientInfo.specialRequests || 'None'}`
             console.log('[v0] Sending email with EmailJS...', templateParams);
             
             // Send email using EmailJS - you need to create a template in your EmailJS dashboard
-            emailjs.send('service_gfttp4s', 'template_kydgvse', templateParams)
+            emailjs.send('service_gfttp4s', 'template_booking', templateParams)
                 .then(function(response) {
                     console.log('[v0] EmailJS SUCCESS!', response.status, response.text);
                     // Redirect to booking confirmation page
@@ -1978,7 +1978,7 @@ Special Requests: ${bookingData.clientInfo.specialRequests || 'None'}`
                     // More detailed error handling
                     let errorMessage = 'There was an error sending your booking request. ';
                     if (error.status === 400) {
-                        errorMessage += 'Please check that you have created an email template named "template_kydgvse" in your EmailJS dashboard.';
+                        errorMessage += 'Please check that you have created an email template named "template_booking" in your EmailJS dashboard.';
                     } else if (error.status === 401) {
                         errorMessage += 'Authentication failed. Please check your EmailJS configuration.';
                     } else {
