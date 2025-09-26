@@ -1971,7 +1971,7 @@ Special Requests: ${bookingData.clientInfo.specialRequests || 'None'}`
                 .then(function(response) {
                     console.log('[v0] EmailJS SUCCESS!', response.status, response.text);
                     // Redirect to booking confirmation page
-                    window.location.href = 'https://collinxander.com/booking-confirmed';
+                    window.location.href = 'https://collinxander.com/thank-you';
                 }, function(error) {
                     console.log('[v0] EmailJS FAILED...', error);
                     
