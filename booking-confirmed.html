@@ -557,10 +557,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Generate unique booking ID
-            const bookingId = 'GRAD-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-            document.getElementById('booking-id').textContent = bookingId;
-            
             // Three.js Enhanced Background Animation
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
