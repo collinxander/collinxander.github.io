@@ -10,7 +10,13 @@
     <!-- Three.js for Background Animation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- EmailJS for sending confirmation emails -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // Initialize EmailJS with your public key
+            emailjs.init("xWAo6ZoGdjyak9c6X"); // Replace with your actual EmailJS public key
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -1523,16 +1529,7 @@
 
             <!-- Confirmation Screen -->
             
-            <form class="contact-form" id="contact-form" action="https://formsubmit.co/collinxander1@gmail.com" method="POST">
-                <!-- FormSubmit configuration -->
-                <input type="hidden" name="_subject" value="New message from your website!">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_captcha" value="false">
-                <!-- Updated redirect URL to booking-confirmed.html -->
-                <input type="hidden" name="_next" value="https://collinxander.com/booking-confirmed">
-                <input type="hidden" name="_cc" value="3462765810@txt.att.net">
-                
-            </form>
+            <!-- Removed the formsubmit form -->
 
             <div class="confirmation-container" id="confirmation">
                 <div class="success-icon">
@@ -1910,83 +1907,76 @@
             document.getElementById('total-amount').textContent = `$${totalPrice}`;
         }
 
-        function submitBooking() {
-            const nextBtn = document.getElementById('next-btn');
-            nextBtn.disabled = true;
-            nextBtn.innerHTML = '<div class="spinner"></div> Submitting...';
-            
-            // Send booking confirmation email
-            sendBookingConfirmation();
+        // Helper function to validate booking data before submission
+        function validateBookingData() {
+            // Check required fields for each step
+            if (currentStep === 1 && bookingData.service === '') return false;
+            if (currentStep === 2 && (bookingData.date === '' || bookingData.time === '' || bookingData.location === '')) return false;
+            if (currentStep === 3 && (bookingData.clientInfo.firstName === '' || bookingData.clientInfo.lastName === '' || bookingData.clientInfo.email === '' || bookingData.clientInfo.phone === '')) return false;
+            if (currentStep === 4 && !document.getElementById('terms-checkbox').checked) return false;
+            return true;
         }
 
-        function sendBookingConfirmation() {
-            const selectedDateFormatted = selectedDate ? selectedDate.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            }) : '';
-            
+        function submitBooking() {
+            if (!validateBookingData()) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            const originalText = nextBtn.innerHTML; // Store original HTML content
+            nextBtn.innerHTML = '<div class="spinner"></div> Submitting...';
+            nextBtn.disabled = true;
+
+            // Calculate total price
             const totalPrice = bookingData.price + (bookingData.cinematicVideo ? bookingData.videoPrice : 0);
-            
-            // Create a hidden form to submit booking data
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = 'https://formsubmit.co/collinxander1@gmail.com';
-            form.style.display = 'none';
-            
-            // FormSubmit configuration
-            const formData = {
-                '_subject': 'New Graduation Photography Booking - ' + bookingData.clientInfo.firstName + ' ' + bookingData.clientInfo.lastName,
-                '_template': 'table',
-                '_captcha': 'false',
-                '_cc': '3462765810@txt.att.net',
-                '_next': 'booking-confirmed.html',
-                '_autoresponse': 'Thank you for booking your graduation photography session with Collin Xander! I have received your booking request and will contact you within 24 hours to confirm the details and discuss payment options. Looking forward to capturing your special milestone!',
-                
-                // Client Information
-                'Client Name': bookingData.clientInfo.firstName + ' ' + bookingData.clientInfo.lastName,
-                'Email': bookingData.clientInfo.email,
-                'Phone': bookingData.clientInfo.phone,
-                'University': bookingData.clientInfo.university || 'Not specified',
-                'Graduation Date': bookingData.clientInfo.graduationDate || 'Not specified',
-                
-                // Session Details
-                'Package': bookingData.serviceName,
-                'Session Date': selectedDateFormatted,
-                'Session Time': bookingData.time,
-                'Duration': bookingData.duration,
-                'Location': bookingData.location,
-                'Cinematic Video': bookingData.cinematicVideo ? 'Yes (+$' + bookingData.videoPrice + ')' : 'No',
-                'Total Price': '$' + totalPrice,
-                
-                // Special Requests
-                'Special Requests': bookingData.clientInfo.specialRequests || 'None',
-                
-                // Booking Details
-                'Booking Submitted': new Date().toLocaleString(),
-                'Booking ID': 'GRAD-' + Date.now()
+
+            // Prepare email template parameters
+            const templateParams = {
+                to_email: 'collinxander1@gmail.com', // Your recipient email
+                from_name: `${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}`,
+                from_email: bookingData.clientInfo.email,
+                phone: bookingData.clientInfo.phone,
+                service_name: bookingData.serviceName,
+                service_price: `$${bookingData.price}`,
+                session_date: bookingData.date,
+                session_time: bookingData.time,
+                session_duration: bookingData.duration,
+                location: bookingData.location,
+                cinematic_video: bookingData.cinematicVideo ? 'Yes (+$75)' : 'No',
+                total_price: `$${totalPrice}`,
+                graduation_date: bookingData.clientInfo.graduationDate || 'Not specified',
+                university: bookingData.clientInfo.university || 'Not specified',
+                special_requests: bookingData.clientInfo.specialRequests || 'None',
+                booking_summary: `
+                    Service: ${bookingData.serviceName} (${bookingData.duration})
+                    Date & Time: ${bookingData.date} at ${bookingData.time}
+                    Location: ${bookingData.location}
+                    Cinematic Video: ${bookingData.cinematicVideo ? 'Yes (+$75)' : 'No'}
+                    Total Price: $${totalPrice}
+                    
+                    Client Information:
+                    Name: ${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}
+                    Email: ${bookingData.clientInfo.email}
+                    Phone: ${bookingData.clientInfo.phone}
+                    Graduation Date: ${bookingData.clientInfo.graduationDate || 'Not specified'}
+                    University: ${bookingData.clientInfo.university || 'Not specified'}
+                    Special Requests: ${bookingData.clientInfo.specialRequests || 'None'}
+                `
             };
-            
-            // Add form fields
-            Object.keys(formData).forEach(key => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = formData[key];
-                form.appendChild(input);
-            });
-            
-            // Add form to page and submit
-            document.body.appendChild(form);
-            
-            // Submit form
-            form.submit();
-            
-            // Show confirmation immediately (FormSubmit will handle the redirect)
-            setTimeout(() => {
-                showConfirmation();
-            }, 1000);
+
+            // Send email using EmailJS
+            emailjs.send('service_gfttp4s', 'YOUR_TEMPLATE_ID', templateParams) // Replace with your actual Service ID and Template ID
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    // Redirect to booking confirmation page
+                    window.location.href = 'https://collinxander.com/booking-confirmed';
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('There was an error sending your booking request. Please try again or contact us directly.');
+                    nextBtn.innerHTML = originalText; // Restore original button text
+                    nextBtn.disabled = false;
+                });
         }
 
         function showConfirmation() {
