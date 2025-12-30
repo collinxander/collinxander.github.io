@@ -262,9 +262,66 @@
         .graduation-description {
             font-size: 1.3rem;
             color: #f0f0f0;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             line-height: 1.6;
             font-weight: 300;
+        }
+
+        /* Added deposit notice styling */
+        .deposit-notice {
+            background: linear-gradient(135deg, rgba(255, 30, 30, 0.2), rgba(255, 165, 0, 0.2));
+            border: 2px solid #ff1e1e;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deposit-notice::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .deposit-notice-title {
+            font-size: 1.4rem;
+            color: #FFD700;
+            font-weight: bold;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .deposit-notice-icon {
+            font-size: 1.6rem;
+            color: #ff1e1e;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .deposit-notice-text {
+            font-size: 1.1rem;
+            color: #ffffff;
+            line-height: 1.5;
         }
         
         .graduation-button {
@@ -821,6 +878,14 @@
             .graduation-description {
                 font-size: 1.1rem;
             }
+
+            .deposit-notice-title {
+                font-size: 1.2rem;
+            }
+
+            .deposit-notice-text {
+                font-size: 1rem;
+            }
             
             .graduation-button {
                 padding: 1rem 2rem;
@@ -875,6 +940,18 @@
             
             .graduation-description {
                 font-size: 1rem;
+            }
+
+            .deposit-notice {
+                padding: 1rem;
+            }
+
+            .deposit-notice-title {
+                font-size: 1.1rem;
+            }
+
+            .deposit-notice-text {
+                font-size: 0.95rem;
             }
             
             .graduation-button {
@@ -941,6 +1018,17 @@
             <p class="graduation-description">
                 Graduation bookings are now open! If you have any crazy creative ideas book now. LET'S CREATE!!!
             </p>
+            
+            <!-- Added deposit notice for graduation section -->
+            <div class="deposit-notice">
+                <div class="deposit-notice-title">
+                    DEPOSIT REQUIRED
+                </div>
+                <p class="deposit-notice-text">
+                    A $75 non-refundable deposit is required to secure your booking
+                </p>
+            </div>
+            
             <a href="./Graduation" class="graduation-button" id="graduation-btn">
                 <i class="fas fa-graduation-cap graduation-icon"></i>
                 BOOK GRADUATION SHOOT
@@ -953,6 +1041,16 @@
             
             <div class="profile-photo-container">
                 <img src="profilepic.jpg" alt="Collin Xander" class="profile-photo">
+            </div>
+
+            <!-- Added deposit notice for general bookings section -->
+            <div class="deposit-notice">
+                <div class="deposit-notice-title">
+                    DEPOSIT REQUIRED
+                </div>
+                <p class="deposit-notice-text">
+                    A $75 non-refundable deposit is required to secure your booking
+                </p>
             </div>
             
             <div class="contact-info">
@@ -1026,7 +1124,6 @@
     </main>
 
     <script>
-        // Enhanced JavaScript functionality
         document.addEventListener('DOMContentLoaded', function() {
             // Three.js Enhanced Background Animation
             const scene = new THREE.Scene();
@@ -1183,103 +1280,88 @@
             });
             
             // Enhanced form validation
-           const form = document.getElementById('contact-form');
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const phoneInput = document.getElementById('phone');
-        const messageInput = document.getElementById('message');
-        
-        function validateInput(input) {
-            const validationMessage = input.parentElement.querySelector('.validation-message');
+            const form = document.getElementById('contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const messageInput = document.getElementById('message');
             
-            if (input.type === 'email') {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(input.value)) {
+            function validateInput(input) {
+                const validationMessage = input.parentElement.querySelector('.validation-message');
+                
+                if (input.type === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(input.value)) {
+                        input.classList.add('invalid');
+                        input.classList.remove('valid');
+                        validationMessage.textContent = 'Please enter a valid email address';
+                        validationMessage.classList.add('error', 'show');
+                        validationMessage.classList.remove('success');
+                        return false;
+                    }
+                }
+                
+                if (input.type === 'tel') {
+                    const phoneRegex = /^[\d\s+\-()]+$/;
+                    if (input.value.trim().length < 7 || !phoneRegex.test(input.value)) {
+                        input.classList.add('invalid');
+                        input.classList.remove('valid');
+                        validationMessage.textContent = 'Please enter a valid phone number';
+                        validationMessage.classList.add('error', 'show');
+                        validationMessage.classList.remove('success');
+                        return false;
+                    }
+                }
+                
+                if (input.value.trim() === '') {
                     input.classList.add('invalid');
                     input.classList.remove('valid');
-                    validationMessage.textContent = 'Please enter a valid email address';
+                    validationMessage.textContent = 'This field is required';
                     validationMessage.classList.add('error', 'show');
                     validationMessage.classList.remove('success');
                     return false;
                 }
+                
+                input.classList.add('valid');
+                input.classList.remove('invalid');
+                validationMessage.textContent = '✓';
+                validationMessage.classList.add('success', 'show');
+                validationMessage.classList.remove('error');
+                return true;
             }
             
-            if (input.type === 'tel') {
-                const phoneRegex = /^[\d\s+\-()]+$/;
-                if (input.value.trim().length < 7 || !phoneRegex.test(input.value)) {
-                    input.classList.add('invalid');
-                    input.classList.remove('valid');
-                    validationMessage.textContent = 'Please enter a valid phone number';
-                    validationMessage.classList.add('error', 'show');
-                    validationMessage.classList.remove('success');
-                    return false;
-                }
-            }
-            
-            if (input.value.trim() === '') {
-                input.classList.add('invalid');
-                input.classList.remove('valid');
-                validationMessage.textContent = 'This field is required';
-                validationMessage.classList.add('error', 'show');
-                validationMessage.classList.remove('success');
-                return false;
-            }
-            
-            input.classList.add('valid');
-            input.classList.remove('invalid');
-            validationMessage.textContent = '✓';
-            validationMessage.classList.add('success', 'show');
-            validationMessage.classList.remove('error');
-            return true;
-        }
-        
-        [nameInput, emailInput, phoneInput, messageInput].forEach(input => {
-            input.addEventListener('blur', () => validateInput(input));
-            input.addEventListener('input', () => {
-                if (input.classList.contains('invalid')) {
-                    validateInput(input);
-                }
+            [nameInput, emailInput, phoneInput, messageInput].forEach(input => {
+                input.addEventListener('blur', () => validateInput(input));
+                input.addEventListener('input', () => {
+                    if (input.classList.contains('invalid')) {
+                        validateInput(input);
+                    }
+                });
             });
-        });
-        
-        form.addEventListener('submit', (e) => {
-            // Validate fields. If any invalid, prevent submission and show error.
-            const isNameValid = validateInput(nameInput);
-            const isEmailValid = validateInput(emailInput);
-            const isPhoneValid = validateInput(phoneInput);
-            const isMessageValid = validateInput(messageInput);
-
-            if (!(isNameValid && isEmailValid && isPhoneValid && isMessageValid)) {
-                e.preventDefault();
-                const formErrorEl = document.getElementById('form-error');
-                const formSuccessEl = document.getElementById('form-success');
-                formErrorEl.textContent = 'Please fix the errors above before submitting.';
-                formErrorEl.style.display = 'block';
-                if (formSuccessEl) formSuccessEl.style.display = 'none';
-                return;
-            }
-
-            // All fields valid — allow native submit to FormSubmit.co which will send the email
-            // and redirect to the `_next` URL. Show a loading state while the request completes.
-            const submitBtnEl = document.getElementById('submit-btn');
-            if (submitBtnEl) {
-                submitBtnEl.disabled = true;
-                submitBtnEl.innerHTML = 'Sending... <span class="spinner" style="display: inline-block;"></span>';
-            }
-
-            // Do NOT call e.preventDefault() here — let the form submit normally to FormSubmit.
-        });
             
-            // Enhanced form submission
-            const submitBtn = document.getElementById('submit-btn');
-            const submitSpinner = document.getElementById('submit-spinner');
-            const formSuccess = document.getElementById('form-success');
-            const formError = document.getElementById('form-error');
-            
-            form.addEventListener('submit', function(e) {
-                // No-op duplicate submit handler kept intentionally empty to avoid JS errors from
-                // undefined variables in the previous version. Primary submit behavior is
-                // handled in the other submit listener above which performs validation and reset.
+            form.addEventListener('submit', (e) => {
+                // Validate fields. If any invalid, prevent submission and show error.
+                const isNameValid = validateInput(nameInput);
+                const isEmailValid = validateInput(emailInput);
+                const isPhoneValid = validateInput(phoneInput);
+                const isMessageValid = validateInput(messageInput);
+
+                if (!(isNameValid && isEmailValid && isPhoneValid && isMessageValid)) {
+                    e.preventDefault();
+                    const formErrorEl = document.getElementById('form-error');
+                    const formSuccessEl = document.getElementById('form-success');
+                    formErrorEl.textContent = 'Please fix the errors above before submitting.';
+                    formErrorEl.style.display = 'block';
+                    if (formSuccessEl) formSuccessEl.style.display = 'none';
+                    return;
+                }
+
+                // All fields valid — allow native submit to FormSubmit.co
+                const submitBtnEl = document.getElementById('submit-btn');
+                if (submitBtnEl) {
+                    submitBtnEl.disabled = true;
+                    submitBtnEl.innerHTML = 'Sending... <span class="spinner" style="display: inline-block;"></span>';
+                }
             });
             
             // Handle window resize
@@ -1292,6 +1374,7 @@
             // Check for success parameter in URL
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('success') === 'true') {
+                const formSuccess = document.getElementById('form-success');
                 formSuccess.style.display = 'block';
                 // Scroll to success message
                 setTimeout(() => {
