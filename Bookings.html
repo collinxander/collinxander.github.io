@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Three.js for Background Animation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- EmailJS for sending emails (loaded once) -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // Initialize EmailJS with the same public key used on Graduation page
+            // Replace with your actual EmailJS public key if different
+            if (window.emailjs) {
+                try { emailjs.init("xWAo6ZoGdjyak9c6X"); } catch (e) { console.warn('EmailJS init failed', e); }
+            }
+        })();
+    </script>
     <style>
         /* Base styles */
         * {
@@ -1075,7 +1086,8 @@
                 There was an error sending your message. Please try again.
             </div>
             
-            <form class="contact-form" id="contact-form" action="https://formsubmit.co/collinxander1@gmail.com" method="POST">
+            <!-- Removed FormSubmit action; form will be sent via EmailJS instead -->
+            <form class="contact-form" id="contact-form" novalidate>
                 <!-- FormSubmit configuration -->
                 <input type="hidden" name="_subject" value="New message from your website!">
                 <input type="hidden" name="_template" value="table">
@@ -1340,27 +1352,86 @@
             });
             
             form.addEventListener('submit', (e) => {
-                // Validate fields. If any invalid, prevent submission and show error.
+                e.preventDefault();
+                // Validate fields. If any invalid, show error and return.
                 const isNameValid = validateInput(nameInput);
                 const isEmailValid = validateInput(emailInput);
                 const isPhoneValid = validateInput(phoneInput);
                 const isMessageValid = validateInput(messageInput);
 
+                const formErrorEl = document.getElementById('form-error');
+                const formSuccessEl = document.getElementById('form-success');
+
                 if (!(isNameValid && isEmailValid && isPhoneValid && isMessageValid)) {
-                    e.preventDefault();
-                    const formErrorEl = document.getElementById('form-error');
-                    const formSuccessEl = document.getElementById('form-success');
                     formErrorEl.textContent = 'Please fix the errors above before submitting.';
                     formErrorEl.style.display = 'block';
                     if (formSuccessEl) formSuccessEl.style.display = 'none';
                     return;
                 }
 
-                // All fields valid — allow native submit to FormSubmit.co
+                // Prepare UI
                 const submitBtnEl = document.getElementById('submit-btn');
                 if (submitBtnEl) {
                     submitBtnEl.disabled = true;
                     submitBtnEl.innerHTML = 'Sending... <span class="spinner" style="display: inline-block;"></span>';
+                }
+
+                // Build template params for EmailJS — construct a full, labeled message similar to Graduation emails
+                const clientName = document.getElementById('name').value;
+                const clientEmail = document.getElementById('email').value;
+                const clientPhone = document.getElementById('phone').value;
+                const inquiryType = document.getElementById('subject').value;
+                const clientMessage = document.getElementById('message').value;
+
+                const composedMessage = `New Booking Inquiry\n\n` +
+                    `CLIENT INFORMATION:\n` +
+                    `Name: ${clientName}\n` +
+                    `Email: ${clientEmail}\n` +
+                    `Phone: ${clientPhone}\n\n` +
+                    `BOOKING DETAILS:\n` +
+                    `Inquiry Type: ${inquiryType || 'Not specified'}\n\n` +
+                    `SPECIAL REQUESTS / MESSAGE:\n` +
+                    `${clientMessage || 'None'}\n`;
+
+                const templateParams = {
+                    to_email: 'collinxander1@gmail.com',
+                    client_name: clientName,
+                    client_email: clientEmail,
+                    client_phone: clientPhone,
+                    inquiry_type: inquiryType,
+                    message: composedMessage
+                };
+
+                // Send via EmailJS (service/template ids match Graduation page)
+                if (window.emailjs && typeof emailjs.send === 'function') {
+                    emailjs.send('service_gfttp4s', 'template_v01f3qj', templateParams)
+                        .then(function(response) {
+                            console.log('EmailJS SUCCESS', response.status, response.text);
+                            if (formSuccessEl) {
+                                formSuccessEl.style.display = 'block';
+                            }
+                            // redirect to thank-you page after brief delay
+                            setTimeout(() => {
+                                window.location.href = 'https://collinxander.com/thank-you';
+                            }, 800);
+                        }, function(error) {
+                            console.error('EmailJS ERROR', error);
+                            if (formErrorEl) {
+                                formErrorEl.textContent = 'There was an error sending your message. Please try again or email directly at collinxander1@gmail.com';
+                                formErrorEl.style.display = 'block';
+                            }
+                            if (submitBtnEl) {
+                                submitBtnEl.disabled = false;
+                                submitBtnEl.innerHTML = 'Send Message <span class="spinner" id="submit-spinner"></span>';
+                            }
+                        });
+                } else {
+                    // EmailJS not available - fallback to direct mailto
+                    if (formErrorEl) {
+                        formErrorEl.textContent = 'Email service unavailable. Please email directly to collinxander1@gmail.com';
+                        formErrorEl.style.display = 'block';
+                    }
+                    if (submitBtnEl) submitBtnEl.disabled = false;
                 }
             });
             
