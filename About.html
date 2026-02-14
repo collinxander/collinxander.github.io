@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT - COLLIN XANDER</title>
+    <link rel="icon" href="assets/shared/profilepic.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @font-face {
+            font-family: myFont;
+            src: url(video.ttf);
+        }
+        
+        @font-face {
+            font-family: signatureFont;
+            src: url(signature.ttf);
+        }
+        
+        body { 
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-style: italic;
+            color: red;
+            font-size: 2rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        
+        .logo:hover {
+            color: lime;
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: red;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: lime;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6rem 1rem 5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content-container {
+            max-width: 800px;
+            width: 100%;
+            /* Make container slightly more translucent so the background video is visible */
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+        
+        .about-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            text-align: left;
+        }
+        
+        .highlight {
+            color: #ff3d3d;
+            font-weight: bold;
+        }
+        
+        .signature-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-top: 2rem;
+        }
+        
+        .signature {
+            font-family: signatureFont, 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #f4e04d;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 1.5s;
+        }
+        
+        .title {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 1rem;
+            color: #a0a0a0;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 2s;
+        }
+        
+        /* Background video */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Slightly boost brightness/contrast/saturation so the footage reads better under overlays */
+            filter: brightness(1.12) contrast(1.06) saturate(1.12);
+            will-change: transform, filter;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Reduce darkness so the video is more visible while keeping text readable */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
+            z-index: 0;
+            pointer-events: none; /* allow interactions to pass through */
+        }
+        
+        /* Audio controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            border-radius: 50px;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 2.5s;
+        }
+        
+        .audio-controls button {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            font-family: myFont, 'Arial', sans-serif;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-controls button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: lime;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .volume-icon {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .volume-slider {
+            appearance: none; /* standard property for cross-browser compatibility */
+            -webkit-appearance: none;
+            width: 100px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .volume-slider::-webkit-slider-thumb:hover {
+            background: lime;
+            transform: scale(1.2);
+        }
+        
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: lime;
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 0.8rem;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-link {
+                font-size: 1rem;
+            }
+            
+            .content-container {
+                padding: 1.5rem;
+            }
+            
+            .about-text {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+            
+            .signature {
+                font-size: 2rem;
+            }
+            
+            .audio-controls {
+                flex-direction: column;
+                bottom: 4.5rem;
+                padding: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.6rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                gap: 0.8rem;
+            }
+            
+            .nav-link {
+                font-size: 0.9rem;
+            }
+            
+            .content-container {
+                padding: 1.2rem;
+            }
+            
+            .about-text {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            
+            .signature {
+                font-size: 1.8rem;
+            }
+            
+            .title {
+                font-size: 0.9rem;
+            }
+            
+            .social-icon {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="./" class="logo">COLLIN XANDER</a>
+        <div class="nav-links">
+            <a href="./Photos" class="nav-link">Photos</a>
+            <a href="./videos" class="nav-link">Videos</a>
+            <a href="./Bookings" class="nav-link">Bookings</a>
+        </div>
+    </header>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Background Video -->
+    <div class="video-background">
+        <video id="background-video" autoplay muted loop playsinline>
+            <source src="assets/about/websitehomevideo.MP4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-container">
+            <p class="about-text">
+                Meet <span class="highlight">Collin Xander</span>, a 21-year-old creative from Houston, Texas, currently pursuing a degree in computer science. With a deep passion for visual storytelling and digital media, Collin developed his personal photography and videography website portfolio coding it from scratch.
+            </p>
+            <p class="about-text">
+                His work captures authentic moments and unique perspectives, constantly pushing creative boundaries through his lens. Each photo and video in this collection represents Collin's distinctive visual style and attention to detail.
+            </p>
+            <p class="about-text">
+                "<span class="highlight">I designed this platform to visually showcase my work and creative journey. My philosophy is simple: be authentic, stay creative, and always elevate your craft!</span>"
+            </p>
+            
+            <div class="signature-container">
+                <div class="signature">- Collin Xander</div>
+                <div class="title">Photographer & Videographer</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Audio Controls -->
+
+
+    <!-- Audio Element -->
+    <audio id="background-audio" loop>
+        <source src="background-music.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="https://instagram.com/collinxander.jpeg" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:contact@collinxander1@gmail.com" class="social-icon">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Elements
+            const audio = document.getElementById('background-audio');
+            const video = document.getElementById('background-video');
+            const playPauseButton = document.getElementById('play-pause');
+            const volumeControl = document.getElementById('volume-control');
+            const contentContainer = document.querySelector('.content-container');
+            
+            // Set initial volume
+            audio.volume = volumeControl.value;
+            
+            // Restore audio and video states on load
+            const savedAudioTime = localStorage.getItem('audioTime');
+            const savedVideoTime = localStorage.getItem('videoTime');
+            const audioPaused = localStorage.getItem('audioPaused') === 'true';
+            
+            if (savedAudioTime !== null) {
+                audio.currentTime = parseFloat(savedAudioTime);
+            }
+            
+            if (savedVideoTime !== null) {
+                video.currentTime = parseFloat(savedVideoTime);
+            }
+            
+            // Handle play/pause button
+            playPauseButton.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        playPauseButton.innerHTML = 'Pause Music <i class="fas fa-pause"></i>';
+                    }).catch(error => {
+                        console.log("Audio play prevented:", error);
+                    });
+                } else {
+                    audio.pause();
+                    playPauseButton.innerHTML = 'Play Music <i class="fas fa-play"></i>';
+                }
+                
+                // Save audio state
+                localStorage.setItem('audioPaused', audio.paused);
+            });
+            
+            // Handle volume control
+            volumeControl.addEventListener('input', (e) => {
+                audio.volume = e.target.value;
+            });
+            
+            // Update button text based on initial audio state
+            if (audioPaused) {
+                playPauseButton.innerHTML = 'Play Music <i class="fas fa-play"></i>';
+            } else {
+                audio.play().then(() => {
+                    playPauseButton.innerHTML = 'Pause Music <i class="fas fa-pause"></i>';
+                }).catch(error => {
+                    console.log("Audio autoplay prevented:", error);
+                    playPauseButton.innerHTML = 'Play Music <i class="fas fa-play"></i>';
+                });
+            }
+            
+            // Ensure video plays
+            video.play().catch(error => {
+                console.log("Video autoplay prevented:", error);
+            });
+            
+            // Save audio and video states before leaving the page
+            window.addEventListener('beforeunload', () => {
+                localStorage.setItem('audioTime', audio.currentTime);
+                localStorage.setItem('videoTime', video.currentTime);
+                localStorage.setItem('audioPaused', audio.paused);
+            });
+            
+            // Add scroll animation
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.scrollY;
+                
+                if (scrollPosition > 50) {
+                    contentContainer.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+                } else {
+                    contentContainer.style.transform = 'translateY(0)';
+                }
+            });
+            
+            // Add parallax effect to video
+            window.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX / window.innerWidth - 0.5;
+                const mouseY = e.clientY / window.innerHeight - 0.5;
+                
+                video.style.transform = `translate(${mouseX * -20}px, ${mouseY * -20}px)`;
+            });
+        });
+    </script>
+</body>
+</html>

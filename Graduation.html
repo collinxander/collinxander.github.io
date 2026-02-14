@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRADUATION BOOKINGS - COLLIN XANDER</title>
+    <link rel="icon" href="assets/shared/profilepic.jpg" type="image/x-icon">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for Background Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- EmailJS for sending confirmation emails -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // Initialize EmailJS with your public key
+            emailjs.init("xWAo6ZoGdjyak9c6X"); // Replace with your actual EmailJS public key
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Canvas for Three.js */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Floating particles overlay */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff1e1e, transparent);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(255, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 4px 40px rgba(255, 0, 0, 0.5);
+        }
+        
+        .logo {
+            font-style: italic;
+            color: #ff1e1e;
+            font-size: 2rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-decoration: none;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .logo:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .logo:hover {
+            color: #00ff00;
+            transform: scale(1.1);
+            text-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+        }
+        
+        .step-indicator {
+            color: #ff1e1e;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            width: 100%;
+            z-index: 40;
+            padding: 0 1rem;
+        }
+        
+        .progress-bar-bg {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 30, 30, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff1e1e, #00ff00);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 25%;
+        }
+        
+        /* Main content */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 8rem 1rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .booking-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(255, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 1s ease forwards 0.5s;
+            overflow: hidden;
+        }
+        
+        .booking-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 0, 0, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+        
+        .booking-container::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 23px;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .step-container {
+            animation: slideIn 0.6s ease;
+            display: none;
+        }
+        
+        .step-container.active {
+            display: block;
+        }
+        
+        .step-title {
+            font-size: 2.5rem;
+            color: #ff1e1e;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 30, 30, 0.5);
+            font-weight: bold;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        /* Service Selection Styles */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .service-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 30, 30, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .service-card:hover::before,
+        .service-card.selected::before {
+            opacity: 1;
+        }
+        
+        .service-card:hover,
+        .service-card.selected {
+            border-color: #ff1e1e;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 30, 30, 0.3);
+        }
+        
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .service-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0;
+        }
+        
+        .service-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ff00;
+        }
+        
+        .service-description {
+            color: #ccc;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .service-duration {
+            color: #ff1e1e;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .service-features li {
+            color: #ccc;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-features li::before {
+            content: '✓';
+            color: #00ff00;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Added cinematic video option section */
+        .cinematic-video-section {
+            background: rgba(255, 30, 30, 0.1);
+            border: 2px solid #ff1e1e;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .cinematic-video-section h3 {
+            color: #ff1e1e;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+
+        .video-option-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .video-option-card:hover,
+        .video-option-card.selected {
+            border-color: #ff1e1e;
+            background: rgba(255, 30, 30, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 30, 30, 0.2);
+        }
+
+        .video-option-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-option-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .video-option-title i {
+            margin-right: 0.5rem;
+            color: #ff1e1e;
+        }
+
+        .video-option-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        .video-option-description {
+            color: #ccc;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .video-checkbox {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .video-checkmark {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            height: 25px;
+            width: 25px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .video-option-card.selected .video-checkmark {
+            background-color: #ff1e1e;
+            border-color: #ff1e1e;
+        }
+
+        .video-checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .video-option-card.selected .video-checkmark:after {
+            display: block;
+        }
+        
+        /* Calendar Styles */
+        .datetime-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .calendar-section,
+        .time-section,
+        .location-section {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #ff1e1e;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .calendar-nav {
+            background: rgba(255, 30, 30, 0.1);
+            border: 1px solid #ff1e1e;
+            color: #ff1e1e;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-nav:hover {
+            background: #ff1e1e;
+            color: white;
+        }
+        
+        .calendar-title {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            margin-bottom: 1rem;
+        }
+        
+        .weekday {
+            text-align: center;
+            padding: 0.5rem;
+            color: #ccc;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .calendar-day.blank {
+            cursor: default;
+        }
+        
+        .calendar-day.past {
+            color: #666;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.available {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .calendar-day.available:hover {
+            background: rgba(255, 30, 30, 0.2);
+            color: #ff1e1e;
+        }
+        
+        .calendar-day.today {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+        }
+        
+        .calendar-day.selected {
+            background: #ff1e1e;
+            color: white;
+        }
+        
+        .calendar-day.weekend {
+            color: #ff6b6b;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+        
+        .time-slot {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .time-slot:hover {
+            border-color: #ff1e1e;
+            background: rgba(255, 30, 30, 0.1);
+            color: #ff1e1e;
+        }
+        
+        .time-slot.selected {
+            background: #ff1e1e;
+            border-color: #ff1e1e;
+            color: white;
+        }
+        
+        .location-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .location-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .location-option:hover {
+            border-color: #ff1e1e;
+            background: rgba(255, 30, 30, 0.1);
+            color: #ff1e1e;
+        }
+        
+        .location-option.selected {
+            background: #ff1e1e;
+            border-color: #ff1e1e;
+            color: white;
+        }
+        
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-label {
+            color: #ccc;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-input,
+        .form-textarea {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #ff1e1e;
+            box-shadow: 0 0 20px rgba(255, 30, 30, 0.3);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        /* Review Styles */
+        .review-container {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .review-section {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .review-title {
+            font-size: 1.3rem;
+            color: #ff1e1e;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .review-details {
+            display: grid;
+            gap: 0.8rem;
+        }
+        
+        .review-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .review-label {
+            color: #ccc;
+            font-weight: bold;
+        }
+        
+        .review-value {
+            color: white;
+            text-align: right;
+        }
+        
+        .pricing-summary {
+            background: rgba(255, 30, 30, 0.1);
+            border: 2px solid #ff1e1e;
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .price-breakdown {
+            margin-bottom: 1rem;
+        }
+        
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .total-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ff00;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-note {
+            color: #ccc;
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 0;
+        }
+        
+        .terms-section {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            color: white;
+            line-height: 1.5;
+        }
+        
+        .checkbox-label input {
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+        
+        /* Navigation */
+        .navigation-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .nav-button {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+        }
+        
+        .nav-button.primary {
+            background: linear-gradient(45deg, #ff1e1e, #ff4444);
+            color: white;
+        }
+        
+        .nav-button.primary:hover {
+            background: linear-gradient(45deg, #ff4444, #00ff00);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 30, 30, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: transparent;
+            color: #ccc;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-button.secondary:hover {
+            border-color: #ff1e1e;
+            color: #ff1e1e;
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        /* Confirmation Styles */
+        .confirmation-container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            animation: slideIn 0.6s ease;
+            display: none;
+        }
+        
+        .confirmation-container.show {
+            display: block;
+        }
+        
+        .success-icon {
+            background: #00ff00;
+            color: black;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            animation: bounceIn 0.8s ease;
+            font-size: 3rem;
+        }
+        
+        .confirmation-title {
+            font-size: 2.5rem;
+            color: #00ff00;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .confirmation-message {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        
+        .booking-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .booking-summary h3 {
+            color: #ff1e1e;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .booking-summary p {
+            margin: 0.5rem 0;
+            color: white;
+        }
+        
+        .confirmation-note {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #ff1e1e, #ff4444);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background: linear-gradient(45deg, #ff4444, #00ff00);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 30, 30, 0.4);
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 0.8rem;
+                gap: 0.5rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .step-indicator {
+                font-size: 0.8rem;
+            }
+            
+            .main-content {
+                padding: 140px 0.5rem 2rem;
+            }
+            
+            .booking-container {
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+            
+            .booking-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .step-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+            
+            .service-name {
+                font-size: 1.3rem;
+            }
+            
+            .service-price {
+                font-size: 1.8rem;
+            }
+            
+            .calendar-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .calendar-section {
+                padding: 1.5rem;
+            }
+            
+            .calendar-grid {
+                gap: 2px;
+            }
+            
+            .calendar-day {
+                font-size: 0.9rem;
+                min-height: 40px;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .time-slot {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .form-input,
+            .form-textarea,
+            .form-select {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .form-label {
+                font-size: 1rem;
+                margin-bottom: 0.4rem;
+            }
+            
+            .booking-summary {
+                padding: 1.5rem;
+            }
+            
+            .summary-item {
+                padding: 0.8rem 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+            
+            .summary-value {
+                font-size: 0.9rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.5rem;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .main-content {
+                padding: 120px 0.3rem 1rem;
+            }
+            
+            .booking-container {
+                padding: 1rem;
+                margin: 0.3rem;
+                border-radius: 16px;
+            }
+            
+            .booking-title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .step-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+            
+            .service-card {
+                padding: 1rem;
+            }
+            
+            .service-name {
+                font-size: 1.1rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .service-price {
+                font-size: 1.5rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .service-description {
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .service-features {
+                font-size: 0.85rem;
+            }
+            
+            .calendar-section {
+                padding: 1rem;
+            }
+            
+            .calendar-header {
+                margin-bottom: 0.8rem;
+            }
+            
+            .calendar-title {
+                font-size: 1rem;
+            }
+            
+            .calendar-nav {
+                padding: 0.4rem;
+                font-size: 0.9rem;
+            }
+            
+            .calendar-day {
+                font-size: 0.8rem;
+                min-height: 35px;
+            }
+            
+            .time-slots {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+            
+            .time-slot {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+            
+            .form-input,
+            .form-textarea,
+            .form-select {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+            
+            .form-label {
+                font-size: 0.9rem;
+            }
+            
+            .form-textarea {
+                min-height: 100px;
+            }
+            
+            .booking-summary {
+                padding: 1rem;
+            }
+            
+            .summary-item {
+                padding: 0.6rem 0;
+                font-size: 0.9rem;
+            }
+            
+            .summary-label {
+                font-size: 0.85rem;
+            }
+            
+            .summary-value {
+                font-size: 0.85rem;
+            }
+            
+            .total-price {
+                font-size: 1.2rem;
+            }
+            
+            .navigation {
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+            }
+            
+            .nav-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.85rem;
+                border-radius: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="floating-particles" id="floating-particles"></div>
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <a href="./" class="logo">COLLIN XANDER</a>
+        <div class="step-indicator" id="step-indicator">Step 1 of 4</div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="booking-container">
+            
+            <!-- Step 1: Service Selection -->
+            <div class="step-container active" id="step-1">
+                <h2 class="step-title">
+                    <i class="fas fa-camera" style="margin-right: 1rem;"></i>
+                    Choose Your Package
+                </h2>
+                <div class="services-grid">
+                    <div class="service-card" data-service="essential" data-price="250" data-duration="1 hour">
+                        <div class="service-header">
+                            <h3 class="service-name">Essential Graduation Package</h3>
+                            <div class="service-price">$250</div>
+                        </div>
+                        <p class="service-description">Perfect for individual graduation portraits</p>
+                        <div class="service-duration">
+                            <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>
+                            1 hour
+                        </div>
+                        <ul class="service-features">
+                            <li>15 edited photos</li>
+                            <li>Access to all Raw photos</li>
+                            <li>1-2 Outfits</li>
+                            <li>1-2 Locations</li>
+                            <li>Individual portraits</li>
+                            <li>Travel fee: $50 for universities outside San Antonio area</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card" data-service="premium" data-price="325" data-duration="2 hours">
+                        <div class="service-header">
+                            <h3 class="service-name">Premium Graduation Package</h3>
+                            <div class="service-price">$325</div>
+                        </div>
+                        <p class="service-description">Perfect for a fullset graduation package</p>
+                        <div class="service-duration">
+                            <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>
+                            2 hours
+                        </div>
+                        <ul class="service-features">
+                            <li>25 edited photos</li>
+                            <li>Access to all Raw photos</li>
+                            <li>1-3 Outfits</li>
+                            <li>1-3 Locations</li>
+                            <li>Individual portraits</li>
+                            <li>Travel fee: $50 for universities outside San Antonio area</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card" data-service="deluxe" data-price="500" data-duration="3 hours">
+                        <div class="service-header">
+                            <h3 class="service-name">Deluxe Celebration Package</h3>
+                            <div class="service-price">$500</div>
+                        </div>
+                        <p class="service-description">Perfect for group graduation portraits</p>
+                        <div class="service-duration">
+                            <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>
+                            3 hours
+                        </div>
+                        <ul class="service-features">
+                            <li>35 edited photos</li>
+                            <li>Access to all Raw photos</li>
+                            <li>1-4 Outfits</li>
+                            <li>1-4 Locations</li>
+                            <li>Group family shots</li>
+                            <li>Travel fee: $50 for universities outside San Antonio area</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Added prominent cinematic video option section -->
+                <div class="cinematic-video-section">
+                    <h3>
+                        <i class="fas fa-video" style="margin-right: 0.5rem;"></i>
+                        Add Cinematic Video?
+                    </h3>
+                    <p style="color: #ccc; margin-bottom: 1.5rem;">
+                        Capture your graduation moment with a professional cinematic video to complement your photos
+                    </p>
+                    
+                    <div class="video-option-card" id="video-option" data-video-price="75">
+                        <input type="checkbox" class="video-checkbox" id="cinematic-video-checkbox">
+                        <div class="video-checkmark"></div>
+                        
+                        <div class="video-option-header">
+                            <div class="video-option-title">
+                                <i class="fas fa-film"></i>
+                                Cinematic Video Add-On
+                            </div>
+                            <div class="video-option-price">+$75</div>
+                        </div>
+                        
+                        <div class="video-option-description">
+                            • Professional cinematic video (Up to 45 seconds)<br>
+                            • Includes music and color grading<br>
+                            • Perfect for social media sharing<br>
+                            • Delivered in high-resolution format
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Date & Time Selection -->
+            <div class="step-container" id="step-2">
+                <h2 class="step-title">
+                    <i class="fas fa-calendar" style="margin-right: 1rem;"></i>
+                    Select Date & Time
+                </h2>
+                
+                <div class="datetime-container">
+                    <div class="calendar-section">
+                        <h3 class="section-title">Choose a Date</h3>
+                        <div class="calendar-header">
+                            <button class="calendar-nav" id="prev-month">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h4 class="calendar-title" id="calendar-title">January 2025</h4>
+                            <button class="calendar-nav" id="next-month">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="calendar-grid">
+                            <div class="calendar-weekdays">
+                                <div class="weekday">Sun</div>
+                                <div class="weekday">Mon</div>
+                                <div class="weekday">Tue</div>
+                                <div class="weekday">Wed</div>
+                                <div class="weekday">Thu</div>
+                                <div class="weekday">Fri</div>
+                                <div class="weekday">Sat</div>
+                            </div>
+                            <div class="calendar-days" id="calendar-days">
+                                <!-- Calendar days will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="time-section" id="time-section" style="display: none;">
+                        <h3 class="section-title">Available Times</h3>
+                        <div class="time-slots" id="time-slots">
+                            <button class="time-slot" data-time="9:00 AM">9:00 AM</button>
+                            <button class="time-slot" data-time="10:00 AM">10:00 AM</button>
+                            <button class="time-slot" data-time="11:00 AM">11:00 AM</button>
+                            <button class="time-slot" data-time="12:00 PM">12:00 PM</button>
+                            <button class="time-slot" data-time="1:00 PM">1:00 PM</button>
+                            <button class="time-slot" data-time="2:00 PM">2:00 PM</button>
+                            <button class="time-slot" data-time="3:00 PM">3:00 PM</button>
+                            <button class="time-slot" data-time="4:00 PM">4:00 PM</button>
+                            <button class="time-slot" data-time="5:00 PM">5:00 PM</button>
+                            <button class="time-slot" data-time="6:00 PM">6:00 PM</button>
+                            <button class="time-slot" data-time="7:00 PM">7:00 PM</button>
+                            <button class="time-slot" data-time="8:00 PM">8:00 PM</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>
+                        Preferred Location
+                    </h3>
+                    <div class="location-options">
+                        <button class="location-option" data-location="Campus/University Grounds">Campus/University Grounds</button>
+                        <button class="location-option" data-location="Studio Session">Studio Session</button>
+                        <button class="location-option" data-location="Outdoor Park/Garden">Outdoor Park/Garden</button>
+                        <button class="location-option" data-location="Urban/City Setting">Urban/City Setting</button>
+                        <button class="location-option" data-location="Beach/Waterfront">Beach/Waterfront</button>
+                        <button class="location-option" data-location="Custom Location">Custom Location</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Client Information -->
+            <div class="step-container" id="step-3">
+                <h2 class="step-title">
+                    <i class="fas fa-user" style="margin-right: 1rem;"></i>
+                    Your Information
+                </h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">First Name *</label>
+                        <input type="text" class="form-input" id="firstName" placeholder="Enter your first name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Last Name *</label>
+                        <input type="text" class="form-input" id="lastName" placeholder="Enter your last name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>
+                            Email Address *
+                        </label>
+                        <input type="email" class="form-input" id="email" placeholder="your.email@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-phone" style="margin-right: 0.5rem;"></i>
+                            Phone Number *
+                        </label>
+                        <input type="tel" class="form-input" id="phone" placeholder="(555) 123-4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Graduation Date</label>
+                        <input type="date" class="form-input" id="graduationDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">University/School</label>
+                        <input type="text" class="form-input" id="university" placeholder="University of Example">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label class="form-label">Special Requests or Notes</label>
+                        <textarea class="form-textarea" id="specialRequests" rows="4" placeholder="Any specific shots you'd like, props to bring, accessibility needs, etc."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Review & Confirm -->
+            <div class="step-container" id="step-4">
+                <h2 class="step-title">
+                    <i class="fas fa-check" style="margin-right: 1rem;"></i>
+                    Review Your Booking
+                </h2>
+                
+                <div class="review-container">
+                    <div class="review-section">
+                        <h3 class="review-title">Session Details</h3>
+                        <div class="review-details" id="session-details">
+                            <!-- Details will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="review-section">
+                        <h3 class="review-title">Client Information</h3>
+                        <div class="review-details" id="client-details">
+                            <!-- Details will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="pricing-summary">
+                        <div class="price-breakdown" id="price-breakdown">
+                            <!-- Price breakdown will be populated by JavaScript -->
+                        </div>
+                        <div class="total-price">
+                            <i class="fas fa-dollar-sign" style="margin-right: 0.5rem;"></i>
+                            <span id="total-amount">$0</span>
+                        </div>
+                        <p class="payment-note">
+                            A 50% NON-REFUNDABLE deposit will be required to secure your booking. 
+                            Payment options will be provided via email.
+                        </p>
+                    </div>
+
+                    <div class="terms-section">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms-checkbox" required>
+                            <span>I agree to the terms and conditions and understand the cancellation policy.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirmation Screen -->
+            
+            <!-- Removed the formsubmit form -->
+
+            <div class="confirmation-container" id="confirmation">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h1 class="confirmation-title">Booking Confirmed!</h1>
+                <p class="confirmation-message">
+                    Thank you for booking your graduation photography session with Collin Xander!
+                </p>
+                <div class="booking-summary" id="final-summary">
+                    <!-- Final booking summary will be populated by JavaScript -->
+                </div>
+                <p class="confirmation-note" id="confirmation-note">
+                    <!-- Confirmation note will be populated by JavaScript -->
+                </p>
+                <a href="https://collinxander.com" class="cta-button">
+                    Return to Website
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <div class="navigation-container" id="navigation">
+                <button class="nav-button secondary" id="prev-btn" style="display: none;">
+                    <i class="fas fa-chevron-left" style="margin-right: 0.5rem;"></i>
+                    Previous
+                </button>
+                
+                <div style="flex: 1;"></div>
+                
+                <button class="nav-button primary" id="next-btn">
+                    Continue
+                    <i class="fas fa-chevron-right" style="margin-left: 0.5rem;"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Booking system state
+        let currentStep = 1;
+        let bookingData = {
+            service: '',
+            serviceName: '',
+            price: 0,
+            duration: '',
+            date: '',
+            time: '',
+            location: '',
+            cinematicVideo: false,
+            videoPrice: 75,
+            clientInfo: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                graduationDate: '',
+                university: '',
+                specialRequests: ''
+            }
+        };
+
+        // Calendar variables
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let selectedDate = null;
+
+        const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBookingSystem();
+            createFloatingParticles();
+            initializeThreeJS();
+        });
+
+        function initializeBookingSystem() {
+            // Service selection
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    bookingData.service = this.dataset.service;
+                    bookingData.serviceName = this.querySelector('.service-name').textContent;
+                    bookingData.price = parseInt(this.dataset.price);
+                    bookingData.duration = this.dataset.duration;
+                    
+                    updateNextButton();
+                });
+            });
+
+            document.getElementById('video-option').addEventListener('click', function() {
+                const checkbox = document.getElementById('cinematic-video-checkbox');
+                checkbox.checked = !checkbox.checked;
+                
+                if (checkbox.checked) {
+                    this.classList.add('selected');
+                    bookingData.cinematicVideo = true;
+                } else {
+                    this.classList.remove('selected');
+                    bookingData.cinematicVideo = false;
+                }
+                
+                updateNextButton();
+            });
+
+            // Calendar navigation
+            document.getElementById('prev-month').addEventListener('click', function() {
+                if (currentMonth === 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                } else {
+                    currentMonth--;
+                }
+                renderCalendar();
+            });
+
+            document.getElementById('next-month').addEventListener('click', function() {
+                if (currentMonth === 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                } else {
+                    currentMonth++;
+                }
+                renderCalendar();
+            });
+
+            // Time slots
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.addEventListener('click', function() {
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    bookingData.time = this.dataset.time;
+                    updateNextButton();
+                });
+            });
+
+            // Location options
+            document.querySelectorAll('.location-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.location-option').forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    bookingData.location = this.dataset.location;
+                    updateNextButton();
+                });
+            });
+
+            // Form inputs
+            const formInputs = ['firstName', 'lastName', 'email', 'phone', 'graduationDate', 'university', 'specialRequests'];
+            formInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', function() {
+                        bookingData.clientInfo[inputId] = this.value;
+                        updateNextButton();
+                    });
+                }
+            });
+
+            // Terms checkbox
+            document.getElementById('terms-checkbox').addEventListener('change', updateNextButton);
+
+            // Navigation buttons
+            document.getElementById('prev-btn').addEventListener('click', prevStep);
+            document.getElementById('next-btn').addEventListener('click', nextStep);
+
+            // Initialize calendar
+            renderCalendar();
+            updateStepIndicator();
+            updateNextButton();
+        }
+
+
+        function renderCalendar() {
+            const calendarTitle = document.getElementById('calendar-title');
+            const calendarDays = document.getElementById('calendar-days');
+            
+            calendarTitle.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            
+            const today = new Date();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+            
+            let daysHTML = '';
+            
+            // Add blank days for the first week
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                daysHTML += '<div class="calendar-day blank"></div>';
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const isToday = date.toDateString() === today.toDateString();
+                const isPast = date < today;
+                const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+                const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+                
+                let classes = 'calendar-day';
+                if (isPast) classes += ' past';
+                else classes += ' available';
+                if (isToday) classes += ' today';
+                if (isSelected) classes += ' selected';
+                if (isWeekend) classes += ' weekend';
+                
+                daysHTML += `<div class="${classes}" data-day="${day}" ${!isPast ? 'onclick="selectDate(' + day + ')"' : ''}>${day}</div>`;
+            }
+            
+            calendarDays.innerHTML = daysHTML;
+        }
+
+        function selectDate(day) {
+            selectedDate = new Date(currentYear, currentMonth, day);
+            bookingData.date = selectedDate.toISOString().split('T')[0];
+            
+            renderCalendar();
+            document.getElementById('time-section').style.display = 'block';
+            updateNextButton();
+        }
+
+        function updateStepIndicator() {
+            document.getElementById('step-indicator').textContent = `Step ${currentStep} of 4`;
+            document.getElementById('progress-bar').style.width = `${(currentStep / 4) * 100}%`;
+        }
+
+        
+        function updateNextButton() {
+            const nextBtn = document.getElementById('next-btn');
+            let isValid = false;
+            
+            switch(currentStep) {
+                case 1:
+                    isValid = bookingData.service !== '';
+                    break;
+                case 2:
+                    isValid = bookingData.date !== '' && bookingData.time !== '' && bookingData.location !== '';
+                    break;
+                case 3:
+                    isValid = bookingData.clientInfo.firstName !== '' && 
+                             bookingData.clientInfo.lastName !== '' && 
+                             bookingData.clientInfo.email !== '' && 
+                             bookingData.clientInfo.phone !== '';
+                    break;
+                case 4:
+                    isValid = document.getElementById('terms-checkbox').checked;
+                    nextBtn.innerHTML = isValid ? 'Confirm Booking' : 'Confirm Booking';
+                    break;
+            }
+            
+            nextBtn.disabled = !isValid;
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                currentStep++;
+                showStep(currentStep);
+            } else {
+                submitBooking();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.step-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Show current step
+            document.getElementById(`step-${step}`).classList.add('active');
+            
+            // Update navigation
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.style.display = step > 1 ? 'flex' : 'none';
+            
+            if (step === 4) {
+                populateReviewStep();
+                nextBtn.innerHTML = 'Confirm Booking';
+            } else {
+                nextBtn.innerHTML = 'Continue <i class="fas fa-chevron-right" style="margin-left: 0.5rem;"></i>';
+            }
+            
+            updateStepIndicator();
+            updateNextButton();
+        }
+
+        function populateReviewStep() {
+            // Session details
+            const sessionDetails = document.getElementById('session-details');
+            const selectedDateFormatted = selectedDate ? selectedDate.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            }) : '';
+            
+            sessionDetails.innerHTML = `
+                <div class="review-item">
+                    <span class="review-label">Package:</span>
+                    <span class="review-value">${bookingData.serviceName}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Date:</span>
+                    <span class="review-value">${selectedDateFormatted}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Time:</span>
+                    <span class="review-value">${bookingData.time}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Duration:</span>
+                    <span class="review-value">${bookingData.duration}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Location:</span>
+                    <span class="review-value">${bookingData.location}</span>
+                </div>
+                ${bookingData.cinematicVideo ? `
+                <div class="review-item">
+                    <span class="review-label">Cinematic Video:</span>
+                    <span class="review-value">Yes (+$${bookingData.videoPrice})</span>
+                </div>
+                ` : ''}
+            `;
+            
+            // Client details
+            const clientDetails = document.getElementById('client-details');
+            clientDetails.innerHTML = `
+                <div class="review-item">
+                    <span class="review-label">Name:</span>
+                    <span class="review-value">${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Email:</span>
+                    <span class="review-value">${bookingData.clientInfo.email}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Phone:</span>
+                    <span class="review-value">${bookingData.clientInfo.phone}</span>
+                </div>
+                ${bookingData.clientInfo.university ? `
+                <div class="review-item">
+                    <span class="review-label">University:</span>
+                    <span class="review-value">${bookingData.clientInfo.university}</span>
+                </div>
+                ` : ''}
+            `;
+            
+            const priceBreakdown = document.getElementById('price-breakdown');
+            const totalPrice = bookingData.price + (bookingData.cinematicVideo ? bookingData.videoPrice : 0);
+            
+            priceBreakdown.innerHTML = `
+                <div class="price-item">
+                    <span>${bookingData.serviceName}</span>
+                    <span>$${bookingData.price}</span>
+                </div>
+                ${bookingData.cinematicVideo ? `
+                <div class="price-item">
+                    <span>Cinematic Video Add-On</span>
+                    <span>$${bookingData.videoPrice}</span>
+                </div>
+                ` : ''}
+            `;
+            
+            document.getElementById('total-amount').textContent = `$${totalPrice}`;
+        }
+
+        // Helper function to validate booking data before submission
+        function validateBookingData() {
+            // Check required fields for each step
+            if (currentStep === 1 && bookingData.service === '') return false;
+            if (currentStep === 2 && (bookingData.date === '' || bookingData.time === '' || bookingData.location === '')) return false;
+            if (currentStep === 3 && (bookingData.clientInfo.firstName === '' || bookingData.clientInfo.lastName === '' || bookingData.clientInfo.email === '' || bookingData.clientInfo.phone === '')) return false;
+            if (currentStep === 4 && !document.getElementById('terms-checkbox').checked) return false;
+            return true;
+        }
+
+        function submitBooking() {
+            if (!validateBookingData()) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            const originalText = nextBtn.innerHTML;
+            nextBtn.innerHTML = '<div class="spinner"></div> Submitting...';
+            nextBtn.disabled = true;
+
+            // Calculate total price
+            const totalPrice = bookingData.price + (bookingData.cinematicVideo ? bookingData.videoPrice : 0);
+
+            const templateParams = {
+                to_email: 'collinxander1@gmail.com',
+                client_name: `${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}`,
+                client_email: bookingData.clientInfo.email,
+                client_phone: bookingData.clientInfo.phone,
+                service_name: bookingData.serviceName,
+                service_price: `$${bookingData.price}`,
+                session_date: bookingData.date,
+                session_time: bookingData.time,
+                session_duration: bookingData.duration,
+                location: bookingData.location,
+                cinematic_video: bookingData.cinematicVideo ? 'Yes (+$75)' : 'No',
+                total_price: `$${totalPrice}`,
+                graduation_date: bookingData.clientInfo.graduationDate || 'Not specified',
+                university: bookingData.clientInfo.university || 'Not specified',
+                special_requests: bookingData.clientInfo.specialRequests || 'None',
+                message: `New Graduation Photography Booking Request:
+
+Service: ${bookingData.serviceName} (${bookingData.duration})
+Date & Time: ${bookingData.date} at ${bookingData.time}
+Location: ${bookingData.location}
+Cinematic Video: ${bookingData.cinematicVideo ? 'Yes (+$75)' : 'No'}
+Total Price: $${totalPrice}
+
+Client Information:
+Name: ${bookingData.clientInfo.firstName} ${bookingData.clientInfo.lastName}
+Email: ${bookingData.clientInfo.email}
+Phone: ${bookingData.clientInfo.phone}
+Graduation Date: ${bookingData.clientInfo.graduationDate || 'Not specified'}
+University: ${bookingData.clientInfo.university || 'Not specified'}
+Special Requests: ${bookingData.clientInfo.specialRequests || 'None'}`
+            };
+
+            console.log('[v0] Sending email with EmailJS...', templateParams);
+            
+            // Send email using EmailJS - you need to create a template in your EmailJS dashboard
+            emailjs.send('service_gfttp4s', 'template_kydgvse', templateParams)
+                .then(function(response) {
+                    console.log('[v0] EmailJS SUCCESS!', response.status, response.text);
+                    // Redirect to booking confirmation page
+                    window.location.href = 'https://collinxander.com/thank-you';
+                }, function(error) {
+                    console.log('[v0] EmailJS FAILED...', error);
+                    
+                    // More detailed error handling
+                    let errorMessage = 'There was an error sending your booking request. ';
+                    if (error.status === 400) {
+                        errorMessage += 'Please check that you have created an email template named "template_kydgvse" in your EmailJS dashboard.';
+                    } else if (error.status === 401) {
+                        errorMessage += 'Authentication failed. Please check your EmailJS configuration.';
+                    } else {
+                        errorMessage += 'Please try again or contact us directly at collinxander1@gmail.com';
+                    }
+                    
+                    alert(errorMessage);
+                    nextBtn.innerHTML = originalText;
+                    nextBtn.disabled = false;
+                });
+        }
+
+        function showConfirmation() {
+            // Hide booking container and show confirmation
+            document.querySelector('.booking-container').style.display = 'none';
+            document.getElementById('navigation').style.display = 'none';
+            
+            const confirmation = document.getElementById('confirmation');
+            confirmation.classList.add('show');
+            
+            const finalSummary = document.getElementById('final-summary');
+            const selectedDateFormatted = selectedDate ? selectedDate.toLocaleDateString() : '';
+            const totalPrice = bookingData.price + (bookingData.cinematicVideo ? bookingData.videoPrice : 0);
+            
+            finalSummary.innerHTML = `
+                <h3>Session Details:</h3>
+                <p><strong>Service:</strong> ${bookingData.serviceName}</p>
+                <p><strong>Date:</strong> ${selectedDateFormatted}</p>
+                <p><strong>Time:</strong> ${bookingData.time}</p>
+                <p><strong>Duration:</strong> ${bookingData.duration}</p>
+                <p><strong>Location:</strong> ${bookingData.location}</p>
+                ${bookingData.cinematicVideo ? '<p><strong>Cinematic Video:</strong> Yes</p>' : ''}
+                <p><strong>Total:</strong> $${totalPrice}</p>
+            `;
+            
+            document.getElementById('confirmation-note').innerHTML = `
+                A confirmation email has been sent to both you (${bookingData.clientInfo.email}) and Collin Xander. 
+                You will receive an automatic confirmation, and Collin will contact you within 24 hours to finalize the details and discuss payment options.
+            `;
+            
+            // Create new booking container for confirmation
+            const newContainer = document.createElement('div');
+            newContainer.className = 'booking-container';
+            newContainer.appendChild(confirmation);
+            document.querySelector('.main-content').appendChild(newContainer);
+        }
+
+
+        function createFloatingParticles() {
+            const container = document.getElementById('floating-particles');
+            
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    container.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 8000);
+                }
+            }, 500);
+        }
+
+        function initializeThreeJS() {
+            // Three.js Enhanced Background Animation
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            
+            // Enhanced particle system
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1500;
+            const posArray = new Float32Array(particlesCount * 3);
+            const colorArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i += 3) {
+                posArray[i] = (Math.random() - 0.5) * 15;
+                posArray[i + 1] = (Math.random() - 0.5) * 15;
+                posArray[i + 2] = (Math.random() - 0.5) * 15;
+                
+                colorArray[i] = Math.random() * 0.5 + 0.5;
+                colorArray[i + 1] = Math.random() * 0.2;
+                colorArray[i + 2] = Math.random() * 0.2;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.008,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 5;
+            
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            
+            function onDocumentMouseMove(event) {
+                mouseX = (event.clientX - window.innerWidth / 2) / 100;
+                mouseY = (event.clientY - window.innerHeight / 2) / 100;
+            }
+            
+            document.addEventListener('mousemove', onDocumentMouseMove);
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                targetX += (mouseX - targetX) * 0.02;
+                targetY += (mouseY - targetY) * 0.02;
+                
+                particlesMesh.rotation.x += 0.0008;
+                particlesMesh.rotation.y += 0.0008;
+                particlesMesh.rotation.x += targetY * 0.0003;
+                particlesMesh.rotation.y += targetX * 0.0003;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

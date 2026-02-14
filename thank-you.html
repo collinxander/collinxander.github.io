@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THANK YOU - COLLIN XANDER</title>
+    <link rel="icon" href="assets/shared/profilepic.jpg" type="image/x-icon">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for Background Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Canvas for Three.js */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Floating particles overlay */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #00ff00, transparent);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 255, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            font-style: italic;
+            color: #00ff00;
+            font-size: 2rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-decoration: none;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .logo:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .logo:hover {
+            color: #ff1e1e;
+            transform: scale(1.1);
+            text-shadow: 0 0 30px rgba(255, 30, 30, 0.8);
+        }
+        
+        /* Main content */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 8rem 1rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .confirmation-container {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 4rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0, 255, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(20px);
+            border: 2px solid #00ff00;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 1s ease forwards 0.5s;
+            overflow: hidden;
+        }
+        
+        .confirmation-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 0, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+        
+        .confirmation-container::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 23px;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-icon {
+            background: #00ff00;
+            color: black;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            animation: bounceIn 0.8s ease 1s both;
+            font-size: 3rem;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+        }
+        
+        .confirmation-title {
+            font-size: 3rem;
+            color: #00ff00;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(0, 255, 0, 1), 0 0 40px rgba(0, 255, 0, 0.8);
+            }
+        }
+        
+        .confirmation-message {
+            color: #ccc;
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            animation: slideIn 0.6s ease 1.5s both;
+        }
+        
+        .booking-details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: left;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            animation: slideIn 0.6s ease 2s both;
+        }
+        
+        .booking-details h3 {
+            color: #00ff00;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .detail-item:hover {
+            background: rgba(0, 255, 0, 0.05);
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-radius: 8px;
+        }
+        
+        .detail-label {
+            color: #ccc;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .detail-label i {
+            margin-right: 0.5rem;
+            color: #00ff00;
+        }
+        
+        .detail-value {
+            color: white;
+            text-align: right;
+            font-weight: bold;
+        }
+        
+        .next-steps {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            animation: slideIn 0.6s ease 2.5s both;
+        }
+        
+        .next-steps h3 {
+            color: #00ff00;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .next-steps p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .next-steps ul {
+            color: #ccc;
+            text-align: left;
+            padding-left: 1.5rem;
+        }
+        
+        .next-steps li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideIn 0.6s ease 3s both;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #00ff00, #44ff44);
+            color: black;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-size: 1rem;
+            box-shadow: 0 8px 25px rgba(0, 255, 0, 0.4);
+        }
+        
+        .action-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            background: linear-gradient(45deg, #44ff44, #ff1e1e);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 255, 0, 0.6);
+        }
+        
+        .action-btn.secondary {
+            background: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+        }
+        
+        .action-btn.secondary:hover {
+            background: #00ff00;
+            color: black;
+        }
+        
+        .contact-info {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            animation: slideIn 0.6s ease 3.5s both;
+        }
+        
+        .contact-info h4 {
+            color: #00ff00;
+            margin-bottom: 1rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            color: #00ff00;
+            transform: scale(1.05);
+        }
+        
+        .contact-item i {
+            margin-right: 0.5rem;
+            color: #00ff00;
+        }
+        
+        .contact-link {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .confirmation-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .confirmation-title {
+                font-size: 2.2rem;
+            }
+            
+            .confirmation-message {
+                font-size: 1.1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .detail-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .detail-value {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 6rem 0.5rem 2rem;
+            }
+            
+            .confirmation-container {
+                padding: 1.5rem;
+            }
+            
+            .confirmation-title {
+                font-size: 1.8rem;
+            }
+            
+            .success-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="floating-particles" id="floating-particles"></div>
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <a href="./" class="logo">COLLIN XANDER</a>
+    </header>
+
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="confirmation-container">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h1 class="confirmation-title">THANK YOU!</h1>
+            
+            <p class="confirmation-message">
+                Thank you for booking your session with Collin Xander! 
+                Your booking has been successfully submitted.
+            </p>
+            
+            <div class="next-steps">
+                <h3><i class="fas fa-list-check"></i> What Happens Next?</h3>
+                <p>Here's what you can expect in the coming hours:</p>
+                <ul>
+                    <li><strong>Personal Contact:</strong> I'll reach out within 24-48 hours to discuss your session details and preferences</li>
+                    <li><strong>Payment Discussion:</strong> We'll go over payment options and schedule (50% deposit required to secure your date)</li>
+                    <li><strong>Session Planning:</strong> We'll finalize location, timing, outfit suggestions, and any special requests</li>
+                    <li><strong>Preparation Guide:</strong> You'll receive tips and guidelines to help you prepare for your graduation shoot</li>
+                    <li><strong>Turnaround Time:</strong> Photo turnaround time is approximately 3–5 days for editing & videos is approximately 7-12 days, after for careful selection from your favorite raw photos</li>
+
+                </ul>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="./" class="action-btn">
+                    <i class="fas fa-home"></i>
+                    Return Home
+                </a>
+                <a href="./Photos" class="action-btn secondary">
+                    <i class="fas fa-images"></i>
+                    View Portfolio
+                </a>
+            </div>
+            
+            <div class="contact-info">
+                <h4>Need to reach me immediately?</h4>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:collinxander1@gmail.com" class="contact-link">collinxander1@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <a href="https://www.instagram.com/collinxander.jpeg" target="_blank" class="contact-link">@collinxander.jpeg</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Three.js Enhanced Background Animation
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            
+            // Enhanced particle system
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1200;
+            const posArray = new Float32Array(particlesCount * 3);
+            const colorArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i += 3) {
+                posArray[i] = (Math.random() - 0.5) * 15;
+                posArray[i + 1] = (Math.random() - 0.5) * 15;
+                posArray[i + 2] = (Math.random() - 0.5) * 15;
+                
+                // Green color scheme for success
+                colorArray[i] = Math.random() * 0.2;
+                colorArray[i + 1] = Math.random() * 0.5 + 0.5;
+                colorArray[i + 2] = Math.random() * 0.2;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.008,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 5;
+            
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            
+            function onDocumentMouseMove(event) {
+                mouseX = (event.clientX - window.innerWidth / 2) / 100;
+                mouseY = (event.clientY - window.innerHeight / 2) / 100;
+            }
+            
+            document.addEventListener('mousemove', onDocumentMouseMove);
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                targetX += (mouseX - targetX) * 0.02;
+                targetY += (mouseY - targetY) * 0.02;
+                
+                particlesMesh.rotation.x += 0.0008;
+                particlesMesh.rotation.y += 0.0008;
+                particlesMesh.rotation.x += targetY * 0.0003;
+                particlesMesh.rotation.y += targetX * 0.0003;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Floating particles overlay
+            function createFloatingParticles() {
+                const container = document.getElementById('floating-particles');
+                
+                setInterval(() => {
+                    if (Math.random() > 0.8) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                        particle.style.animationDelay = Math.random() * 2 + 's';
+                        container.appendChild(particle);
+                        
+                        setTimeout(() => {
+                            particle.remove();
+                        }, 8000);
+                    }
+                }, 1000);
+            }
+            
+            createFloatingParticles();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Add celebration effect
+            setTimeout(() => {
+                // Create confetti effect
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed;
+                            top: -10px;
+                            left: ${Math.random() * 100}%;
+                            width: 10px;
+                            height: 10px;
+                            background: ${Math.random() > 0.5 ? '#00ff00' : '#ff1e1e'};
+                            z-index: 1000;
+                            animation: confetti-fall 3s ease-out forwards;
+                            pointer-events: none;
+                        `;
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 100);
+                }
+            }, 2000);
+            
+            // Add confetti animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes confetti-fall {
+                    to {
+                        transform: translateY(100vh) rotate(720deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
