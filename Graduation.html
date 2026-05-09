@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GRADUATION BOOKINGS - COLLIN XANDER</title>
+    <meta name="description" content="Book graduation photography with Collin Xander — packages, dates, locations and optional cinematic video add-on. Easy booking and confirmation." />
     <link rel="icon" href="assets/shared/profilepic.jpg" type="image/x-icon">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,6 +23,23 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        /* Skip link */
+        .skip-link {
+            position: absolute;
+            left: 8px;
+            top: -40px;
+            background: #ff1e1e;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            z-index: 9999;
+            transition: top 0.2s ease;
+            font-weight: 700;
+        }
+        .skip-link:focus {
+            top: 8px;
         }
         
         body {
@@ -1240,13 +1258,14 @@
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <!-- Floating particles -->
     <div class="floating-particles" id="floating-particles"></div>
     
     <!-- Header -->
     <header class="header" id="header">
         <a href="./" class="logo">COLLIN XANDER</a>
-        <div class="step-indicator" id="step-indicator">Step 1 of 4</div>
+        <div class="step-indicator" id="step-indicator" role="status" aria-live="polite">Step 1 of 4</div>
     </header>
 
     <!-- Progress Bar -->
@@ -1257,7 +1276,7 @@
     </div>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main id="main-content" class="main-content">
         <div class="booking-container">
             
             <!-- Step 1: Service Selection -->
@@ -1300,7 +1319,7 @@
                         <ul class="service-features">
                             <li>15 edited photos</li>
                             <li>Access to all Raw photos</li>
-                            <li>1-2 Outfits</li>
+                            <li>1 Outfit</li>
                             <li>1-2 Locations</li>
                             <li>Individual portraits</li>
                             <li>Travel fee will be required for universities outside San Antonio area</li>
@@ -1310,7 +1329,7 @@
                     <div class="service-card" data-service="premium" data-price="500" data-duration="3 hours">
                         <div class="service-header">
                             <h3 class="service-name">Premium Graduation Package</h3>
-                            <div class="service-price">$500</div>
+                            <div class="service-price">$525</div>
                         </div>
                         <p class="service-description">Perfect for a fullset graduation package</p>
                         <div class="service-duration">
@@ -1338,7 +1357,7 @@
                             4 hours
                         </div>
                         <ul class="service-features">
-                            <li>40!edited photos</li>
+                            <li>40 edited photos</li>
                             <li>Access to all Raw photos</li>
                             <li>1-4 Outfits</li>
                             <li>1-4 Locations</li>
@@ -1358,12 +1377,12 @@
                         Capture your graduation moment with a professional cinematic video to complement your photos
                     </p>
                     
-                    <div class="video-option-card" id="video-option" data-video-price="100">
-                        <input type="checkbox" class="video-checkbox" id="cinematic-video-checkbox">
+                    <div class="video-option-card" id="video-option" data-video-price="75" role="button" tabindex="0" aria-pressed="false">
+                        <input type="checkbox" class="video-checkbox" id="cinematic-video-checkbox" aria-labelledby="video-option-title">
                         <div class="video-checkmark"></div>
                         
                         <div class="video-option-header">
-                            <div class="video-option-title">
+                            <div class="video-option-title" id="video-option-title">
                                 <i class="fas fa-film"></i>
                                 Cinematic Video Add-On
                             </div>
@@ -1459,43 +1478,43 @@
                 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label">First Name *</label>
-                        <input type="text" class="form-input" id="firstName" placeholder="Enter your first name">
+                        <label class="form-label" for="firstName">First Name *</label>
+                        <input type="text" class="form-input" id="firstName" placeholder="Enter your first name" aria-required="true" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Last Name *</label>
-                        <input type="text" class="form-input" id="lastName" placeholder="Enter your last name">
+                        <label class="form-label" for="lastName">Last Name *</label>
+                        <input type="text" class="form-input" id="lastName" placeholder="Enter your last name" aria-required="true" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">
+                        <label class="form-label" for="email">
                             <i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>
                             Email Address *
                         </label>
-                        <input type="email" class="form-input" id="email" placeholder="your.email@example.com">
+                        <input type="email" class="form-input" id="email" placeholder="your.email@example.com" aria-required="true" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">
+                        <label class="form-label" for="phone">
                             <i class="fas fa-phone" style="margin-right: 0.5rem;"></i>
                             Phone Number *
                         </label>
-                        <input type="tel" class="form-input" id="phone" placeholder="(555) 123-4567">
+                        <input type="tel" class="form-input" id="phone" placeholder="(555) 123-4567" aria-required="true" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Graduation Date</label>
+                        <label class="form-label" for="graduationDate">Graduation Date</label>
                         <input type="date" class="form-input" id="graduationDate">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">University/School</label>
+                        <label class="form-label" for="university">University/School</label>
                         <input type="text" class="form-input" id="university" placeholder="University of Example">
                     </div>
 
                     <div class="form-group full-width">
-                        <label class="form-label">Special Requests or Notes</label>
+                        <label class="form-label" for="specialRequests">Special Requests or Notes</label>
                         <textarea class="form-textarea" id="specialRequests" rows="4" placeholder="Any specific shots you'd like, props to bring, accessibility needs, etc."></textarea>
                     </div>
                 </div>
@@ -1532,16 +1551,16 @@
                             <span id="total-amount">$0</span>
                         </div>
                         <p class="payment-note">
-                            A $75 NON-REFUNDABLE retainer will be required to secure your booking. 
+                            A 75% NON-REFUNDABLE retainer will be required to secure your booking. 
                             Payment options will be provided via email.
                         </p>
                     </div>
 
                     <div class="terms-section">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="terms-checkbox" required>
-                            <span>I agree to the terms and conditions and understand the cancellation policy.</span>
-                        </label>
+                        <label class="checkbox-label" for="terms-checkbox">
+                                <input type="checkbox" id="terms-checkbox" required aria-required="true">
+                                <span>I agree to the terms and conditions and understand the cancellation policy.</span>
+                            </label>
                     </div>
                 </div>
             </div>
@@ -1571,14 +1590,14 @@
 
             <!-- Navigation -->
             <div class="navigation-container" id="navigation">
-                <button class="nav-button secondary" id="prev-btn" style="display: none;">
+                <button class="nav-button secondary" id="prev-btn" style="display: none;" aria-label="Previous step">
                     <i class="fas fa-chevron-left" style="margin-right: 0.5rem;"></i>
                     Previous
                 </button>
                 
                 <div style="flex: 1;"></div>
                 
-                <button class="nav-button primary" id="next-btn">
+                <button class="nav-button primary" id="next-btn" aria-label="Next step">
                     Continue
                     <i class="fas fa-chevron-right" style="margin-left: 0.5rem;"></i>
                 </button>
@@ -1645,16 +1664,26 @@
             document.getElementById('video-option').addEventListener('click', function() {
                 const checkbox = document.getElementById('cinematic-video-checkbox');
                 checkbox.checked = !checkbox.checked;
-                
                 if (checkbox.checked) {
                     this.classList.add('selected');
                     bookingData.cinematicVideo = true;
+                    this.setAttribute('aria-pressed', 'true');
                 } else {
                     this.classList.remove('selected');
                     bookingData.cinematicVideo = false;
+                    this.setAttribute('aria-pressed', 'false');
                 }
                 
                 updateNextButton();
+            });
+
+            // Keyboard accessibility for video option card
+            const videoOptionCard = document.getElementById('video-option');
+            videoOptionCard.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
             });
 
             // Calendar navigation
