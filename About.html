@@ -1,566 +1,153 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABOUT - COLLIN XANDER</title>
-    <link rel="icon" href="assets/shared/profilepic.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <style>
-        /* Base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        @font-face {
-            font-family: myFont;
-            src: url(video.ttf);
-        }
-        
-        @font-face {
-            font-family: signatureFont;
-            src: url(signature.ttf);
-        }
-        
-        body { 
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-        }
-        
-        .logo {
-            font-style: italic;
-            color: red;
-            font-size: 2rem;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-decoration: none;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-        }
-        
-        .logo:hover {
-            color: lime;
-            transform: scale(1.05);
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-        
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: red;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover {
-            color: lime;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        /* Main content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 6rem 1rem 5rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .content-container {
-            max-width: 800px;
-            width: 100%;
-            /* Make container slightly more translucent so the background video is visible */
-            background: rgba(0, 0, 0, 0.45);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transform: translateY(50px);
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.5s;
-        }
-        
-        .about-text {
-            font-size: 1.25rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            color: #f0f0f0;
-            font-family: 'Arial', sans-serif;
-            text-align: left;
-        }
-        
-        .highlight {
-            color: #ff3d3d;
-            font-weight: bold;
-        }
-        
-        .signature-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            margin-top: 2rem;
-        }
-        
-        .signature {
-            font-family: signatureFont, 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: #f4e04d;
-            margin-bottom: 0.5rem;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 1.5s;
-        }
-        
-        .title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 1rem;
-            color: #a0a0a0;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 2s;
-        }
-        
-        /* Background video */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .video-background video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Slightly boost brightness/contrast/saturation so the footage reads better under overlays */
-            filter: brightness(1.12) contrast(1.06) saturate(1.12);
-            will-change: transform, filter;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Reduce darkness so the video is more visible while keeping text readable */
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
-            z-index: 0;
-            pointer-events: none; /* allow interactions to pass through */
-        }
-        
-        /* Audio controls */
-        .audio-controls {
-            position: fixed;
-            bottom: 5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            border-radius: 50px;
-            z-index: 10;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 2.5s;
-        }
-        
-        .audio-controls button {
-            background: none;
-            border: 2px solid white;
-            color: white;
-            font-family: myFont, 'Arial', sans-serif;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .audio-controls button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: lime;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .volume-icon {
-            color: white;
-            font-size: 1.2rem;
-        }
-        
-        .volume-slider {
-            appearance: none; /* standard property for cross-browser compatibility */
-            -webkit-appearance: none;
-            width: 100px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            outline: none;
-        }
-        
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 15px;
-            height: 15px;
-            background: white;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .volume-slider::-webkit-slider-thumb:hover {
-            background: lime;
-            transform: scale(1.2);
-        }
-        
-        /* Footer */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 1.5rem;
-        }
-        
-        .social-icon {
-            color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            color: lime;
-            transform: translateY(-5px);
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                padding: 0.8rem;
-            }
-            
-            .logo {
-                font-size: 1.8rem;
-                margin-bottom: 0.5rem;
-            }
-            
-            .nav-links {
-                gap: 1rem;
-            }
-            
-            .nav-link {
-                font-size: 1rem;
-            }
-            
-            .content-container {
-                padding: 1.5rem;
-            }
-            
-            .about-text {
-                font-size: 1.1rem;
-                line-height: 1.6;
-            }
-            
-            .signature {
-                font-size: 2rem;
-            }
-            
-            .audio-controls {
-                flex-direction: column;
-                bottom: 4.5rem;
-                padding: 0.8rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header {
-                padding: 0.6rem;
-            }
-            
-            .logo {
-                font-size: 1.5rem;
-            }
-            
-            .nav-links {
-                gap: 0.8rem;
-            }
-            
-            .nav-link {
-                font-size: 0.9rem;
-            }
-            
-            .content-container {
-                padding: 1.2rem;
-            }
-            
-            .about-text {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
-            
-            .signature {
-                font-size: 1.8rem;
-            }
-            
-            .title {
-                font-size: 0.9rem;
-            }
-            
-            .social-icon {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABOUT - COLLIN XANDER</title>
+<meta name="description" content="Meet Collin Xander, a Houston-based photographer and videographer.">
+<link rel="icon" href="assets/shared/profilepic.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink: '#0b0b0c', panel: '#151517', line: 'rgba(255,255,255,.09)', mute: '#9a9aa2', red: '#e50914' },
+    fontFamily: { display: ['"Bebas Neue"', 'Impact', 'sans-serif'], sans: ['"DM Sans"', 'system-ui', 'sans-serif'] }
+  } }
+};
+</script>
+<style>
+  body { background:#0b0b0c; color:#f4f4f5; }
+  .focus-ring:focus-visible { outline:2px solid #e50914; outline-offset:3px; }
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+  @keyframes rise { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:none } }
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important } .reveal { opacity:1; transform:none } html { scroll-behavior:auto } }
+</style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <a href="./" class="logo">COLLIN XANDER</a>
-        <div class="nav-links">
-            <a href="./Photos" class="nav-link">Photos</a>
-            <a href="./videos" class="nav-link">Videos</a>
-            <a href="./Bookings" class="nav-link">Bookings</a>
+<body class="font-sans antialiased">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-red focus:px-4 focus:py-2 focus:rounded-md">Skip to content</a>
+
+<header id="header" class="fixed inset-x-0 top-0 z-50 h-16 md:h-[72px] border-b border-transparent transition-colors duration-300">
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-5 md:px-8">
+    <a href="./" class="font-display italic text-3xl tracking-[.12em] text-red hover:text-white transition-colors focus-ring">COLLIN XANDER</a>
+    <button id="menu-toggle" class="md:hidden grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 focus-ring" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <nav id="nav" aria-label="Main navigation" class="hidden md:flex absolute md:static top-full inset-x-0 flex-col md:flex-row md:items-center gap-1 bg-ink/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border-b md:border-0 border-line p-4 md:p-0">
+      <a href="./" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Home</a>
+      <a href="./Photos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Photos</a>
+      <a href="./videos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Videos</a>
+      <a href="./About" aria-current="page" class="rounded-lg px-4 py-2 text-sm font-medium text-white bg-white/10 focus-ring">About</a>
+      <a href="./Bookings" class="mt-2 md:mt-0 md:ml-3 rounded-full bg-red px-5 py-2 text-center text-sm font-bold hover:bg-white hover:text-ink transition-colors focus-ring">Book now</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden pt-28 md:pt-36 pb-12 md:pb-16">
+    <div class="pointer-events-none absolute -top-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-red/20 blur-[120px]" aria-hidden="true"></div>
+    <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-5 md:px-8 lg:grid-cols-[1.3fr_1fr]">
+      <div>
+        <p class="rise text-sm font-bold uppercase tracking-[.3em] text-red">Photographer &amp; Visual Artist</p>
+        <h1 class="rise mt-4 font-display text-[clamp(5rem,17vw,13rem)] leading-[.85] tracking-[.04em]" style="animation-delay:.1s">ABOUT</h1>
+      </div>
+      <div class="rise mx-auto w-full max-w-xs" style="animation-delay:.25s">
+        <div class="relative">
+          <div class="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl border border-red/60" aria-hidden="true"></div>
+          <img src="assets/shared/profilepic.jpg" alt="Portrait of Collin Xander" class="relative aspect-[4/5] w-full rounded-2xl object-cover ring-1 ring-white/10">
         </div>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <!-- Overlay -->
-    <div class="overlay"></div>
+  <!-- Facts -->
+  <section class="mx-auto max-w-7xl px-5 md:px-8" aria-label="Quick facts">
+    <dl class="reveal grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-4">
+      <div class="bg-panel p-5 md:p-6"><dt class="text-sm text-mute">Age</dt><dd class="mt-1 font-display text-3xl tracking-wider">22</dd></div>
+      <div class="bg-panel p-5 md:p-6"><dt class="text-sm text-mute">Based in</dt><dd class="mt-1 font-display text-3xl tracking-wider">Houston, TX</dd></div>
+      <div class="bg-panel p-5 md:p-6"><dt class="text-sm text-mute">Degree</dt><dd class="mt-1 font-display text-3xl tracking-wider">B.S. Computer Science</dd></div>
+      <div class="bg-panel p-5 md:p-6"><dt class="text-sm text-mute">Craft</dt><dd class="mt-1 font-display text-3xl tracking-wider">Photo + Video</dd></div>
+    </dl>
+  </section>
 
-    <!-- Background Video -->
-    <div class="video-background">
-        <video id="background-video" autoplay muted loop playsinline>
-            <source src="assets/about/websitehomevideo.MP4" type="video/mp4">
-        </video>
+  <!-- Story -->
+  <section class="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
+    <div class="space-y-6 text-lg leading-relaxed text-white/85 md:text-xl">
+      <p class="reveal">Meet <strong class="text-red">Collin Xander</strong>, a 22-year-old creative from Houston, Texas, a recent graduate with a Bachelor's degree in Computer Science. With a deep passion for visual storytelling and digital media, Collin developed his personal photography and visual website portfolio coding it from scratch.</p>
+      <p class="reveal">His work captures authentic moments and unique perspectives, constantly pushing creative boundaries through his lens. Each photo and video in this collection represents Collin's distinctive visual style and attention to detail.</p>
     </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="content-container">
-            <p class="about-text">
-                Meet <span class="highlight">Collin Xander</span>, a 22-year-old creative from Houston, Texas, a recent graduate with a Bachelor's degree in Computer Science. With a deep passion for visual storytelling and digital media, Collin developed his personal photography and videography website portfolio coding it from scratch.
-            </p>
-            <p class="about-text">
-                His work captures authentic moments and unique perspectives, constantly pushing creative boundaries through his lens. Each photo and video in this collection represents Collin's distinctive visual style and attention to detail.
-            </p>
-            <p class="about-text">
-                "<span class="highlight">I designed this platform to visually showcase my work and creative journey. My philosophy is simple: be authentic, stay creative, and always elevate your craft!</span>"
-            </p>
-            
-            <div class="signature-container">
-                <div class="title">Photographer & Videographer</div>
-            </div>
-        </div>
-    </main>
+    <blockquote class="reveal mt-14 border-l-4 border-red pl-6 md:pl-8">
+      <p class="font-display text-3xl leading-tight tracking-wide md:text-5xl">&ldquo;I designed this platform to visually showcase my work and creative journey. My philosophy is simple: be authentic, stay creative, and always elevate your craft!&rdquo;</p>
+      <footer class="mt-4 text-sm text-mute">Collin Xander, Photographer &amp; Visual Artist</footer>
+    </blockquote>
 
-    <!-- Audio Controls -->
+    <div class="reveal mt-14 flex flex-wrap gap-3">
+      <a href="./Photos" class="rounded-full border border-line px-6 py-3 text-sm font-bold hover:border-white/40 hover:bg-white/5 transition-colors focus-ring">View photos</a>
+      <a href="./videos" class="rounded-full border border-line px-6 py-3 text-sm font-bold hover:border-white/40 hover:bg-white/5 transition-colors focus-ring">Watch videos</a>
+      <a href="./Bookings" class="rounded-full bg-red px-6 py-3 text-sm font-bold hover:bg-white hover:text-ink transition-colors focus-ring">Book a session</a>
+    </div>
+  </section>
+</main>
 
+<footer class="border-t border-line bg-panel px-5 pb-6 pt-14 md:px-8">
+  <div class="mx-auto flex max-w-7xl flex-wrap justify-between gap-10">
+    <div class="max-w-xs">
+      <p class="font-display italic text-3xl tracking-[.12em] text-red">COLLIN XANDER</p>
+      <p class="mt-3 text-sm leading-relaxed text-mute">Capturing moments and creating visual stories through photography and visual art.</p>
+      <div class="mt-5 flex gap-3">
+        <a href="https://instagram.com/collinxander.jpeg" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram" class="grid h-10 w-10 place-items-center rounded-full bg-white/5 text-mute hover:bg-red hover:text-white transition-colors focus-ring"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <a href="mailto:collinxander1@gmail.com" aria-label="Send email" class="grid h-10 w-10 place-items-center rounded-full bg-white/5 text-mute hover:bg-red hover:text-white transition-colors focus-ring"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <nav aria-label="Footer navigation">
+      <h2 class="mb-3 text-sm font-bold">Navigation</h2>
+      <ul class="space-y-2 text-sm text-mute">
+        <li><a class="hover:text-red" href="./">Home</a></li>
+        <li><a class="hover:text-red" href="./Photos">Photos</a></li>
+        <li><a class="hover:text-red" href="./videos">Videos</a></li>
+        <li><a class="hover:text-red" href="./About">About</a></li>
+        <li><a class="hover:text-red" href="./Bookings">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="mx-auto mt-10 max-w-7xl border-t border-line pt-5 text-center text-xs text-mute">&copy; <span id="year"></span> Collin Xander. All rights reserved.</p>
+</footer>
 
-    <!-- Audio Element -->
-    <audio id="background-audio" loop>
-        <source src="background-music.mp3" type="audio/mp3">
-    </audio>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  $('year').textContent = new Date().getFullYear();
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="social-icons">
-            <a href="https://instagram.com/collinxander.jpeg" target="_blank" class="social-icon">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="mailto:contact@collinxander1@gmail.com" class="social-icon">
-                <i class="fas fa-envelope"></i>
-            </a>
-        </div>
-    </footer>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Elements
-            const audio = document.getElementById('background-audio');
-            const video = document.getElementById('background-video');
-            const playPauseButton = document.getElementById('play-pause');
-            const volumeControl = document.getElementById('volume-control');
-            const contentContainer = document.querySelector('.content-container');
-            
-            // Set initial volume
-            audio.volume = volumeControl.value;
-            
-            // Restore audio and video states on load
-            const savedAudioTime = localStorage.getItem('audioTime');
-            const savedVideoTime = localStorage.getItem('videoTime');
-            const audioPaused = localStorage.getItem('audioPaused') === 'true';
-            
-            if (savedAudioTime !== null) {
-                audio.currentTime = parseFloat(savedAudioTime);
-            }
-            
-            if (savedVideoTime !== null) {
-                video.currentTime = parseFloat(savedVideoTime);
-            }
-            
-            // Handle play/pause button
-            playPauseButton.addEventListener('click', () => {
-                if (audio.paused) {
-                    audio.play().then(() => {
-                        playPauseButton.innerHTML = 'Pause Music <i class="fas fa-pause"></i>';
-                    }).catch(error => {
-                        console.log("Audio play prevented:", error);
-                    });
-                } else {
-                    audio.pause();
-                    playPauseButton.innerHTML = 'Play Music <i class="fas fa-play"></i>';
-                }
-                
-                // Save audio state
-                localStorage.setItem('audioPaused', audio.paused);
-            });
-            
-            // Handle volume control
-            volumeControl.addEventListener('input', (e) => {
-                audio.volume = e.target.value;
-            });
-            
-            // Update button text based on initial audio state
-            if (audioPaused) {
-                playPauseButton.innerHTML = 'Play Music <i class="fas fa-play"></i>';
-            } else {
-                audio.play().then(() => {
-                    playPauseButton.innerHTML = 'Pause Music <i class="fas fa-pause"></i>';
-                }).catch(error => {
-                    console.log("Audio autoplay prevented:", error);
-                    playPauseButton.innerHTML = 'Play Music <i class="fas fa-play"></i>';
-                });
-            }
-            
-            // Ensure video plays
-            video.play().catch(error => {
-                console.log("Video autoplay prevented:", error);
-            });
-            
-            // Save audio and video states before leaving the page
-            window.addEventListener('beforeunload', () => {
-                localStorage.setItem('audioTime', audio.currentTime);
-                localStorage.setItem('videoTime', video.currentTime);
-                localStorage.setItem('audioPaused', audio.paused);
-            });
-            
-            // Add scroll animation
-            window.addEventListener('scroll', () => {
-                const scrollPosition = window.scrollY;
-                
-                if (scrollPosition > 50) {
-                    contentContainer.style.transform = `translateY(${scrollPosition * 0.1}px)`;
-                } else {
-                    contentContainer.style.transform = 'translateY(0)';
-                }
-            });
-            
-            // Add parallax effect to video
-            window.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX / window.innerWidth - 0.5;
-                const mouseY = e.clientY / window.innerHeight - 0.5;
-                
-                video.style.transform = `translate(${mouseX * -20}px, ${mouseY * -20}px)`;
-            });
-        });
-    </script>
+  const header = $('header'), nav = $('nav'), toggle = $('menu-toggle');
+  const onScroll = () => {
+    const s = scrollY > 40;
+    header.classList.toggle('bg-ink/90', s); header.classList.toggle('backdrop-blur-xl', s);
+    header.classList.toggle('border-line', s); header.classList.toggle('border-transparent', !s);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  const setMenu = open => {
+    nav.classList.toggle('hidden', !open); nav.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.firstElementChild.className = open ? 'fas fa-times' : 'fas fa-bars';
+  };
+  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('click', e => { if (!header.contains(e.target)) setMenu(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+  }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
 </body>
 </html>
