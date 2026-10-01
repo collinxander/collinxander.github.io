@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RSVP — Collin Xander</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f1eadb;--dim:#c4baa8;--brass:#d8b26a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0b0809;color:var(--ink);font-family:'Inter Tight',sans-serif;overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
+
+/* background video + darkening so text stays readable */
+.bg{position:fixed;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+.shade{position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(ellipse at 50% 50%,rgba(11,8,9,.35),rgba(11,8,9,.75)),linear-gradient(rgba(11,8,9,.6),transparent 30%,transparent 70%,rgba(11,8,9,.6))}
+
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:1.2rem clamp(1.2rem,4vw,2.5rem)}
+header .name{
+  display:inline-block;font-family:'Bebas Neue','Oswald','Arial Narrow',sans-serif;font-weight:400;
+  font-size:clamp(1.9rem,4.2vw,2.8rem);line-height:1;letter-spacing:.14em;text-transform:uppercase;
+  color:#d7352b;text-decoration:none;transform:skewX(-12deg);
+  text-shadow:0 2px 18px rgba(0,0,0,.55);transition:color .25s;
+}
+header .name:hover{color:#f0493d}
+header nav{display:flex;gap:1.4rem;font-size:.9rem}
+header nav a{text-decoration:none;color:var(--dim);padding:.25rem 0;border-bottom:1px solid transparent;transition:color .2s}
+header nav a:hover{color:var(--ink)}
+header nav a.on{color:var(--ink);border-color:var(--brass)}
+
+main{height:100%;display:grid;place-items:center;text-align:center;padding:5rem 1.5rem;padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px))}
+.eyebrow{font-size:.85rem;color:var(--dim);letter-spacing:.04em;margin-bottom:1.2rem}
+h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,8vw,6.5rem);line-height:.95;letter-spacing:-.03em;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+h1 em{color:var(--brass)}
+
+.rsvp{
+  display:inline-flex;align-items:center;gap:.7rem;margin-top:2.4rem;
+  padding:1.1rem 3rem;border:1px solid var(--brass);border-radius:999px;
+  background:rgba(11,8,9,.35);backdrop-filter:blur(10px);
+  color:var(--brass);font-size:1.15rem;font-weight:500;letter-spacing:.14em;text-decoration:none;
+  position:relative;transition:background .3s,color .3s,transform .3s;
+}
+.rsvp::after{content:'';position:absolute;inset:-7px;border-radius:inherit;border:1px solid var(--brass);opacity:.5;animation:ring 2.6s ease-out infinite}
+@keyframes ring{from{transform:scale(.96);opacity:.6}to{transform:scale(1.18);opacity:0}}
+.rsvp .arrow{transition:transform .3s}
+.rsvp:hover,.rsvp:focus-visible{background:var(--brass);color:#120d0a;transform:translateY(-3px)}
+.rsvp:hover .arrow{transform:translateX(5px)}
+
+@media(max-width:720px){header nav{gap:1rem;font-size:.82rem}.rsvp{padding:1rem 2.4rem}}
+@media(prefers-reduced-motion:reduce){.rsvp::after{animation:none}*{transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<video class="bg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+  <source src="HELICOPTERVIDEO.mov" type="video/quicktime">
+  <source src="rsvp/rsvp.MP4" type="video/mp4">
+</video>
+<div class="shade"></div>
+ 
+<header>
+  <a class="name" href="index.html">Collin Xander</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Bookings</a>
+  </nav>
+</header>
+
+<main>
+  <div>
+    <p class="eyebrow">You're invited</p>
+    <h1>Aura <em>Solo</em><br>Photo + Visual Exhibition</h1>
+    <a class="rsvp" href="https://posh.vip/e/aura-solo-photo-visual-exhibition" target="_blank" rel="noopener noreferrer">RSVP <span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+</main>
+
+</body>
+</html>
