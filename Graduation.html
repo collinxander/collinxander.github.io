@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRADUATION BOOKINGS - COLLIN XANDER</title>
+<meta name="description" content="Book graduation photography with Collin Xander: packages, dates, locations and an optional cinematic video add-on.">
+<link rel="icon" href="assets/shared/profilepic.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink: '#0b0b0c', line: 'rgba(255,255,255,.09)', red: '#e50914', mute: '#9a9aa2' },
+    fontFamily: { display: ['"Bebas Neue"', 'Impact', 'sans-serif'], sans: ['"DM Sans"', 'system-ui', 'sans-serif'] }
+  } }
+};
+</script>
+<style>
+  .focus-ring:focus-visible { outline:2px solid #e50914; outline-offset:3px; }
+  .field { width:100%; border-radius:.5rem; border:1px solid rgba(255,255,255,.2); background:transparent; padding:.75rem 1rem; outline:none; }
+  .field:focus { border-color:#e50914; }
+  .field::placeholder { color:rgba(255,255,255,.3); }
+</style>
+</head>
+<body class="min-h-screen bg-black font-sans text-white antialiased">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-red focus:px-4 focus:py-2 focus:rounded-md">Skip to content</a>
+
+<header id="header" class="fixed inset-x-0 top-0 z-50 h-16 md:h-[72px] border-b border-transparent transition-colors duration-300">
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-5 md:px-8">
+    <a href="./" class="font-display italic text-3xl tracking-[.12em] text-red hover:text-white transition-colors focus-ring">COLLIN XANDER</a>
+    <button id="menu-toggle" class="md:hidden grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 focus-ring" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <nav id="nav" aria-label="Main navigation" class="hidden md:flex absolute md:static top-full inset-x-0 flex-col md:flex-row md:items-center gap-1 bg-ink/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border-b md:border-0 border-line p-4 md:p-0">
+      <a href="./" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Home</a>
+      <a href="./Photos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Photos</a>
+      <a href="./videos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Videos</a>
+      <a href="./About" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">About</a>
+      <a href="./Bookings" aria-current="page" class="mt-2 md:mt-0 md:ml-3 rounded-full bg-red px-5 py-2 text-center text-sm font-bold hover:bg-white hover:text-ink transition-colors focus-ring">Book now</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="mx-auto max-w-3xl px-6 pb-20 pt-28 md:pt-36">
+  <h1 class="font-display text-6xl tracking-wide md:text-8xl">GRADUATION</h1>
+  <p class="mt-4 border-l-2 border-red pl-4 text-white/85">A <strong>$75 non-refundable retainer</strong> is required to secure your booking.</p>
+
+  <div class="mt-10">
+    <div class="flex items-center justify-between text-sm text-mute">
+      <span id="step-label" role="status" aria-live="polite">Step 1 of 4</span>
+      <span id="step-name">Package</span>
+    </div>
+    <div class="mt-2 h-1 rounded bg-white/10"><div id="bar" class="h-full rounded bg-red transition-all duration-500" style="width:25%"></div></div>
+  </div>
+
+  <div id="msg" role="alert" class="mt-6 hidden rounded-lg border border-red px-4 py-3 text-sm text-red"></div>
+
+  <!-- Step 1 -->
+  <section id="step-1" class="step mt-8" aria-labelledby="h1">
+    <h2 id="h1" tabindex="-1" class="font-display text-4xl tracking-wide outline-none">Choose your package</h2>
+    <div id="packages" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
+    <p class="mt-4 text-sm text-mute">Travel fees apply for universities outside the Houston area.</p>
+
+    <h3 class="mt-10 font-display text-3xl tracking-wide">Add cinematic video?</h3>
+    <label class="mt-4 block cursor-pointer">
+      <input id="video" type="checkbox" class="peer sr-only">
+      <span class="block rounded-2xl border border-white/15 p-5 transition-colors peer-checked:border-red peer-checked:bg-red/10 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-red">
+        <span class="flex items-baseline justify-between gap-4">
+          <span class="font-bold"><i class="fas fa-film mr-2 text-red" aria-hidden="true"></i>Cinematic video add-on</span>
+          <span id="video-price" class="font-display text-3xl"></span>
+        </span>
+        <span class="mt-2 block text-sm text-white/70">Up to 60 seconds, with music and color grading. Great for social media, delivered in high resolution.</span>
+      </span>
+    </label>
+  </section>
+
+  <!-- Step 2 -->
+  <section id="step-2" class="step mt-8 hidden" aria-labelledby="h2">
+    <h2 id="h2" tabindex="-1" class="font-display text-4xl tracking-wide outline-none">Date, time &amp; location</h2>
+
+    <div class="mt-6 rounded-2xl border border-line p-5">
+      <div class="flex items-center justify-between">
+        <button id="prev-month" type="button" class="grid h-9 w-9 place-items-center rounded-full border border-line hover:bg-white/10 disabled:opacity-30 focus-ring" aria-label="Previous month"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+        <p id="month-title" class="font-bold" aria-live="polite"></p>
+        <button id="next-month" type="button" class="grid h-9 w-9 place-items-center rounded-full border border-line hover:bg-white/10 focus-ring" aria-label="Next month"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <div class="mt-4 grid grid-cols-7 gap-1 text-center text-xs text-mute" aria-hidden="true">
+        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+      </div>
+      <div id="days" class="mt-2 grid grid-cols-7 gap-1"></div>
+    </div>
+
+    <fieldset class="mt-6">
+      <legend class="mb-3 font-bold">Time</legend>
+      <div id="times" class="grid grid-cols-3 gap-2 sm:grid-cols-4"></div>
+    </fieldset>
+
+    <fieldset class="mt-6">
+      <legend class="mb-3 font-bold">Preferred location</legend>
+      <div id="locations" class="grid gap-2 sm:grid-cols-2"></div>
+    </fieldset>
+  </section>
+
+  <!-- Step 3 -->
+  <section id="step-3" class="step mt-8 hidden" aria-labelledby="h3">
+    <h2 id="h3" tabindex="-1" class="font-display text-4xl tracking-wide outline-none">Your information</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2">
+      <div><label for="firstName" class="mb-1.5 block text-sm font-medium">First name *</label><input id="firstName" class="field" autocomplete="given-name" required></div>
+      <div><label for="lastName" class="mb-1.5 block text-sm font-medium">Last name *</label><input id="lastName" class="field" autocomplete="family-name" required></div>
+      <div><label for="email" class="mb-1.5 block text-sm font-medium">Email *</label><input id="email" type="email" class="field" autocomplete="email" required></div>
+      <div><label for="phone" class="mb-1.5 block text-sm font-medium">Phone *</label><input id="phone" type="tel" class="field" autocomplete="tel" placeholder="(555) 123-4567" required></div>
+      <div><label for="graduationDate" class="mb-1.5 block text-sm font-medium">Graduation date</label><input id="graduationDate" type="date" class="field [color-scheme:dark]"></div>
+      <div><label for="university" class="mb-1.5 block text-sm font-medium">University / school</label><input id="university" class="field"></div>
+      <div class="sm:col-span-2"><label for="specialRequests" class="mb-1.5 block text-sm font-medium">Special requests or notes</label><textarea id="specialRequests" rows="4" class="field resize-y" placeholder="Specific shots, props to bring, accessibility needs, etc."></textarea></div>
+    </div>
+  </section>
+
+  <!-- Step 4 -->
+  <section id="step-4" class="step mt-8 hidden" aria-labelledby="h4">
+    <h2 id="h4" tabindex="-1" class="font-display text-4xl tracking-wide outline-none">Review your booking</h2>
+    <dl id="review" class="mt-6 divide-y divide-line rounded-2xl border border-line"></dl>
+    <div class="mt-4 rounded-2xl border border-red/60 p-5">
+      <div id="price-lines" class="space-y-1 text-sm text-white/80"></div>
+      <div class="mt-3 flex items-baseline justify-between border-t border-line pt-3">
+        <span class="font-bold">Total</span><span id="total" class="font-display text-4xl"></span>
+      </div>
+      <p class="mt-3 text-sm text-mute">A $75 non-refundable retainer secures your booking. Payment options will be sent by email.</p>
+    </div>
+    <label class="mt-6 flex cursor-pointer items-start gap-3 text-sm">
+      <input id="terms" type="checkbox" class="mt-1 h-4 w-4 accent-red">
+      <span>I agree to the terms and conditions and understand the cancellation policy.</span>
+    </label>
+  </section>
+
+  <div class="mt-10 flex items-center justify-between gap-4">
+    <button id="back" type="button" class="hidden rounded-full border border-line px-6 py-3 text-sm font-bold hover:border-white/40 hover:bg-white/5 focus-ring"><i class="fas fa-chevron-left mr-2" aria-hidden="true"></i>Back</button>
+    <button id="next" type="button" class="ml-auto rounded-full bg-red px-8 py-3 text-sm font-bold hover:bg-white hover:text-black transition-colors disabled:opacity-60 focus-ring">Continue <i class="fas fa-chevron-right ml-2" aria-hidden="true"></i></button>
+  </div>
+</main>
+
+<script>
+(() => {
+  /* ═══ PRICING: edit numbers here only. Everything on the page and in the email reads from this block. ═══ */
+  const PACKAGES = [
+    { id: 'basic',     name: 'Basic Graduation Package',     price: 275, duration: '1 hour',  blurb: 'Perfect for individual graduation portraits', features: ['10 edited photos', 'Access to all raw photos', '1 outfit', '1-2 locations', 'Individual portraits'] },
+    { id: 'essential', name: 'Essential Graduation Package', price: 350, duration: '2 hours', blurb: 'Perfect for individual graduation portraits', features: ['15 edited photos', 'Access to all raw photos', '1-2 outfits', '1-2 locations', 'Individual portraits'] },
+    { id: 'premium',   name: 'Premium Graduation Package',   price: 525, duration: '3 hours', blurb: 'Perfect for a full-set graduation package',   features: ['25 edited photos', 'Access to all raw photos', '1-3 outfits', '1-3 locations', 'Individual portraits'] },
+    { id: 'deluxe',    name: 'Deluxe Celebration Package',   price: 725, duration: '4 hours', blurb: 'Perfect for group graduation portraits',      features: ['40 edited photos', 'Access to all raw photos', '1-4 outfits', '1-4 locations', 'Group portraits'] },
+  ];
+  const VIDEO_PRICE = 125;
+  const RETAINER = 75;
+  /* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+  const TIMES = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
+  const LOCATIONS = ['Campus / University Grounds','Studio Session','Outdoor Park / Garden','Urban / City Setting','Beach / Waterfront','Custom Location'];
+  const STEPS = ['Package', 'Date & time', 'Your info', 'Review'];
+
+  const $ = id => document.getElementById(id);
+  const money = n => '$' + n;
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const state = { pkg: null, video: false, date: null, time: '', location: '' };
+  let step = 1;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  const total = () => state.pkg.price + (state.video ? VIDEO_PRICE : 0);
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const longDate = d => d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const val = id => $(id).value.trim();
+
+  /* ── Navbar ── */
+  const header = $('header'), nav = $('nav'), toggle = $('menu-toggle');
+  const onScroll = () => {
+    const s = scrollY > 40;
+    header.classList.toggle('bg-ink/90', s); header.classList.toggle('backdrop-blur-xl', s);
+    header.classList.toggle('border-line', s); header.classList.toggle('border-transparent', !s);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const setMenu = open => {
+    nav.classList.toggle('hidden', !open); nav.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.firstElementChild.className = open ? 'fas fa-times' : 'fas fa-bars';
+  };
+  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('click', e => { if (!header.contains(e.target)) setMenu(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+  /* ── Step 1: packages + video ── */
+  const cardCls = 'block h-full rounded-2xl border border-white/15 p-5 transition-colors peer-checked:border-red peer-checked:bg-red/10 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-red hover:border-white/40';
+  $('packages').innerHTML = PACKAGES.map(p => `
+    <label class="block cursor-pointer">
+      <input type="radio" name="pkg" value="${p.id}" class="peer sr-only">
+      <span class="${cardCls}">
+        <span class="flex items-baseline justify-between gap-3">
+          <span class="font-bold">${p.name}</span>
+          <span class="font-display text-3xl">${money(p.price)}</span>
+        </span>
+        <span class="mt-1 block text-sm text-white/70">${p.blurb}</span>
+        <span class="mt-3 block text-sm font-bold text-red"><i class="fas fa-clock mr-2" aria-hidden="true"></i>${p.duration}</span>
+        <span class="mt-3 block space-y-1 text-sm text-white/80">${p.features.map(f => `<span class="block"><i class="fas fa-check mr-2 text-red" aria-hidden="true"></i>${f}</span>`).join('')}</span>
+      </span>
+    </label>`).join('');
+  $('video-price').textContent = '+' + money(VIDEO_PRICE);
+  $('packages').addEventListener('change', e => { state.pkg = PACKAGES.find(p => p.id === e.target.value); hideMsg(); });
+  $('video').addEventListener('change', e => { state.video = e.target.checked; });
+
+  /* ── Step 2: calendar, times, locations ── */
+  const renderCalendar = () => {
+    $('month-title').textContent = view.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    $('prev-month').disabled = view <= new Date(today.getFullYear(), today.getMonth(), 1);
+    const first = view.getDay(), count = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    let html = '<span></span>'.repeat(first);
+    for (let d = 1; d <= count; d++) {
+      const date = new Date(view.getFullYear(), view.getMonth(), d);
+      const past = date < today, sel = state.date && iso(date) === iso(state.date);
+      const cls = sel ? 'bg-red text-white' : past ? 'text-white/25' : 'hover:bg-white/10';
+      html += `<button type="button" data-date="${iso(date)}" ${past ? 'disabled' : ''} aria-pressed="${!!sel}" aria-label="${longDate(date)}" class="aspect-square rounded-lg text-sm font-medium focus-ring ${cls}">${d}</button>`;
+    }
+    $('days').innerHTML = html;
+  };
+  $('days').addEventListener('click', e => {
+    const b = e.target.closest('[data-date]'); if (!b) return;
+    const [y, m, d] = b.dataset.date.split('-').map(Number);
+    state.date = new Date(y, m - 1, d); renderCalendar(); hideMsg();
+  });
+  $('prev-month').addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCalendar(); });
+  $('next-month').addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCalendar(); });
+
+  const optCls = 'block cursor-pointer rounded-lg border border-white/15 px-3 py-3 text-center text-sm font-medium transition-colors peer-checked:border-red peer-checked:bg-red peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-red hover:border-white/40';
+  const radioGroup = (el, name, items) => el.innerHTML = items.map(t =>
+    `<label><input type="radio" name="${name}" value="${t}" class="peer sr-only"><span class="${optCls}">${t}</span></label>`).join('');
+  radioGroup($('times'), 'time', TIMES);
+  radioGroup($('locations'), 'location', LOCATIONS);
+  $('times').addEventListener('change', e => { state.time = e.target.value; hideMsg(); });
+  $('locations').addEventListener('change', e => { state.location = e.target.value; hideMsg(); });
+
+  /* ── Step 4: review ── */
+  const row = (k, v) => `<div class="flex justify-between gap-4 px-5 py-3 text-sm"><dt class="text-mute">${k}</dt><dd class="text-right">${esc(v)}</dd></div>`;
+  const renderReview = () => {
+    const rows = [
+      ['Package', `${state.pkg.name} (${state.pkg.duration})`],
+      ['Date', longDate(state.date)], ['Time', state.time], ['Location', state.location],
+      ['Cinematic video', state.video ? 'Yes' : 'No'],
+      ['Name', `${val('firstName')} ${val('lastName')}`], ['Email', val('email')], ['Phone', val('phone')],
+    ];
+    if (val('university')) rows.push(['University', val('university')]);
+    if (val('graduationDate')) rows.push(['Graduation date', val('graduationDate')]);
+    $('review').innerHTML = rows.map(r => row(...r)).join('');
+    $('price-lines').innerHTML =
+      `<div class="flex justify-between"><span>${state.pkg.name}</span><span>${money(state.pkg.price)}</span></div>` +
+      (state.video ? `<div class="flex justify-between"><span>Cinematic video add-on</span><span>${money(VIDEO_PRICE)}</span></div>` : '');
+    $('total').textContent = money(total());
+  };
+
+  /* ── Flow ── */
+  const showMsg = t => { $('msg').textContent = t; $('msg').classList.remove('hidden'); };
+  const hideMsg = () => $('msg').classList.add('hidden');
+
+  const validate = () => {
+    if (step === 1 && !state.pkg) return 'Please choose a package.';
+    if (step === 2) {
+      if (!state.date) return 'Please pick a date.';
+      if (!state.time) return 'Please pick a time.';
+      if (!state.location) return 'Please pick a location.';
+    }
+    if (step === 3) {
+      if (!val('firstName') || !val('lastName')) return 'Please enter your first and last name.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) return 'Please enter a valid email address.';
+      if (val('phone').replace(/\D/g, '').length < 7) return 'Please enter a valid phone number.';
+    }
+    if (step === 4 && !$('terms').checked) return 'Please agree to the terms to continue.';
+    return '';
+  };
+
+  const show = n => {
+    step = n; hideMsg();
+    document.querySelectorAll('.step').forEach((s, i) => s.classList.toggle('hidden', i + 1 !== n));
+    $('step-label').textContent = `Step ${n} of 4`;
+    $('step-name').textContent = STEPS[n - 1];
+    $('bar').style.width = (n * 25) + '%';
+    $('back').classList.toggle('hidden', n === 1);
+    $('next').innerHTML = n === 4 ? 'Confirm booking' : 'Continue <i class="fas fa-chevron-right ml-2" aria-hidden="true"></i>';
+    if (n === 4) renderReview();
+    scrollTo({ top: 0, behavior: 'smooth' });
+    $('h' + n).focus({ preventScroll: true });
+  };
+
+  $('back').addEventListener('click', () => show(step - 1));
+  $('next').addEventListener('click', () => {
+    const err = validate(); if (err) return showMsg(err);
+    step < 4 ? show(step + 1) : submit();
+  });
+
+  const submit = () => {
+    if (!window.emailjs) return showMsg('Email service unavailable. Please email collinxander1@gmail.com directly.');
+    const btn = $('next'); btn.disabled = true; btn.textContent = 'Submitting...';
+
+    const p = state.pkg, name = `${val('firstName')} ${val('lastName')}`, t = money(total());
+    const video = state.video ? `Yes (+${money(VIDEO_PRICE)})` : 'No';
+    const params = {
+      to_email: 'collinxander1@gmail.com',
+      client_name: name, client_email: val('email'), client_phone: val('phone'),
+      service_name: p.name, service_price: money(p.price),
+      session_date: iso(state.date), session_time: state.time, session_duration: p.duration,
+      location: state.location, cinematic_video: video, total_price: t,
+      retainer: money(RETAINER),
+      graduation_date: val('graduationDate') || 'Not specified',
+      university: val('university') || 'Not specified',
+      special_requests: val('specialRequests') || 'None',
+      message: `New Graduation Photography Booking Request:\n\n` +
+        `Service: ${p.name} (${p.duration})\nDate & Time: ${iso(state.date)} at ${state.time}\nLocation: ${state.location}\n` +
+        `Cinematic Video: ${video}\nTotal Price: ${t}\nRetainer required: ${money(RETAINER)}\n\n` +
+        `Client Information:\nName: ${name}\nEmail: ${val('email')}\nPhone: ${val('phone')}\n` +
+        `Graduation Date: ${val('graduationDate') || 'Not specified'}\nUniversity: ${val('university') || 'Not specified'}\n` +
+        `Special Requests: ${val('specialRequests') || 'None'}`
+    };
+
+    emailjs.init('xWAo6ZoGdjyak9c6X');
+    emailjs.send('service_gfttp4s', 'template_kydgvse', params)
+      .then(() => { location.href = 'https://collinxander.com/thank-you'; })
+      .catch(err => {
+        console.error('EmailJS error', err);
+        showMsg('There was an error sending your booking. Please try again or email collinxander1@gmail.com.');
+        btn.disabled = false; btn.textContent = 'Confirm booking';
+      });
+  };
+
+  renderCalendar();
+})();
+</script>
+</body>
+</html>

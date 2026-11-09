@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIDEOS - COLLIN XANDER</title>
+<meta name="description" content="Watch Collin Xander's videography portfolio.">
+<link rel="icon" href="assets/shared/profilepic.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink: '#0b0b0c', panel: '#151517', line: 'rgba(255,255,255,.09)', mute: '#9a9aa2', red: '#e50914' },
+    fontFamily: { display: ['"Bebas Neue"', 'Impact', 'sans-serif'], sans: ['"DM Sans"', 'system-ui', 'sans-serif'] }
+  } }
+};
+</script>
+<style>
+  body { background:#0b0b0c; color:#f4f4f5; }
+  .focus-ring:focus-visible { outline:2px solid #e50914; outline-offset:3px; }
+  .thumb video { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+  .thumb:hover video { transform: scale(1.05); }
+  .scroll-x::-webkit-scrollbar { height:6px } .scroll-x::-webkit-scrollbar-thumb { background:#333; border-radius:6px }
+  @keyframes rise { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:none } }
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important } html { scroll-behavior:auto } }
+</style>
+</head>
+<body class="font-sans antialiased">
+<a href="#gallery" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-red focus:px-4 focus:py-2 focus:rounded-md">Skip to videos</a>
+
+<header id="header" class="fixed inset-x-0 top-0 z-50 h-16 md:h-[72px] border-b border-transparent transition-colors duration-300">
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-5 md:px-8">
+    <a href="./" class="font-display italic text-3xl tracking-[.12em] text-red hover:text-white transition-colors focus-ring">COLLIN XANDER</a>
+    <button id="menu-toggle" class="md:hidden grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 focus-ring" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <nav id="nav" aria-label="Main navigation" class="hidden md:flex absolute md:static top-full inset-x-0 flex-col md:flex-row md:items-center gap-1 bg-ink/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border-b md:border-0 border-line p-4 md:p-0">
+      <a href="./" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Home</a>
+      <a href="./Photos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Photos</a>
+      <a href="./videos" aria-current="page" class="rounded-lg px-4 py-2 text-sm font-medium text-white bg-white/10 focus-ring">Videos</a>
+      <a href="./About" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">About</a>
+      <a href="./Bookings" class="mt-2 md:mt-0 md:ml-3 rounded-full bg-red px-5 py-2 text-center text-sm font-bold hover:bg-white hover:text-ink transition-colors focus-ring">Book now</a>
+    </nav>
+  </div>
+</header>
+
+<section class="relative overflow-hidden pt-28 md:pt-36 pb-14 md:pb-20">
+  <div class="pointer-events-none absolute -top-40 -right-32 h-[28rem] w-[28rem] rounded-full bg-red/20 blur-[120px]" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-7xl px-5 md:px-8">
+    <h1 class="rise font-display text-[clamp(5rem,17vw,13rem)] leading-[.85] tracking-[.04em]">VIDEOS</h1>
+    <p class="rise mt-6 max-w-md text-lg text-mute" style="animation-delay:.15s">Event recaps, visuals and short films. Press play on any clip to watch it full screen.</p>
+    <dl class="rise mt-8 flex gap-10" style="animation-delay:.3s">
+      <div><dt class="text-sm text-mute">Videos</dt><dd id="stat-videos" class="font-display text-4xl">0</dd></div>
+      <div><dt class="text-sm text-mute">Categories</dt><dd id="stat-cats" class="font-display text-4xl">0</dd></div>
+    </dl>
+  </div>
+</section>
+
+<div class="sticky top-16 md:top-[72px] z-40 border-y border-line bg-ink/85 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center gap-3 px-5 py-3 md:px-8">
+    <div id="filters" class="scroll-x flex flex-1 gap-2 overflow-x-auto" role="group" aria-label="Filter videos"></div>
+    <span id="filter-count" class="shrink-0 text-sm text-mute" aria-live="polite"></span>
+  </div>
+</div>
+
+<main id="gallery" class="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
+  <div id="grid" class="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"></div>
+</main>
+
+<div id="player" role="dialog" aria-modal="true" aria-label="Video player" class="fixed inset-0 z-[100] hidden flex-col bg-black/95 backdrop-blur-xl">
+  <div class="flex items-center justify-between p-4 md:px-8">
+    <p id="pl-title" class="font-display text-2xl tracking-wider"></p>
+    <button id="pl-close" class="grid h-11 w-11 place-items-center rounded-full bg-white/10 hover:bg-red transition-colors focus-ring" aria-label="Close video player"><i class="fas fa-times" aria-hidden="true"></i></button>
+  </div>
+  <div class="flex min-h-0 flex-1 items-center justify-center px-4 pb-8 md:px-16">
+    <video id="pl-video" controls playsinline class="max-h-full max-w-full rounded-lg bg-black"></video>
+  </div>
+</div>
+
+<footer class="border-t border-line bg-panel px-5 pb-6 pt-14 md:px-8">
+  <div class="mx-auto flex max-w-7xl flex-wrap justify-between gap-10">
+    <div class="max-w-xs">
+      <p class="font-display italic text-3xl tracking-[.12em] text-red">COLLIN XANDER</p>
+      <p class="mt-3 text-sm leading-relaxed text-mute">Capturing moments and creating visual stories through photography and videography.</p>
+      <div class="mt-5 flex gap-3">
+        <a href="https://instagram.com/bycollinxander" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram" class="grid h-10 w-10 place-items-center rounded-full bg-white/5 text-mute hover:bg-red hover:text-white transition-colors focus-ring"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <a href="mailto:collinxander1@gmail.com" aria-label="Send email" class="grid h-10 w-10 place-items-center rounded-full bg-white/5 text-mute hover:bg-red hover:text-white transition-colors focus-ring"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <nav aria-label="Footer navigation">
+      <h2 class="mb-3 text-sm font-bold">Navigation</h2>
+      <ul class="space-y-2 text-sm text-mute">
+        <li><a class="hover:text-red" href="./">Home</a></li>
+        <li><a class="hover:text-red" href="./Photos">Photos</a></li>
+        <li><a class="hover:text-red" href="./videos">Videos</a></li>
+        <li><a class="hover:text-red" href="./About">About</a></li>
+        <li><a class="hover:text-red" href="./Bookings">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="mx-auto mt-10 max-w-7xl border-t border-line pt-5 text-center text-xs text-mute">&copy; <span id="year"></span> Collin Xander. All rights reserved.</p>
+</footer>
+
+<script>
+(() => {
+  /* ── REPLACE these placeholders with your real videos ──
+     title: shown on the card · tag: filter category · src: path to the file · poster (optional): image path */
+  const videos = [
+    { title: 'Kam For Aura',      tag: 'visuals', src: 'assets/videos/kamforaura.MP4',            poster: 'assets/videos/kamaura.png' },
+    { title: 'Lyne Aura',        tag: 'visuals', src: 'assets/videos/lyneaura.MP4',              poster: 'assets/videos/lyneaura.png' },
+    { title: 'DJ Az',            tag: 'visuals', src: 'assets/videos/djazvideo.MP4',            poster: 'assets/videos/az1.png' },
+    { title: 'Rosado Altier',           tag: 'visuals',  src: 'assets/videos/tennisvideo.MP4',           poster: 'assets/videos/tennis.png' },
+    { title: 'UATS',             tag: 'visuals',  src: 'assets/videos/uatsvideo.MP4',             poster: 'assets/videos/uats.jpg' },
+    { title: '5th Look',         tag: 'visuals', src: 'assets/videos/5thlookvideo.MP4',        poster: 'assets/videos/5thlook.png' },
+    { title: 'Dissimilar',       tag: 'visuals', src: 'assets/videos/dissimilarvideo.MP4',      poster: 'assets/videos/dissimilar.jpg' },
+    { title: 'Valentine',        tag: 'events',  src: 'assets/videos/valentinevideo.MP4',        poster: 'assets/videos/valentine.jpg' },
+  ];
+
+  const $ = id => document.getElementById(id);
+  const label = t => t[0].toUpperCase() + t.slice(1);
+  $('year').textContent = new Date().getFullYear();
+
+  /* Header + menu */
+  const header = $('header'), nav = $('nav'), toggle = $('menu-toggle');
+  const onScroll = () => {
+    const s = scrollY > 40;
+    header.classList.toggle('bg-ink/90', s); header.classList.toggle('backdrop-blur-xl', s);
+    header.classList.toggle('border-line', s); header.classList.toggle('border-transparent', !s);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const setMenu = open => {
+    nav.classList.toggle('hidden', !open); nav.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.firstElementChild.className = open ? 'fas fa-times' : 'fas fa-bars';
+  };
+  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('click', e => { if (!header.contains(e.target)) setMenu(false); });
+
+  /* Stats */
+  const tags = [...new Set(videos.map(v => v.tag))];
+  const count = (el, target) => {
+    let n = 0; const step = Math.max(1, Math.ceil(target / 30));
+    const t = setInterval(() => { n = Math.min(target, n + step); el.textContent = n; if (n === target) clearInterval(t); }, 40);
+  };
+  count($('stat-videos'), videos.length); count($('stat-cats'), tags.length);
+
+  /* Filters */
+  let active = 'all';
+  const base = 'shrink-0 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-ring ';
+  const on = 'border-red bg-red text-white', off = 'border-line text-mute hover:text-white hover:border-white/30';
+  $('filters').innerHTML = ['all', ...tags].map(t =>
+    `<button data-filter="${t}" aria-pressed="${t === 'all'}" class="${base}${t === 'all' ? on : off}">${label(t)}</button>`).join('');
+
+  /* Grid: first frame is shown as the thumbnail unless a poster is set */
+  $('grid').innerHTML = videos.map((v, i) => `
+    <button data-i="${i}" data-tag="${v.tag}" class="group text-left rounded-xl focus-ring" aria-label="Play ${v.title}">
+      <span class="thumb relative block aspect-video overflow-hidden rounded-xl bg-panel ring-1 ring-white/5">
+        <video src="${v.src}#t=0.5" ${v.poster ? `poster="${v.poster}"` : ''} preload="metadata" muted playsinline tabindex="-1" class="h-full w-full object-cover"></video>
+        <span class="absolute inset-0 grid place-items-center bg-black/20 group-hover:bg-black/40 transition-colors">
+          <span class="grid h-14 w-14 place-items-center rounded-full bg-red pl-1 shadow-lg shadow-black/50 transition-transform group-hover:scale-110"><i class="fas fa-play" aria-hidden="true"></i></span>
+        </span>
+      </span>
+      <span class="mt-3 block font-display text-2xl leading-none tracking-wider">${v.title}</span>
+      <span class="mt-1 block text-sm text-mute">${label(v.tag)}</span>
+    </button>`).join('');
+
+  const cards = [...$('grid').children];
+  const apply = () => {
+    let n = 0;
+    cards.forEach(c => { const show = active === 'all' || c.dataset.tag === active; c.classList.toggle('hidden', !show); if (show) n++; });
+    $('filter-count').textContent = n + ' video' + (n === 1 ? '' : 's');
+  };
+  $('filters').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    active = b.dataset.filter;
+    [...$('filters').children].forEach(x => { const a = x === b; x.setAttribute('aria-pressed', a); x.className = base + (a ? on : off); });
+    apply();
+  });
+  apply();
+
+  /* Player */
+  const pl = $('player'), pv = $('pl-video');
+  let lastFocus = null;
+  const open = i => {
+    lastFocus = document.activeElement;
+    $('pl-title').textContent = videos[i].title;
+    pv.src = videos[i].src;
+    pl.classList.remove('hidden'); pl.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    pv.play().catch(() => {}); $('pl-close').focus();
+  };
+  const close = () => {
+    pv.pause(); pv.removeAttribute('src'); pv.load();
+    pl.classList.add('hidden'); pl.classList.remove('flex');
+    document.body.style.overflow = '';
+    lastFocus && lastFocus.focus();
+  };
+  $('grid').addEventListener('click', e => { const c = e.target.closest('[data-i]'); if (c) open(+c.dataset.i); });
+  $('pl-close').addEventListener('click', close);
+  pl.addEventListener('click', e => { if (e.target === pl || e.target === pv.parentElement) close(); });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    pl.classList.contains('flex') ? close() : setMenu(false);
+  });
+})();
+</script>
+</body>
+</html>

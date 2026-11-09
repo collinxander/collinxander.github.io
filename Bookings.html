@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOOKINGS - COLLIN XANDER</title>
+<meta name="description" content="Book a photo or video session with Collin Xander.">
+<link rel="icon" href="assets/shared/profilepic.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink: '#0b0b0c', panel: '#151517', line: 'rgba(255,255,255,.09)', red: '#e50914', mute: '#9a9aa2' },
+    fontFamily: { display: ['"Bebas Neue"', 'Impact', 'sans-serif'], sans: ['"DM Sans"', 'system-ui', 'sans-serif'] }
+  } }
+};
+</script>
+<style>
+  .focus-ring:focus-visible { outline:2px solid #e50914; outline-offset:3px; }
+</style>
+</head>
+<body class="min-h-screen bg-black font-sans text-white antialiased">
+
+<header id="header" class="fixed inset-x-0 top-0 z-50 h-16 md:h-[72px] border-b border-transparent transition-colors duration-300">
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-5 md:px-8">
+    <a href="./" class="font-display italic text-3xl tracking-[.12em] text-red hover:text-white transition-colors focus-ring">COLLIN XANDER</a>
+    <button id="menu-toggle" class="md:hidden grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 focus-ring" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <nav id="nav" aria-label="Main navigation" class="hidden md:flex absolute md:static top-full inset-x-0 flex-col md:flex-row md:items-center gap-1 bg-ink/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border-b md:border-0 border-line p-4 md:p-0">
+      <a href="./" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Home</a>
+      <a href="./Photos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Photos</a>
+      <a href="./videos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Videos</a>
+      <a href="./About" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">About</a>
+      <a href="./Bookings" aria-current="page" class="mt-2 md:mt-0 md:ml-3 rounded-full bg-red px-5 py-2 text-center text-sm font-bold hover:bg-white hover:text-ink transition-colors focus-ring">Book now</a>
+    </nav>
+  </div>
+</header>
+
+<main class="mx-auto max-w-3xl px-6 pt-28 pb-16 md:pt-36 md:pb-24">
+  <h1 class="font-display text-7xl tracking-wide md:text-9xl">BOOKINGS</h1>
+  <p class="mt-6 border-l-2 border-red pl-4 text-lg text-white/85">A <strong>$75 non-refundable retainer</strong> is required to secure your booking.</p>
+
+  <!-- Graduation -->
+  <section class="mt-14 rounded-2xl border border-white/10 p-6 md:p-8" aria-labelledby="grad-title">
+    <h2 id="grad-title" class="font-display text-4xl tracking-wide">Fall Graduation Bookings</h2>
+    <p class="mt-3 text-white/80">Fall graduation bookings are now open! If you have any crazy creative ideas, book now. Let's create!</p>
+    <a href="./Graduation" class="mt-6 inline-flex items-center gap-2 rounded-full bg-red px-7 py-3 text-sm font-bold hover:bg-white hover:text-black transition-colors">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i> Book graduation shoot
+    </a>
+  </section>
+
+  <!-- General -->
+  <section class="mt-10" aria-labelledby="gen-title">
+    <h2 id="gen-title" class="font-display text-4xl tracking-wide">General Bookings</h2>
+    <p class="mt-3 text-white/80">
+      Reach out on Instagram
+      <a href="https://www.instagram.com/bycollinxander" target="_blank" rel="noopener noreferrer" class="text-red underline underline-offset-4 hover:text-white">@bycollinxander</a>,
+      email
+      <a href="mailto:collinxander1@gmail.com" class="text-red underline underline-offset-4 hover:text-white">collinxander1@gmail.com</a>,
+      or use the form below.
+    </p>
+
+    <div id="status" role="status" aria-live="polite" class="mt-6 hidden rounded-lg border px-4 py-3 text-sm"></div>
+
+    <form id="form" novalidate class="mt-6 space-y-5">
+      <div>
+        <label for="name" class="mb-1.5 block text-sm font-medium">Full name *</label>
+        <input id="name" name="name" type="text" autocomplete="name" required class="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3 outline-none focus:border-red">
+        <p class="err mt-1 hidden text-sm text-red" data-for="name">Please enter your name.</p>
+      </div>
+      <div>
+        <label for="email" class="mb-1.5 block text-sm font-medium">Email address *</label>
+        <input id="email" name="email" type="email" autocomplete="email" required class="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3 outline-none focus:border-red">
+        <p class="err mt-1 hidden text-sm text-red" data-for="email">Please enter a valid email address.</p>
+      </div>
+      <div>
+        <label for="phone" class="mb-1.5 block text-sm font-medium">Phone number *</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="+1 555 555 5555" class="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3 outline-none placeholder:text-white/30 focus:border-red">
+        <p class="err mt-1 hidden text-sm text-red" data-for="phone">Please enter a valid phone number.</p>
+      </div>
+      <div>
+        <label for="subject" class="mb-1.5 block text-sm font-medium">Inquiry type *</label>
+        <input id="subject" name="subject" type="text" required placeholder="e.g. Portrait session, event, commercial work" class="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3 outline-none placeholder:text-white/30 focus:border-red">
+        <p class="err mt-1 hidden text-sm text-red" data-for="subject">Please tell me what you're looking for.</p>
+      </div>
+      <div>
+        <label for="message" class="mb-1.5 block text-sm font-medium">Message *</label>
+        <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project, preferred dates, location, and any requirements." class="w-full resize-y rounded-lg border border-white/20 bg-transparent px-4 py-3 outline-none placeholder:text-white/30 focus:border-red"></textarea>
+        <p class="err mt-1 hidden text-sm text-red" data-for="message">Please enter a message.</p>
+      </div>
+      <button id="submit" type="submit" class="rounded-full bg-red px-8 py-3 text-sm font-bold hover:bg-white hover:text-black transition-colors disabled:opacity-60">Send message</button>
+    </form>
+  </section>
+</main>
+
+<footer class="border-t border-white/10">
+  <div class="mx-auto flex max-w-3xl items-center justify-between px-6 py-6 text-sm text-mute">
+    <p>&copy; <span id="year"></span> Collin Xander</p>
+    <div class="flex gap-5 text-lg">
+      <a href="https://instagram.com/bycollinxander" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-white"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href="mailto:collinxander1@gmail.com" aria-label="Email" class="hover:text-white"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  $('year').textContent = new Date().getFullYear();
+  if (window.emailjs) emailjs.init('xWAo6ZoGdjyak9c6X');
+
+  /* Header + mobile menu */
+  const header = $('header'), nav = $('nav'), toggle = $('menu-toggle');
+  const onScroll = () => {
+    const s = scrollY > 40;
+    header.classList.toggle('bg-ink/90', s); header.classList.toggle('backdrop-blur-xl', s);
+    header.classList.toggle('border-line', s); header.classList.toggle('border-transparent', !s);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const setMenu = open => {
+    nav.classList.toggle('hidden', !open); nav.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.firstElementChild.className = open ? 'fas fa-times' : 'fas fa-bars';
+  };
+  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('click', e => { if (!header.contains(e.target)) setMenu(false); });
+
+  const form = $('form'), status = $('status'), btn = $('submit');
+  const rules = {
+    name:    v => v.trim().length > 0,
+    email:   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+    phone:   v => v.trim().length >= 7 && /^[\d\s+\-()]+$/.test(v),
+    subject: v => v.trim().length > 0,
+    message: v => v.trim().length > 0,
+  };
+
+  const check = key => {
+    const input = form.elements[key];
+    const ok = rules[key](input.value);
+    form.querySelector(`[data-for="${key}"]`).classList.toggle('hidden', ok);
+    input.classList.toggle('border-red', !ok);
+    input.setAttribute('aria-invalid', !ok);
+    return ok;
+  };
+  const say = (msg, good) => {
+    status.textContent = msg;
+    status.className = 'mt-6 rounded-lg border px-4 py-3 text-sm ' +
+      (good ? 'border-white/30 text-white' : 'border-red text-red');
+  };
+
+  Object.keys(rules).forEach(k => {
+    form.elements[k].addEventListener('blur', () => check(k));
+    form.elements[k].addEventListener('input', () => { if (form.elements[k].getAttribute('aria-invalid') === 'true') check(k); });
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const valid = Object.keys(rules).map(check).every(Boolean);
+    if (!valid) return say('Please fix the errors below and try again.', false);
+    if (!window.emailjs) return say('Email service unavailable. Please email collinxander1@gmail.com directly.', false);
+
+    const f = Object.fromEntries(new FormData(form));
+    const message =
+      `New Booking Inquiry\n\nCLIENT INFORMATION:\nName: ${f.name}\nEmail: ${f.email}\nPhone: ${f.phone}\n\n` +
+      `BOOKING DETAILS:\nInquiry Type: ${f.subject}\n\nSPECIAL REQUESTS / MESSAGE:\n${f.message}\n`;
+
+    btn.disabled = true; btn.textContent = 'Sending...';
+    emailjs.send('service_gfttp4s', 'template_v01f3qj', {
+      to_email: 'collinxander1@gmail.com',
+      client_name: f.name, client_email: f.email, client_phone: f.phone,
+      inquiry_type: f.subject, message
+    }).then(() => {
+      say('Message sent! I\'ll get back to you soon.', true);
+      setTimeout(() => { location.href = 'https://collinxander.com/thank-you'; }, 800);
+    }).catch(err => {
+      console.error('EmailJS error', err);
+      say('There was an error sending your message. Please try again or email collinxander1@gmail.com.', false);
+      btn.disabled = false; btn.textContent = 'Send message';
+    });
+  });
+})();
+</script>
+</body>
+</html>

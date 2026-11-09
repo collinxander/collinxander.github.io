@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHOTOS - COLLIN XANDER</title>
+<meta name="description" content="Explore Collin Xander's photography portfolio featuring creative and artistic photography work.">
+<link rel="icon" href="assets/shared/profilepic.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink: '#0b0b0c', panel: '#151517', line: 'rgba(255,255,255,.09)', mute: '#9a9aa2', red: '#e50914' },
+    fontFamily: { display: ['"Bebas Neue"', 'Impact', 'sans-serif'], sans: ['"DM Sans"', 'system-ui', 'sans-serif'] }
+  } }
+};
+</script>
+<style>
+  body { background:#0b0b0c; color:#f4f4f5; }
+  .focus-ring:focus-visible { outline:2px solid #e50914; outline-offset:3px; }
+  .cover img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+  .cover:hover img { transform: scale(1.06); }
+  .stack img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .stack:hover img:nth-child(1) { transform: rotate(-9deg) translate(-14px,-6px); }
+  .stack:hover img:nth-child(3) { transform: rotate(9deg) translate(14px,-6px); }
+  #lb-img { transition: opacity .25s; }
+  .thumbs::-webkit-scrollbar { height:6px } .thumbs::-webkit-scrollbar-thumb { background:#333; border-radius:6px }
+  @keyframes rise { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:none } }
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important } html { scroll-behavior:auto } }
+</style>
+</head>
+<body class="font-sans antialiased">
+<a href="#gallery" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-red focus:px-4 focus:py-2 focus:rounded-md">Skip to gallery</a>
+
+<!-- Header -->
+<header id="header" class="fixed inset-x-0 top-0 z-50 h-16 md:h-[72px] border-b border-transparent transition-colors duration-300">
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-5 md:px-8">
+    <a href="./" class="font-display italic text-3xl tracking-[.12em] text-red hover:text-white transition-colors focus-ring">COLLIN XANDER</a>
+    <button id="menu-toggle" class="md:hidden grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 focus-ring" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <nav id="nav" aria-label="Main navigation" class="hidden md:flex absolute md:static top-full inset-x-0 flex-col md:flex-row md:items-center gap-1 bg-ink/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border-b md:border-0 border-line p-4 md:p-0">
+      <a href="./" class="nav-link rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Home</a>
+      <a href="./Photos" aria-current="page" class="rounded-lg px-4 py-2 text-sm font-medium text-white bg-white/10 focus-ring">Photos</a>
+      <a href="./videos" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">Videos</a>
+      <a href="./About" class="rounded-lg px-4 py-2 text-sm font-medium text-mute hover:text-white hover:bg-white/5 focus-ring">About</a>
+      <a href="./Bookings" class="mt-2 md:mt-0 md:ml-3 rounded-full bg-red px-5 py-2 text-center text-sm font-bold hover:bg-white hover:text-ink transition-colors focus-ring">Book now</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="relative overflow-hidden pt-28 md:pt-36 pb-16 md:pb-24">
+  <div class="pointer-events-none absolute -top-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-red/20 blur-[120px]" aria-hidden="true"></div>
+  <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-5 md:px-8 lg:grid-cols-[1.2fr_1fr]">
+    <div>
+      <h1 class="rise font-display text-[clamp(5rem,17vw,13rem)] leading-[.85] tracking-[.04em]">PHOTOS</h1>
+      <p class="rise mt-6 max-w-md text-lg text-mute" style="animation-delay:.15s">
+        Portraits, graduations, events and art. Pick a collection to view the full set.
+      </p>
+      <dl class="rise mt-8 flex gap-10" style="animation-delay:.3s">
+        <div><dt class="text-sm text-mute">Photos</dt><dd id="stat-photos" class="font-display text-4xl">0</dd></div>
+        <div><dt class="text-sm text-mute">Collections</dt><dd id="stat-collections" class="font-display text-4xl">0</dd></div>
+      </dl>
+    </div>
+    <div id="hero-stack" class="stack rise relative mx-auto flex w-full max-w-md items-center justify-center" style="animation-delay:.2s" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- Filters -->
+<div class="sticky top-16 md:top-[72px] z-40 border-y border-line bg-ink/85 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center gap-3 px-5 py-3 md:px-8">
+    <div id="filters" class="flex flex-1 gap-2 overflow-x-auto thumbs" role="group" aria-label="Filter collections"></div>
+    <span id="filter-count" class="shrink-0 text-sm text-mute" aria-live="polite"></span>
+  </div>
+</div>
+
+<!-- Gallery -->
+<main id="gallery" class="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
+  <div id="grid" class="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-5 lg:grid-cols-4"></div>
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" class="fixed inset-0 z-[100] hidden flex-col bg-black/95 backdrop-blur-xl">
+  <div class="flex items-center justify-between p-4 md:px-8">
+    <div>
+      <p id="lb-title" class="font-display text-2xl tracking-wider"></p>
+      <p id="lb-counter" class="text-sm text-mute"></p>
+    </div>
+    <button id="lb-close" class="grid h-11 w-11 place-items-center rounded-full bg-white/10 hover:bg-red transition-colors focus-ring" aria-label="Close photo viewer"><i class="fas fa-times" aria-hidden="true"></i></button>
+  </div>
+  <div class="relative flex min-h-0 flex-1 items-center justify-center px-14 md:px-24">
+    <button id="lb-prev" class="absolute left-2 md:left-6 grid h-11 w-11 place-items-center rounded-full bg-white/10 hover:bg-white/20 focus-ring" aria-label="Previous photo"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+    <img id="lb-img" src="" alt="" class="max-h-full max-w-full rounded-lg object-contain">
+    <button id="lb-next" class="absolute right-2 md:right-6 grid h-11 w-11 place-items-center rounded-full bg-white/10 hover:bg-white/20 focus-ring" aria-label="Next photo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+  </div>
+  <div id="lb-thumbs" class="thumbs flex gap-2 overflow-x-auto p-4 md:justify-center"></div>
+</div>
+
+<!-- Footer -->
+<footer class="border-t border-line bg-panel px-5 pb-6 pt-14 md:px-8">
+  <div class="mx-auto flex max-w-7xl flex-wrap justify-between gap-10">
+    <div class="max-w-xs">
+      <p class="font-display italic text-3xl tracking-[.12em] text-red">COLLIN XANDER</p>
+      <p class="mt-3 text-sm leading-relaxed text-mute">Capturing moments and creating visual stories through photography and videography.</p>
+      <div class="mt-5 flex gap-3">
+        <a href="https://instagram.com/bycollinxander" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram" class="grid h-10 w-10 place-items-center rounded-full bg-white/5 text-mute hover:bg-red hover:text-white transition-colors focus-ring"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <a href="mailto:collinxander1@gmail.com" aria-label="Send email" class="grid h-10 w-10 place-items-center rounded-full bg-white/5 text-mute hover:bg-red hover:text-white transition-colors focus-ring"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <nav aria-label="Footer navigation">
+      <h2 class="mb-3 text-sm font-bold">Navigation</h2>
+      <ul class="space-y-2 text-sm text-mute">
+        <li><a class="hover:text-red" href="./">Home</a></li>
+        <li><a class="hover:text-red" href="./Photos">Photos</a></li>
+        <li><a class="hover:text-red" href="./videos">Videos</a></li>
+        <li><a class="hover:text-red" href="./About">About</a></li>
+        <li><a class="hover:text-red" href="./Bookings">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="mx-auto mt-10 max-w-7xl border-t border-line pt-5 text-center text-xs text-mute">&copy; <span id="year"></span> Collin Xander. All rights reserved.</p>
+</footer>
+
+<script>
+(() => {
+  /* ── Data: add a collection by adding one line ── */
+  const P = 'assets/photos/';
+  const seq = (prefix, nums, suffix = '', ext = 'jpg') => nums.map(n => `${P}${prefix}${n}${suffix}.${ext}`);
+  const range = n => Array.from({ length: n }, (_, i) => i + 1);
+
+  const collections = [
+    { title: 'Leandro for Aura',          tags: ['portraits'],           photos: [P+'leo1(finall).jpg', ...seq('leo', [2,3,4,5,6], '(final)')] },
+    { title: 'Kayla for Aura',            tags: ['portraits'],           photos: seq('kaylaforaura', range(6)) },
+    { title: 'Uncle Dekarr for Aura',     tags: ['portraits'],           photos: seq('uncdekar', [1,2,4,5], '(final)') },
+    { title: 'Hill State Hours',          tags: ['events'],              photos: seq('Hillstate', range(6)) },
+    { title: 'Split Multiplicity',        tags: ['art'],                 photos: seq('SPLITMULTI', range(3)) },
+    { title: 'Vol. 22',                   tags: ['portraits', 'events'], photos: seq('camvol', range(6)) },
+    { title: 'ID Nupes',                  tags: ['portraits', 'events'], photos: seq('idnupes', range(6)) },
+    { title: 'Prod By Strong',            tags: ['portraits'],           photos: [...seq('az', range(5)), P+'az6.JPG'] },
+    { title: "Trinity's Birthday",        tags: ['portraits'],           photos: seq('trin', range(4)) },
+    { title: "Ameer's Graduation",        tags: ['portraits'],           photos: seq('Ameergrad', range(4)) },
+    { title: "Edward's Graduation",       tags: ['portraits'],           photos: seq('Edwardgrad', range(4)) },
+    { title: "Donte's Graduation",        tags: ['portraits'],           photos: seq('Dontegrad', range(4)) },
+    { title: "Tyler's Graduation",        tags: ['portraits'],           photos: seq('tyler', range(4)) },
+    { title: "Drea's Graduation",         tags: ['portraits'],           photos: seq('drea', range(5)) },
+    { title: "Nebiyu's Graduation",       tags: ['portraits'],           photos: seq('nebs', range(6)) },
+  ];
+  // Add { title: 'Car Meet', tags: ['automotive'], photos: [...] } and the filter button appears automatically.
+
+  const $ = id => document.getElementById(id);
+  const label = t => t[0].toUpperCase() + t.slice(1);
+  const total = collections.reduce((n, c) => n + c.photos.length, 0);
+
+  $('year').textContent = new Date().getFullYear();
+
+  /* ── Header + mobile menu ── */
+  const header = $('header'), nav = $('nav'), toggle = $('menu-toggle');
+  const onScroll = () => {
+    const s = scrollY > 40;
+    header.classList.toggle('bg-ink/90', s); header.classList.toggle('backdrop-blur-xl', s);
+    header.classList.toggle('border-line', s); header.classList.toggle('border-transparent', !s);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const setMenu = open => {
+    nav.classList.toggle('hidden', !open); nav.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.firstElementChild.className = open ? 'fas fa-times' : 'fas fa-bars';
+  };
+  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('click', e => { if (!header.contains(e.target)) setMenu(false); });
+
+  /* ── Stats + hero stack (first photo of three collections) ── */
+  const count = (el, target) => {
+    let n = 0; const step = Math.max(1, Math.ceil(target / 40));
+    const t = setInterval(() => { n = Math.min(target, n + step); el.textContent = n; if (n === target) clearInterval(t); }, 30);
+  };
+  count($('stat-photos'), total); count($('stat-collections'), collections.length);
+  const heroPics = [collections[1], collections[0], collections[3]];
+  $('hero-stack').innerHTML = heroPics.map((c, i) => {
+    const pos = i === 1 ? 'z-10 w-[46%] aspect-[3/4] scale-110' : 'w-[38%] aspect-[3/4]';
+    const tilt = i === 0 ? '-rotate-6 translate-x-4' : i === 2 ? 'rotate-6 -translate-x-4' : '';
+    return `<img src="${c.photos[0]}" alt="" class="${pos} ${tilt} rounded-xl object-cover shadow-2xl shadow-black/60 ring-1 ring-white/10">`;
+  }).join('');
+
+  /* ── Filters ── */
+  const tags = ['all', ...new Set(collections.flatMap(c => c.tags))];
+  let active = 'all';
+  const btnBase = 'shrink-0 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-ring ';
+  const btnOn = 'border-red bg-red text-white', btnOff = 'border-line text-mute hover:text-white hover:border-white/30';
+  $('filters').innerHTML = tags.map(t => `<button data-filter="${t}" aria-pressed="${t === 'all'}" class="${btnBase}${t === 'all' ? btnOn : btnOff}">${label(t)}</button>`).join('');
+
+  /* ── Grid ── */
+  $('grid').innerHTML = collections.map((c, i) => `
+    <button data-index="${i}" data-tags="${c.tags.join(' ')}" class="group text-left focus-ring rounded-xl" aria-label="Open ${c.title}, ${c.photos.length} photos">
+      <span class="cover relative block aspect-[4/5] overflow-hidden rounded-xl bg-panel ring-1 ring-white/5">
+        <img src="${c.photos[0]}" loading="lazy" alt="${c.title} cover photo" class="h-full w-full object-cover">
+        <span class="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-sm backdrop-blur group-hover:bg-red transition-colors"><i class="fas fa-expand" aria-hidden="true"></i></span>
+      </span>
+      <span class="mt-3 block font-display text-2xl leading-none tracking-wider">${c.title}</span>
+      <span class="mt-1 block text-sm text-mute">${c.photos.length} photos</span>
+    </button>`).join('');
+
+  const cards = [...$('grid').children];
+  const applyFilter = () => {
+    let n = 0;
+    cards.forEach(card => {
+      const show = active === 'all' || card.dataset.tags.split(' ').includes(active);
+      card.classList.toggle('hidden', !show);
+      if (show) n += collections[card.dataset.index].photos.length;
+    });
+    $('filter-count').textContent = n + ' photo' + (n === 1 ? '' : 's');
+  };
+  $('filters').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    active = b.dataset.filter;
+    [...$('filters').children].forEach(x => {
+      const on = x === b; x.setAttribute('aria-pressed', on);
+      x.className = btnBase + (on ? btnOn : btnOff);
+    });
+    applyFilter();
+  });
+  applyFilter();
+
+  /* ── Lightbox ── */
+  const lb = $('lightbox'), lbImg = $('lb-img');
+  let group = null, idx = 0, lastFocus = null;
+
+  const show = () => {
+    lbImg.style.opacity = 0;
+    lbImg.onload = () => { lbImg.style.opacity = 1; };
+    lbImg.src = group.photos[idx];
+    lbImg.alt = `${group.title} photo ${idx + 1}`;
+    $('lb-counter').textContent = `${idx + 1} / ${group.photos.length}`;
+    [...$('lb-thumbs').children].forEach((t, i) => {
+      t.classList.toggle('ring-2', i === idx); t.classList.toggle('ring-red', i === idx);
+      t.classList.toggle('opacity-50', i !== idx);
+      if (i === idx) t.scrollIntoView({ block: 'nearest', inline: 'center' });
+    });
+  };
+  const open = i => {
+    lastFocus = document.activeElement; group = collections[i]; idx = 0;
+    $('lb-title').textContent = group.title;
+    $('lb-thumbs').innerHTML = group.photos.map((src, k) =>
+      `<button data-i="${k}" class="h-16 w-16 shrink-0 overflow-hidden rounded-md focus-ring" aria-label="Photo ${k + 1}"><img src="${src}" alt="" class="h-full w-full object-cover"></button>`).join('');
+    lb.classList.remove('hidden'); lb.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    show(); $('lb-close').focus();
+  };
+  const close = () => {
+    lb.classList.add('hidden'); lb.classList.remove('flex');
+    document.body.style.overflow = ''; lbImg.src = '';
+    lastFocus && lastFocus.focus();
+  };
+  const step = d => { idx = (idx + d + group.photos.length) % group.photos.length; show(); };
+
+  $('grid').addEventListener('click', e => { const c = e.target.closest('[data-index]'); if (c) open(+c.dataset.index); });
+  $('lb-thumbs').addEventListener('click', e => { const t = e.target.closest('[data-i]'); if (t) { idx = +t.dataset.i; show(); } });
+  $('lb-close').addEventListener('click', close);
+  $('lb-prev').addEventListener('click', () => step(-1));
+  $('lb-next').addEventListener('click', () => step(1));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target === lbImg.parentElement) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { lb.classList.contains('flex') ? close() : setMenu(false); }
+    if (!lb.classList.contains('flex')) return;
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+
+  let x0 = 0;
+  lb.addEventListener('touchstart', e => { x0 = e.changedTouches[0].screenX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    const d = e.changedTouches[0].screenX - x0;
+    if (Math.abs(d) > 50) step(d > 0 ? -1 : 1);
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
