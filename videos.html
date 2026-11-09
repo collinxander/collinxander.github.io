@@ -111,14 +111,15 @@ tailwind.config = {
   /* ── REPLACE these placeholders with your real videos ──
      title: shown on the card · tag: filter category · src: path to the file · poster (optional): image path */
   const videos = [
+     { title: 'The Gamble - A Texas Based Short Film', tag: 'the gamble', link: 'https://www.youtube.com/watch?v=SoUVRLDNb1A&t=101s', poster: 'assets/videos/Gamble.PNG' },
+     { title: 'Spencer James Chapman as "Terrence" — The Gamble', tag: 'the gamble', src: 'assets/videos/spencer.MP4', poster: 'assets/videos/spencer.png' },
+    { title: 'Uncle Dekarr as the Houseman — The Gamble',        tag: 'the gamble', src: 'assets/videos/uncledekarr.MP4', poster: 'assets/videos/uncledekarr.png' },
+    { title: 'Leandro as the Proprietor — The Gamble',           tag: 'the gamble', src: 'assets/videos/leandro.MP4', poster: 'assets/videos/leandro.png' },
+    { title: 'Veronica Smithhart as "Tess" — The Gamble',        tag: 'the gamble', src: 'assets/videos/veronica.MP4', poster: 'assets/videos/veronica.png' },
+    { title: 'Gabriel Solis as "Wade" — The Gamble',             tag: 'the gamble', src: 'assets/videos/wade.MP4', poster: 'assets/videos/gabriel.png' },
     { title: 'Kam For Aura',      tag: 'visuals', src: 'assets/videos/kamforaura.MP4',            poster: 'assets/videos/kamaura.png' },
-    { title: 'Lyne Aura',        tag: 'visuals', src: 'assets/videos/lyneaura.MP4',              poster: 'assets/videos/lyneaura.png' },
+    { title: 'Lyne For Aura',        tag: 'visuals', src: 'assets/videos/lyneaura.MP4',              poster: 'assets/videos/lyneaura.png' },
     { title: 'DJ Az',            tag: 'visuals', src: 'assets/videos/djazvideo.MP4',            poster: 'assets/videos/az1.png' },
-    { title: 'Rosado Altier',           tag: 'visuals',  src: 'assets/videos/tennisvideo.MP4',           poster: 'assets/videos/tennis.png' },
-    { title: 'UATS',             tag: 'visuals',  src: 'assets/videos/uatsvideo.MP4',             poster: 'assets/videos/uats.jpg' },
-    { title: '5th Look',         tag: 'visuals', src: 'assets/videos/5thlookvideo.MP4',        poster: 'assets/videos/5thlook.png' },
-    { title: 'Dissimilar',       tag: 'visuals', src: 'assets/videos/dissimilarvideo.MP4',      poster: 'assets/videos/dissimilar.jpg' },
-    { title: 'Valentine',        tag: 'events',  src: 'assets/videos/valentinevideo.MP4',        poster: 'assets/videos/valentine.jpg' },
   ];
 
   const $ = id => document.getElementById(id);
@@ -160,7 +161,9 @@ tailwind.config = {
   $('grid').innerHTML = videos.map((v, i) => `
     <button data-i="${i}" data-tag="${v.tag}" class="group text-left rounded-xl focus-ring" aria-label="Play ${v.title}">
       <span class="thumb relative block aspect-video overflow-hidden rounded-xl bg-panel ring-1 ring-white/5">
-        <video src="${v.src}#t=0.5" ${v.poster ? `poster="${v.poster}"` : ''} preload="metadata" muted playsinline tabindex="-1" class="h-full w-full object-cover"></video>
+        ${v.link
+          ? `<img src="${v.poster}" alt="" class="h-full w-full object-cover">`
+          : `<video src="${v.src}#t=0.5" ${v.poster ? `poster="${v.poster}"` : ''} preload="metadata" muted playsinline tabindex="-1" class="h-full w-full object-cover"></video>`}
         <span class="absolute inset-0 grid place-items-center bg-black/20 group-hover:bg-black/40 transition-colors">
           <span class="grid h-14 w-14 place-items-center rounded-full bg-red pl-1 shadow-lg shadow-black/50 transition-transform group-hover:scale-110"><i class="fas fa-play" aria-hidden="true"></i></span>
         </span>
@@ -200,7 +203,12 @@ tailwind.config = {
     document.body.style.overflow = '';
     lastFocus && lastFocus.focus();
   };
-  $('grid').addEventListener('click', e => { const c = e.target.closest('[data-i]'); if (c) open(+c.dataset.i); });
+  $('grid').addEventListener('click', e => {
+    const c = e.target.closest('[data-i]'); if (!c) return;
+    const v = videos[+c.dataset.i];
+    if (v.link) { window.open(v.link, '_blank', 'noopener,noreferrer'); return; }
+    open(+c.dataset.i);
+  });
   $('pl-close').addEventListener('click', close);
   pl.addEventListener('click', e => { if (e.target === pl || e.target === pv.parentElement) close(); });
   document.addEventListener('keydown', e => {
